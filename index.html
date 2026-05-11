@@ -9,18 +9,23 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #f5f3ef;
-  --surface: #fff;
-  --surface2: #f0ede8;
-  --border: #ddd9d2;
-  --text: #1a1814;
-  --muted: #555555;
-  --accent: #af3737;
-  --accent-l: #2fa9ca;
-  --gold: #b8962e;
-  --gold-l: #f0e4b8;
-  --danger: #8b3a3a;
-  --success: #3a6b4a;
+  --bg: light-dark(#fdfdfc, #111110);
+  --surface: light-dark(#fdfdfc, #111110);
+  --surface2: light-dark(#f9f9f8, #191918);
+
+  --border: light-dark(#dad9d6, #3b3a37);
+
+  --text: light-dark(#21201c, #eeeeec);
+  --muted: light-dark(#63635e, #b5b3ad);
+
+  --accent: light-dark(#b5a081, #b5a081);
+  --accent-l: light-dark(#a99576, #a99576);
+
+  --gold: light-dark(#b5a081, #b5a081);
+  --gold-l: light-dark(#f0ece6, #25221d);
+
+  --danger: light-dark(#d13415, #ff977d);
+  --success: light-dark(#1d3b31, #adf0d4);
 }
 body { font-family: 'Cormorant Garamond', serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 2rem 1rem; }
 
