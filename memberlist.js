@@ -2,12 +2,12 @@
 
   // ── CONFIGURACIÓN FIREBASE ──
   var firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_PROJECT.firebaseapp.com",
-    projectId: "TU_PROJECT_ID",
-    storageBucket: "TU_PROJECT.appspot.com",
-    messagingSenderId: "TU_SENDER_ID",
-    appId: "TU_APP_ID"
+     apiKey: "AIzaSyA_DTdVWhe54PRrPlFFmIkdbMuotiSssZU",
+  authDomain: "spectra-85df4.firebaseapp.com",
+  projectId: "spectra-85df4",
+  storageBucket: "spectra-85df4.firebasestorage.app",
+  messagingSenderId: "321843589344",
+  appId: "1:321843589344:web:714ca78124d8aef4d66085"
   };
 
   if (!firebase.apps.length) {
