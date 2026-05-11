@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Personajes No Jugables — Spectra</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+
+  <script type="module">
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, orderBy }
+      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    /* ── CONFIGURA TU PROYECTO FIREBASE ── */
+    const firebaseConfig = {
+     apiKey: "AIzaSyA_DTdVWhe54PRrPlFFmIkdbMuotiSssZU",
+  authDomain: "spectra-85df4.firebaseapp.com",
+  projectId: "spectra-85df4",
+  storageBucket: "spectra-85df4.firebasestorage.app",
+  messagingSenderId: "321843589344",
+  appId: "1:321843589344:web:714ca78124d8aef4d66085"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+    const PARLAMENTOS = ["Todos","Primigenios","Arquitectos","Sabios","Caóticos","Staff"];
+
+    /* Colores exactos del root del foro */
+    const COLORES = {
+      Primigenios: "#A53E67",
+      Arquitectos: "#0C459C",
+      Sabios:      "#00674E",
+      "Caóticos":  "#5A4160",
+      Staff:       "#b5a081",
+    };
+
+    let allPNJs = [];
+
+    function colorParl(p) { return COLORES[p] || "#b5a081"; }
+
+    async function cargarPNJs() {
+      const el = document.getElementById("loading");
+      try {
+        const snap = await getDocs(query(collection(db,"pnjs"), orderBy("orden","asc")));
+        allPNJs = snap.docs.map(d=>({id:d.id,...d.data()})).filter(p=>p.activo!==false);
+        renderFiltros();
+        renderCards(allPNJs);
+        el.style.display = "none";
+      } catch(err) {
+        console.error(err);
+        el.textContent = "Error al cargar los personajes.";
+      }
+    }
+
+    function renderFiltros() {
+      const bar = document.getElementById("filtros");
+      bar.innerHTML = "";
+      PARLAMENTOS.forEach((p,i) => {
+        const btn = document.createElement("button");
+        btn.className = "filtro-btn" + (i===0 ? " activo" : "");
+        btn.textContent = p;
+        if (COLORES[p]) btn.style.setProperty("--parl", COLORES[p]);
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".filtro-btn").forEach(b=>b.classList.remove("activo"));
+          btn.classList.add("activo");
+          renderCards(p==="Todos" ? allPNJs : allPNJs.filter(x=>x.parlamento===p));
+        });
+        bar.appendChild(btn);
+      });
+    }
+
+    function renderCards(lista) {
+      const grid = document.getElementById("grid");
+      if (!lista.length) {
+        grid.innerHTML = '<p class="grid-vacio">No hay personajes en este parlamento todavía.</p>';
+        return;
+      }
+      grid.innerHTML = lista.map(p=>`
+        <article class="card" style="--poster:${colorParl(p.parlamento)}">
+          <div class="card-img-wrap">
+            <img src="${p.imagen||'https://placehold.co/400x500/191918/494844?text=?'}"
+                 alt="${p.nombre||''}" loading="lazy"
+                 onerror="this.src='https://placehold.co/400x500/191918/494844?text=?'"/>
+            <span class="card-tag">${p.parlamento||'—'}</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-nombre">${p.nombre||'Sin nombre'}</h3>
+            ${p.edad?`<p class="card-edad">${p.edad} años</p>`:''}
+            <p class="card-historia">${(p.historia||'').slice(0,115)}${(p.historia||'').length>115?'…':''}</p>
+            <button class="card-btn" onclick="abrirModal('${p.id}')">Leer más</button>
+          </div>
+        </article>`).join("");
+    }
+
+    window.abrirModal = function(id) {
+      const p = allPNJs.find(x=>x.id===id);
+      if (!p) return;
+      document.getElementById("m-img").src              = p.imagen||"https://placehold.co/400x600/191918/494844?text=?";
+      document.getElementById("m-nombre").textContent   = p.nombre||"";
+      document.getElementById("m-edad").textContent     = p.edad?`${p.edad} años`:"";
+      document.getElementById("m-parl").textContent     = p.parlamento||"";
+      document.getElementById("m-parl").style.setProperty("--acc", colorParl(p.parlamento));
+      document.getElementById("m-historia").textContent = p.historia||"";
+      document.getElementById("modal-overlay").showPopover();
+    };
+
+    window.cerrarModal = function() {
+      document.getElementById("modal-overlay").hidePopover();
+    };
+
+    window.addEventListener("DOMContentLoaded", cargarPNJs);
+
+    /* auto-resize si está en iframe de Foroactivo */
+    function enviarAltura() {
+      parent.postMessage({type:"pnjs-height", height:document.body.scrollHeight},"*");
+    }
+    window.addEventListener("load", enviarAltura);
+    window.addEventListener("resize", enviarAltura);
+  </script>
+
+  <style>
+    /* ══ Variables — mismo root que el foro ══ */
+    :root {
+      color-scheme: dark light;
+
+      --mono-surface1:    light-dark(#fdfdfc,#111110);
+      --mono-surface2:    light-dark(#f9f9f8,#191918);
+      --mono-component1:  light-dark(#f1f0ef,#222221);
+      --mono-component2:  light-dark(#e9e8e6,#2a2a28);
+      --mono-border1:     light-dark(#dad9d6,#3b3a37);
+      --mono-border2:     light-dark(#cfceca,#494844);
+      --mono-text1:       light-dark(#63635e,#b5b3ad);
+      --mono-text2:       light-dark(#21201c,#eeeeec);
+
+      --accent-border2:   light-dark(#cfbfa8,#574a38);
+      --accent-solid1:    light-dark(#b5a081,#b5a081);
+      --accent-solid2:    light-dark(#a99576,#a99576);
+      --accent-text1:     light-dark(#6f6048,#cbb696);
+
+      --overlay-strong:   light-dark(rgba(0,0,0,.3),rgba(0,0,0,.55));
+      --shadow-lg:  0 6px 18px  light-dark(rgba(0,0,0,.12),rgba(0,0,0,.28));
+      --shadow-xl:  0 12px 36px light-dark(rgba(0,0,0,.08),rgba(0,0,0,.36));
+
+      --br:    5px;
+      --br-l:  1rem;
+      --br-pill: 999px;
+
+      --spacing-3xs: clamp(.25rem,  .3381rem + -.1136vw,.3125rem);
+      --spacing-2xs: clamp(.5rem,   .5881rem + -.1136vw,.5625rem);
+      --spacing-xs:  clamp(.75rem,  .9261rem + -.2273vw,.875rem);
+      --spacing-s:   clamp(1rem,    1.1761rem + -.2273vw,1.125rem);
+      --spacing:     clamp(1.5rem,  1.7642rem + -.3409vw,1.6875rem);
+      --spacing-l:   clamp(2rem,    2.3523rem + -.4545vw,2.25rem);
+      --spacing-xl:  clamp(3rem,    3.5284rem + -.6818vw,3.375rem);
+
+      --f-xs:  clamp(.5628rem,.6716rem + -.1404vw,.64rem);
+      --f-s:   clamp(.7502rem,.8204rem + -.0906vw,.8rem);
+      --f-base:clamp(1rem,1rem,1rem);
+      --f-l:   clamp(1.25rem,1.216rem + .1509vw,1.333rem);
+      --f-xl:  clamp(1.5625rem,1.4748rem + .3898vw,1.7769rem);
+      --f-2xl: clamp(1.9531rem,1.7832rem + .7554vw,2.3686rem);
+      --f-5xl: clamp(3.8147rem,3.0802rem + 3.2646vw,5.6102rem);
+
+      --f-display:      "DM Serif Display", serif;
+      --f-display-sans: "DM Sans", sans-serif;
+      --f-p:            "DM Sans", sans-serif;
+      --f-mono:         "DM Mono", monospace;
+
+      --transition-ease: all .4s ease-in-out;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font: var(--f-base) var(--f-p);
+      background: var(--mono-surface1);
+      color: var(--mono-text2);
+      min-height: 100vh;
+      overflow-x: clip;
+    }
+
+    /* ── Header ── */
+    .pnj-header {
+      text-align: center;
+      padding: var(--spacing-xl) var(--spacing-s) var(--spacing-l);
+      border-bottom: 1px solid var(--mono-border1);
+    }
+    .pnj-eyebrow {
+      font: var(--f-xs) var(--f-mono);
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--accent-text1);
+      margin-bottom: var(--spacing-2xs);
+    }
+    .pnj-title {
+      font: var(--f-5xl) var(--f-display);
+      color: var(--mono-text2);
+      line-height: 1;
+      margin-bottom: var(--spacing-2xs);
+    }
+    .pnj-subtitle {
+      font: 300 var(--f-s) var(--f-display-sans);
+      color: var(--mono-text1);
+    }
+
+    /* ── Filtros ── */
+    #filtros {
+      display: flex; flex-wrap: wrap; gap: var(--spacing-2xs);
+      justify-content: center;
+      padding: var(--spacing) var(--spacing-s) var(--spacing-xs);
+    }
+    .filtro-btn {
+      font: 500 var(--f-s) var(--f-display);
+      text-transform: uppercase; letter-spacing: .07em;
+      padding: var(--spacing-3xs) var(--spacing-xs);
+      border-radius: var(--br);
+      border: 1px solid var(--mono-border2);
+      background: var(--mono-component1);
+      color: var(--mono-text1);
+      cursor: pointer;
+      transition: var(--transition-ease);
+    }
+    .filtro-btn:hover {
+      border-color: var(--parl, var(--accent-border2));
+      color: var(--parl, var(--accent-text1));
+    }
+    .filtro-btn.activo {
+      background: var(--parl, var(--accent-solid1));
+      border-color: var(--parl, var(--accent-solid1));
+      color: #fdfdfc;
+    }
+
+    /* ── Loading ── */
+    #loading {
+      text-align: center;
+      padding: var(--spacing-xl);
+      color: var(--mono-text1);
+      font: var(--f-s) var(--f-mono);
+      letter-spacing: .1em;
+    }
+
+    /* ── Grid ── */
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: var(--spacing);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--spacing-xs) var(--spacing) var(--spacing-xl);
+    }
+    .grid-vacio {
+      grid-column: 1/-1;
+      text-align: center;
+      color: var(--mono-text1);
+      padding: var(--spacing-xl);
+      font: 300 var(--f-s) var(--f-display-sans);
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--mono-surface2);
+      border: 1px solid var(--mono-border1);
+      border-radius: var(--br-l);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: color-mix(in srgb, var(--poster, var(--accent-solid1)), transparent 30%);
+      box-shadow: var(--shadow-xl),
+                  0 0 0 1px color-mix(in srgb, var(--poster, var(--accent-solid1)), transparent 65%);
+    }
+
+    .card-img-wrap {
+      position: relative; aspect-ratio: 4/5; overflow: hidden;
+    }
+    .card-img-wrap img {
+      width:100%; height:100%; object-fit:cover; display:block;
+      transition: transform .5s ease;
+    }
+    .card:hover .card-img-wrap img { transform: scale(1.05); }
+    .card-img-wrap::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        var(--mono-surface2) 0%,
+        color-mix(in srgb, var(--mono-surface2), transparent 55%) 35%,
+        transparent 65%
+      );
+    }
+
+    .card-tag {
+      position: absolute; bottom: var(--spacing-xs); left: var(--spacing-xs); z-index: 1;
+      font: var(--f-xs) var(--f-mono);
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--poster, var(--accent-text1));
+      background: color-mix(in srgb, var(--mono-surface1), transparent 15%);
+      padding: var(--spacing-3xs) var(--spacing-2xs);
+      border-radius: var(--br-pill);
+      border: 1px solid color-mix(in srgb, var(--poster, var(--accent-border2)), transparent 40%);
+      backdrop-filter: blur(4px);
+    }
+
+    .card-body {
+      padding: var(--spacing-s); display:flex; flex-direction:column; flex:1;
+      gap: var(--spacing-3xs);
+    }
+    .card-nombre {
+      font: 100 var(--f-xl) var(--f-display-sans);
+      color: var(--mono-text2); line-height: 1.15;
+    }
+    .card-edad {
+      font: var(--f-xs) var(--f-mono);
+      color: var(--mono-text1); letter-spacing: .06em;
+    }
+    .card-historia {
+      font: 300 var(--f-s) var(--f-display-sans);
+      line-height: 1.65; color: var(--mono-text1); flex:1;
+    }
+    .card-btn {
+      margin-top: var(--spacing-2xs); align-self: flex-start;
+      font: 500 var(--f-s) var(--f-display);
+      text-transform: uppercase; letter-spacing: .08em;
+      padding: var(--spacing-3xs) var(--spacing-xs);
+      border-radius: var(--br);
+      border: 1px solid var(--poster, var(--accent-border2));
+      background: transparent;
+      color: var(--poster, var(--accent-text1));
+      cursor: pointer;
+      transition: var(--transition-ease);
+    }
+    .card-btn:hover {
+      background: var(--poster, var(--accent-solid1));
+      color: #fdfdfc;
+    }
+
+    /* ── Modal (Popover API) ── */
+    #modal-overlay {
+      position: fixed; inset:0;
+      width:100vw; height:100vh;
+      max-width:none; max-height:none; margin:0;
+      background: var(--overlay-strong);
+      backdrop-filter: blur(6px);
+      display: flex; align-items:center; justify-content:center;
+      padding: var(--spacing-s);
+      border: 0;
+      opacity: 0;
+      transition: opacity .25s ease, overlay .25s allow-discrete, display .25s allow-discrete;
+    }
+    #modal-overlay:popover-open {
+      opacity: 1;
+    }
+    @starting-style {
+      #modal-overlay:popover-open { opacity: 0; }
+    }
+
+    #modal {
+      background: var(--mono-surface2);
+      border: 1px solid var(--mono-border2);
+      border-radius: var(--br-l);
+      width: min(700px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      display: flex; flex-direction: column;
+      box-shadow: var(--shadow-xl);
+      animation: modalIn .3s ease;
+    }
+    @keyframes modalIn {
+      from { transform: translateY(14px) scale(.97); opacity:0; }
+      to   { transform: none; opacity:1; }
+    }
+
+    .modal-inner { display: flex; }
+    #m-img {
+      width: 220px; min-height: 320px;
+      object-fit: cover; flex-shrink:0; display:block;
+    }
+    .modal-info {
+      padding: var(--spacing-l) var(--spacing-s);
+      display: flex; flex-direction:column; gap: var(--spacing-2xs); flex:1;
+    }
+    #m-parl {
+      font: var(--f-xs) var(--f-mono);
+      letter-spacing: .18em; text-transform:uppercase;
+      color: var(--acc, var(--accent-text1));
+      border-left: 2px solid var(--acc, var(--accent-solid1));
+      padding-left: var(--spacing-2xs);
+    }
+    #m-nombre {
+      font: 100 var(--f-2xl) var(--f-display-sans);
+      color: var(--mono-text2); line-height:1.1;
+    }
+    #m-edad {
+      font: var(--f-s) var(--f-mono);
+      color: var(--mono-text1);
+    }
+    .modal-divider {
+      height:1px; background:var(--mono-border1);
+      margin: var(--spacing-3xs) 0;
+    }
+    #m-historia {
+      font: 300 var(--f-base) var(--f-display-sans);
+      line-height:1.75; color:var(--mono-text2); white-space:pre-wrap;
+    }
+    .modal-footer {
+      padding: var(--spacing-xs) var(--spacing-s) var(--spacing-s);
+      display:flex; justify-content:flex-end;
+    }
+    .modal-close {
+      font: 500 var(--f-s) var(--f-display);
+      text-transform:uppercase; letter-spacing:.08em;
+      padding: var(--spacing-3xs) var(--spacing-xs);
+      border-radius: var(--br);
+      border: 1px solid var(--mono-border2);
+      background: transparent; color: var(--mono-text1);
+      cursor:pointer; transition: var(--transition-ease);
+    }
+    .modal-close:hover {
+      border-color: var(--accent-border2);
+      color: var(--accent-text1);
+    }
+
+    @media (max-width:520px) {
+      .modal-inner { flex-direction:column; }
+      #m-img { width:100%; min-height:180px; max-height:240px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="pnj-header">
+    <p class="pnj-eyebrow">Spectra · Universo Expandido</p>
+    <h1 class="pnj-title">Personajes No Jugables</h1>
+    <p class="pnj-subtitle">Figuras que habitan el mundo de Spectra</p>
+  </header>
+
+  <nav id="filtros" aria-label="Filtrar por parlamento"></nav>
+  <p id="loading">Cargando personajes…</p>
+  <main id="grid"></main>
+
+  <div id="modal-overlay" popover="auto"
+       onclick="if(event.target===this)cerrarModal()">
+    <div id="modal" role="dialog" aria-modal="true" aria-labelledby="m-nombre">
+      <div class="modal-inner">
+        <img id="m-img" src="" alt=""/>
+        <div class="modal-info">
+          <p id="m-parl"></p>
+          <h2 id="m-nombre"></h2>
+          <p id="m-edad"></p>
+          <div class="modal-divider"></div>
+          <p id="m-historia"></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-close" onclick="cerrarModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
