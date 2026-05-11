@@ -92,7 +92,6 @@
               var us = userSkills[sk.key] || { level: 0, maxLevel: sk.maxLevel || 5 };
               var pct = Math.round((us.level / (sk.maxLevel || 5)) * 100);
               html += '<div class="fb-skill-row">'
-                + '<span class="fb-skill-icon">' + sk.icon + '</span>'
                 + '<span class="fb-skill-name">' + (sk.name || '') + '</span>'
                 + '<div class="fb-skill-bar-wrap"><div class="fb-skill-bar-fill" style="width:0%" data-pct="' + pct + '"></div></div>'
                 + '<span class="fb-skill-level">Nv.' + us.level + '</span>'
