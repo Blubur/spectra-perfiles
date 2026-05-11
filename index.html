@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configuración de perfil</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f5f3ef; --surface: #fff; --surface2: #f0ede8;
+  --border: #ddd9d2; --text: #1a1814; --muted: #8a8278;
+  --accent: #7c6a52; --accent-l: #c4b49a;
+  --gold: #b8962e; --gold-l: #f0e4b8;
+  --danger: #8b3a3a; --success: #3a6b4a;
+}
+body { font-family: 'Cormorant Garamond', serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 2rem 1rem; }
+
+.wrap { max-width: 680px; margin: 0 auto; }
+
+header { text-align: center; margin-bottom: 2.5rem; }
+header h1 { font-size: 2rem; font-weight: 300; letter-spacing: .04em; }
+header h1 em { font-style: italic; color: var(--accent); }
+header p { font-family: 'DM Mono', monospace; font-size: .65rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-top: .4rem; }
+
+.card { background: var(--surface); border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1.5rem; animation: fadeUp .4s ease both; }
+.card:nth-child(1){animation-delay:.05s} .card:nth-child(2){animation-delay:.1s}
+.card:nth-child(3){animation-delay:.15s} .card:nth-child(4){animation-delay:.2s}
+.card:nth-child(5){animation-delay:.25s}
+
+.card-title { font-family: 'DM Mono', monospace; font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding-bottom: .8rem; border-bottom: 1px solid var(--border); margin-bottom: 1.2rem; }
+
+.field { margin-bottom: 1.1rem; }
+.field label { display: block; font-family: 'DM Mono', monospace; font-size: .6rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .3rem; }
+.field input, .field textarea, .field select {
+  width: 100%; background: var(--surface2); border: 1px solid var(--border);
+  padding: .55rem .8rem; font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+  color: var(--text); outline: none; transition: border-color .2s;
+}
+.field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); }
+.field textarea { min-height: 70px; resize: vertical; }
+.field .hint { font-family: 'DM Mono', monospace; font-size: .58rem; color: var(--muted); margin-top: .3rem; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.btn { display: inline-block; padding: .6rem 1.4rem; font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; border: none; transition: all .2s; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: #5c4d3a; }
+.btn-full { width: 100%; text-align: center; display: block; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* skills */
+.skill-item { border: 1px solid var(--border); padding: 1rem; margin-bottom: .75rem; background: var(--surface2); }
+.skill-header { display: flex; align-items: center; gap: .75rem; margin-bottom: .5rem; }
+.skill-icon { font-size: 1.3rem; }
+.skill-name { font-size: 1rem; font-weight: 600; flex: 1; }
+.skill-level-badge { font-family: 'DM Mono', monospace; font-size: .6rem; color: var(--accent); background: var(--gold-l); border: 1px solid var(--gold); padding: .15rem .5rem; }
+.skill-bar-wrap { height: 3px; background: var(--border); }
+.skill-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-l), var(--accent)); transition: width .6s ease; }
+.skill-req { font-family: 'DM Mono', monospace; font-size: .58rem; color: var(--muted); margin-top: .4rem; }
+.skill-pending { font-family: 'DM Mono', monospace; font-size: .6rem; color: var(--gold); margin-top: .3rem; }
+
+/* login state */
+#loginSection { max-width: 400px; margin: 0 auto; }
+#profileSection { display: none; }
+
+/* toast */
+#toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--text); color: var(--bg); font-family: 'DM Mono', monospace; font-size: .68rem; padding: .6rem 1.2rem; letter-spacing: .06em; opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 100; }
+#toast.show { opacity: 1; }
+#toast.err { background: var(--danger); }
+
+.notice { font-family: 'DM Mono', monospace; font-size: .65rem; color: var(--muted); background: var(--surface2); border: 1px solid var(--border); padding: .75rem 1rem; margin-bottom: 1.5rem; line-height: 1.7; }
+.notice strong { color: var(--accent); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+@media(max-width:500px){ .two-col{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Configuración de <em>perfil</em></h1>
+    <p>Sistema de perfiles extendidos · Foro de Rol</p>
+  </header>
+
+  <!-- LOGIN -->
+  <div id="loginSection">
+    <div class="notice">
+      Introduce tu nombre de usuario exactamente como aparece en el foro.<br>
+      <strong>Esta página es externa al foro.</strong> Tus datos se guardan de forma segura en Firebase.
+    </div>
+    <div class="card">
+      <div class="card-title">◈ Identificación</div>
+      <div class="field">
+        <label>Tu nombre de usuario en el foro</label>
+        <input type="text" id="loginUsername" placeholder="nombre_exacto_del_foro">
+        <div class="hint">Tal como aparece en tu perfil de Foroactivo, distingue mayúsculas</div>
+      </div>
+      <div class="field">
+        <label>Contraseña de este sistema</label>
+        <input type="password" id="loginPassword" placeholder="Crea una la primera vez">
+        <div class="hint">Es independiente de la contraseña del foro</div>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="handleLogin()">Entrar / Crear cuenta</button>
+    </div>
+  </div>
+
+  <!-- PROFILE FORM -->
+  <div id="profileSection">
+    <div class="notice">
+      Bienvenido/a, <strong id="welcomeName"></strong>. Rellena tu perfil y guarda los cambios.<br>
+      Los campos públicos aparecerán en la memberlist y en tu perfil del foro.
+    </div>
+
+    <!-- enlaces -->
+    <div class="card">
+      <div class="card-title">◈ Enlaces del personaje</div>
+      <div class="field">
+        <label>URL de tu ficha de personaje</label>
+        <input type="url" id="fichaUrl" placeholder="https://tuforo.foroactivo.com/t123-nombre-ficha">
+      </div>
+      <div class="field">
+        <label>URL de tu baúl / inventario</label>
+        <input type="url" id="baulUrl" placeholder="https://tuforo.foroactivo.com/t456-nombre-baul">
+      </div>
+    </div>
+
+    <!-- info personaje -->
+    <div class="card">
+      <div class="card-title">◈ Información del personaje</div>
+      <div class="two-col">
+        <div class="field">
+          <label>Nombre del personaje</label>
+          <input type="text" id="charName" placeholder="Nombre">
+        </div>
+        <div class="field">
+          <label>Edad del personaje</label>
+          <input type="text" id="charAge" placeholder="Ej: 24 años / Inmortal">
+        </div>
+      </div>
+      <div class="field">
+        <label>Ocupación / Rol en la historia</label>
+        <input type="text" id="charOcupacion" placeholder="Ej: Guardián del Umbral, Comerciante…">
+      </div>
+      <div class="field">
+        <label>Descripción breve</label>
+        <textarea id="charDesc" placeholder="Una o dos frases que definan a tu personaje…"></textarea>
+      </div>
+    </div>
+
+    <!-- habilidades -->
+    <div class="card">
+      <div class="card-title">◈ Habilidades — <span id="skillsParlamLabel" style="color:var(--accent)">cargando…</span></div>
+      <div id="skillsList">
+        <div style="font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);padding:1rem 0;">
+          Cargando habilidades de tu parlamento…
+        </div>
+      </div>
+      <div class="notice" style="margin-top:1rem;margin-bottom:0;">
+        Los niveles de habilidad los asigna el <strong>administrador</strong>. Aquí puedes ver tu estado actual y solicitar subida de nivel dejando una nota.
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-full" onclick="saveProfile()" id="saveBtn">Guardar cambios</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+// ── CONFIGURACIÓN FIREBASE ──
+// Sustituye estos valores por los de tu proyecto Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyA_DTdVWhe54PRrPlFFmIkdbMuotiSssZU",
+  authDomain: "spectra-85df4.firebaseapp.com",
+  projectId: "spectra-85df4",
+  storageBucket: "spectra-85df4.firebasestorage.app",
+  messagingSenderId: "321843589344",
+  appId: "1:321843589344:web:714ca78124d8aef4d66085"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+// ── ESTADO ──
+let currentUser = null;
+let parlamento  = null;
+let skillsDef   = [];
+
+// ── LOGIN / REGISTRO ──
+window.handleLogin = async () => {
+  const username = document.getElementById('loginUsername').value.trim();
+  const password = document.getElementById('loginPassword').value.trim();
+  if (!username || !password) { toast('Rellena usuario y contraseña', true); return; }
+  if (password.length < 4) { toast('Contraseña mínimo 4 caracteres', true); return; }
+
+  const ref = doc(db, 'users', username);
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) {
+    // Crear cuenta nueva
+    await setDoc(ref, {
+      username, password,
+      fichaUrl: '', baulUrl: '',
+      charName: '', charAge: '', charOcupacion: '', charDesc: '',
+      parlamento: '', skills: {},
+      createdAt: new Date().toISOString(),
+      isAdmin: false
+    });
+    toast('¡Cuenta creada! Bienvenido/a');
+  } else {
+    const data = snap.data();
+    if (data.password !== password) { toast('Contraseña incorrecta', true); return; }
+  }
+
+  currentUser = username;
+  document.getElementById('loginSection').style.display = 'none';
+  document.getElementById('profileSection').style.display = 'block';
+  document.getElementById('welcomeName').textContent = username;
+  await loadProfile();
+};
+
+// ── CARGAR PERFIL ──
+async function loadProfile() {
+  const snap = await getDoc(doc(db, 'users', currentUser));
+  if (!snap.exists()) return;
+  const d = snap.data();
+
+  setVal('fichaUrl', d.fichaUrl);
+  setVal('baulUrl',  d.baulUrl);
+  setVal('charName', d.charName);
+  setVal('charAge',  d.charAge);
+  setVal('charOcupacion', d.charOcupacion);
+  setVal('charDesc', d.charDesc);
+
+  parlamento = d.parlamento || '';
+  await loadSkills(d.skills || {});
+}
+
+// ── CARGAR HABILIDADES ──
+async function loadSkills(userSkills) {
+  if (!parlamento) {
+    document.getElementById('skillsList').innerHTML = `
+      <div style="font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);">
+        El administrador aún no ha asignado tu parlamento. Contacta con el staff.
+      </div>`;
+    return;
+  }
+
+  document.getElementById('skillsParlamLabel').textContent = parlamento.toUpperCase();
+
+  // Leer definición de habilidades del parlamento
+  const configSnap = await getDoc(doc(db, 'config', 'skills'));
+  if (!configSnap.exists()) { document.getElementById('skillsList').innerHTML = '<div style="font-family:\'DM Mono\',monospace;font-size:.65rem;color:var(--muted);">No hay habilidades definidas aún.</div>'; return; }
+
+  const allSkills = configSnap.data();
+  skillsDef = allSkills[parlamento] || [];
+
+  if (!skillsDef.length) {
+    document.getElementById('skillsList').innerHTML = `<div style="font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);">No hay habilidades definidas para ${parlamento}.</div>`;
+    return;
+  }
+
+  document.getElementById('skillsList').innerHTML = skillsDef.map(skill => {
+    const us = userSkills[skill.key] || { level: 0, maxLevel: skill.maxLevel, pending: false };
+    const pct = Math.round((us.level / (skill.maxLevel || 5)) * 100);
+    return `
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-icon">${skill.icon}</span>
+          <span class="skill-name">${skill.name}</span>
+          <span class="skill-level-badge">Nv. ${us.level} / ${skill.maxLevel || 5}</span>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-fill" style="width:${pct}%"></div>
+        </div>
+        <div class="skill-req">${skill.description || ''}</div>
+        ${us.pending ? '<div class="skill-pending">⏳ Solicitud de subida de nivel pendiente de aprobación</div>' : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+// ── GUARDAR PERFIL ──
+window.saveProfile = async () => {
+  if (!currentUser) return;
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true; btn.textContent = 'Guardando…';
+
+  await setDoc(doc(db, 'users', currentUser), {
+    fichaUrl:     getVal('fichaUrl'),
+    baulUrl:      getVal('baulUrl'),
+    charName:     getVal('charName'),
+    charAge:      getVal('charAge'),
+    charOcupacion:getVal('charOcupacion'),
+    charDesc:     getVal('charDesc'),
+    updatedAt:    new Date().toISOString()
+  }, { merge: true });
+
+  btn.disabled = false; btn.textContent = 'Guardar cambios';
+  toast('Perfil guardado correctamente ✓');
+};
+
+// ── HELPERS ──
+function setVal(id, val) { const e = document.getElementById(id); if(e) e.value = val || ''; }
+function getVal(id) { return (document.getElementById(id)?.value || '').trim(); }
+
+let toastTimer;
+window.toast = (msg, err=false) => {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = err ? 'err show' : 'show';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.className = '', 2400);
+};
+</script>
+</body>
+</html>

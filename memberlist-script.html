@@ -1,0 +1,201 @@
+<!--
+  ═══════════════════════════════════════════════════════════════
+  SCRIPT PARA MEMBERLIST DE FOROACTIVO
+  Pega este bloque al final de tu template de memberlist,
+  justo antes del cierre </body> o en el bloque de scripts.
+  ═══════════════════════════════════════════════════════════════
+-->
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, getDoc, getDocs, collection } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+// ── CONFIGURACIÓN FIREBASE ── (misma que index.html y admin.html)
+const firebaseConfig = {
+  apiKey: "AIzaSyA_DTdVWhe54PRrPlFFmIkdbMuotiSssZU",
+  authDomain: "spectra-85df4.firebaseapp.com",
+  projectId: "spectra-85df4",
+  storageBucket: "spectra-85df4.firebasestorage.app",
+  messagingSenderId: "321843589344",
+  appId: "1:321843589344:web:714ca78124d8aef4d66085"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+// ── ESTILOS INYECTADOS ──
+const style = document.createElement('style');
+style.textContent = `
+  .fb-skills-wrap {
+    padding: 6px 12px 8px;
+    background: var(--mono-surface1, #f5f3ef);
+    border-top: 1px solid var(--mono-border1, #ddd);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .fb-skill-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .fb-skill-icon {
+    font-size: .85rem;
+    width: 1.2rem;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .fb-skill-name {
+    font-family: var(--f-display-sans, sans-serif);
+    font-size: .55rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--mono-text2, #888);
+    width: 70px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .fb-skill-bar-wrap {
+    flex: 1;
+    height: 2px;
+    background: var(--mono-border1, #ddd);
+    overflow: hidden;
+  }
+  .fb-skill-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--poster, #c4b49a), var(--poster, #7c6a52));
+    transition: width .6s ease;
+  }
+  .fb-skill-level {
+    font-family: var(--f-display-sans, monospace);
+    font-size: .52rem;
+    color: var(--poster, var(--mono-text2, #888));
+    flex-shrink: 0;
+    min-width: 28px;
+    text-align: right;
+    letter-spacing: .04em;
+  }
+  .fb-links-wrap {
+    display: flex;
+    gap: 6px;
+  }
+  .fb-link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--poster50, rgba(124,106,82,.5));
+    background: var(--poster75, rgba(124,106,82,.15));
+    color: var(--poster, #7c6a52);
+    border-radius: var(--br, 4px);
+    font-size: .9rem;
+    text-decoration: none;
+    transition: all .2s;
+  }
+  .fb-link-btn:hover {
+    background: var(--poster, #7c6a52);
+    color: var(--mono-contrast-text2, #fff);
+  }
+`;
+document.head.appendChild(style);
+
+// ── CARGA PRINCIPAL ──
+async function injectFirebaseData() {
+  // 1. Leer config de visibilidad y habilidades
+  const [visSnap, skillsSnap] = await Promise.all([
+    getDoc(doc(db, 'config', 'fieldVisibility')),
+    getDoc(doc(db, 'config', 'skills'))
+  ]);
+
+  const vis    = visSnap.exists()    ? visSnap.data()    : {};
+  const skills = skillsSnap.exists() ? skillsSnap.data() : {};
+
+  // 2. Recoger todos los nombres de usuario de la memberlist
+  const memberCards = document.querySelectorAll('article.member');
+  if (!memberCards.length) return;
+
+  const usernames = [];
+  memberCards.forEach(card => {
+    const el = card.querySelector('a.username strong');
+    if (el) usernames.push(el.textContent.trim());
+  });
+
+  // 3. Cargar todos los usuarios de Firebase en una sola llamada
+  const allUsersSnap = await getDocs(collection(db, 'users'));
+  const fbUsers = {};
+  allUsersSnap.forEach(d => { fbUsers[d.id] = d.data(); });
+
+  // 4. Inyectar datos en cada tarjeta
+  memberCards.forEach(card => {
+    const usernameEl = card.querySelector('a.username strong');
+    if (!usernameEl) return;
+    const username = usernameEl.textContent.trim();
+    const userData = fbUsers[username];
+    if (!userData) return;
+
+    const parl       = userData.parlamento || '';
+    const userSkills = userData.skills || {};
+    const skillsDef  = skills[parl] || [];
+
+    // ── ENLACES en .contact ──
+    const contact = card.querySelector('menu.contact');
+    if (contact) {
+      if (userData.fichaUrl && vis.fichaUrl !== false) {
+        const fichaLink = document.createElement('li');
+        fichaLink.innerHTML = `<a href="${userData.fichaUrl}" class="fb-link-btn" title="Ficha del personaje" target="_blank"><i class="bi bi-person-lines-fill"></i></a>`;
+        contact.appendChild(fichaLink);
+      }
+      if (userData.baulUrl && vis.baulUrl !== false) {
+        const baulLink = document.createElement('li');
+        baulLink.innerHTML = `<a href="${userData.baulUrl}" class="fb-link-btn" title="Baúl del personaje" target="_blank"><i class="bi bi-archive"></i></a>`;
+        contact.appendChild(baulLink);
+      }
+    }
+
+    // ── HABILIDADES en .member-data ──
+    const memberData = card.querySelector('menu.member-data');
+    if (memberData && skillsDef.length && vis.skills !== false) {
+      // Mostrar máximo 3 habilidades en la memberlist para no sobrecargar
+      const visibleSkills = skillsDef.slice(0, 3);
+      const skillsWrap = document.createElement('div');
+      skillsWrap.className = 'fb-skills-wrap';
+
+      skillsWrap.innerHTML = visibleSkills.map(sk => {
+        const us  = userSkills[sk.key] || { level: 0, maxLevel: sk.maxLevel || 5 };
+        const pct = Math.round((us.level / (sk.maxLevel || 5)) * 100);
+        return `
+          <div class="fb-skill-row">
+            <span class="fb-skill-icon">${sk.icon}</span>
+            <span class="fb-skill-name">${sk.name}</span>
+            <div class="fb-skill-bar-wrap">
+              <div class="fb-skill-bar-fill" style="width:0%" data-pct="${pct}"></div>
+            </div>
+            <span class="fb-skill-level">Nv.${us.level}</span>
+          </div>
+        `;
+      }).join('');
+
+      memberData.appendChild(skillsWrap);
+
+      // Animar barras con un pequeño delay
+      setTimeout(() => {
+        skillsWrap.querySelectorAll('.fb-skill-bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.pct + '%';
+        });
+      }, 150);
+    }
+  });
+}
+
+// Esperar a que el DOM esté listo
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', injectFirebaseData);
+} else {
+  injectFirebaseData();
+}
+</script>
