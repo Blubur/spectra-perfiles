@@ -9,11 +9,18 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #f5f3ef; --surface: #fff; --surface2: #f0ede8;
-  --border: #ddd9d2; --text: #1a1814; --muted: #8a8278;
-  --accent: #7c6a52; --accent-l: #c4b49a;
-  --gold: #b8962e; --gold-l: #f0e4b8;
-  --danger: #8b3a3a; --success: #3a6b4a;
+  --bg: #f5f3ef;
+  --surface: #fff;
+  --surface2: #f0ede8;
+  --border: #ddd9d2;
+  --text: #1a1814;
+  --muted: #555555;
+  --accent: #af3737;
+  --accent-l: #2fa9ca;
+  --gold: #b8962e;
+  --gold-l: #f0e4b8;
+  --danger: #8b3a3a;
+  --success: #3a6b4a;
 }
 body { font-family: 'Cormorant Garamond', serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 2rem 1rem; }
 
@@ -29,10 +36,10 @@ header p { font-family: 'DM Mono', monospace; font-size: .65rem; color: var(--mu
 .card:nth-child(3){animation-delay:.15s} .card:nth-child(4){animation-delay:.2s}
 .card:nth-child(5){animation-delay:.25s}
 
-.card-title { font-family: 'DM Mono', monospace; font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding-bottom: .8rem; border-bottom: 1px solid var(--border); margin-bottom: 1.2rem; }
+.card-title {font-family: 'DM Mono', monospace;font-size: .8rem;letter-spacing: .14em;text-transform: uppercase;color: var(--text);color: var(--t);g-bottom: .8rem;border-bottom: 1px solid var(--border);margin-bottom: 1.2rem;}
 
 .field { margin-bottom: 1.1rem; }
-.field label { display: block; font-family: 'DM Mono', monospace; font-size: .6rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .3rem; }
+.field label {display: block;font-family: 'DM Mono', monospace;font-size: .7rem;color: var(--muted);letter-spacing: .1em;text-transform: uppercase;margin-bottom: .3rem;}
 .field input, .field textarea, .field select {
   width: 100%; background: var(--surface2); border: 1px solid var(--border);
   padding: .55rem .8rem; font-family: 'Cormorant Garamond', serif; font-size: 1rem;
@@ -40,7 +47,7 @@ header p { font-family: 'DM Mono', monospace; font-size: .65rem; color: var(--mu
 }
 .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); }
 .field textarea { min-height: 70px; resize: vertical; }
-.field .hint { font-family: 'DM Mono', monospace; font-size: .58rem; color: var(--muted); margin-top: .3rem; }
+.field .hint {font-family: 'DM Mono', monospace;font-size: .7rem;color: var(--muted);margin-top: .3rem;}
 
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
@@ -70,12 +77,12 @@ header p { font-family: 'DM Mono', monospace; font-size: .65rem; color: var(--mu
 #toast.show { opacity: 1; }
 #toast.err { background: var(--danger); }
 
-.notice { font-family: 'DM Mono', monospace; font-size: .65rem; color: var(--muted); background: var(--surface2); border: 1px solid var(--border); padding: .75rem 1rem; margin-bottom: 1.5rem; line-height: 1.7; }
+.notice {font-family: 'DM Mono', monospace;font-size: .9rem;color: var(--muted);background: var(--surface2);border: 1px solid var(--border);padding: .75rem 1rem;margin-bottom: 1.5rem;line-height: 1.7;}
 .notice strong { color: var(--accent); }
 
 @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 @media(max-width:500px){ .two-col{grid-template-columns:1fr;} }
-</style>
+
 </head>
 <body>
 <div class="wrap">
