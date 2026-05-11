@@ -1,468 +1,565 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Personajes No Jugables — Spectra</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personajes No Jugables — Spectra</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=DM+Sans:wght@200;300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+:root {
+  color-scheme: dark light;
 
-  <script type="module">
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, query, orderBy }
-      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  --mono-surface1: light-dark(#fdfdfc, #111110);
+  --mono-surface2: light-dark(#f9f9f8, #191918);
+  --mono-component1: light-dark(#f1f0ef, #222221);
+  --mono-component2: light-dark(#e9e8e6, #2a2a28);
+  --mono-component3: light-dark(#e2e1de, #31312e);
+  --mono-border1: light-dark(#dad9d6, #3b3a37);
+  --mono-border2: light-dark(#cfceca, #494844);
+  --mono-border3: light-dark(#bcbbb5, #62605b);
+  --mono-solid1: light-dark(#8d8d86, #6f6d66);
+  --mono-solid2: light-dark(#82827c, #7c7b74);
+  --mono-text1: light-dark(#63635e, #b5b3ad);
+  --mono-text2: light-dark(#21201c, #eeeeec);
 
-    /* ── CONFIGURA TU PROYECTO FIREBASE ── */
-    const firebaseConfig = {
-     apiKey: "AIzaSyA_DTdVWhe54PRrPlFFmIkdbMuotiSssZU",
+  --accent-surface1: light-dark(#fbfaf9, #13110f);
+  --accent-surface2: light-dark(#f8f6f3, #1b1916);
+  --accent-component1: light-dark(#f0ece6, #25221d);
+  --accent-border1: light-dark(#dacebd, #453c2f);
+  --accent-border2: light-dark(#cfbfa8, #574a38);
+  --accent-border3: light-dark(#bea98a, #726148);
+  --accent-solid1: light-dark(#b5a081, #b5a081);
+  --accent-solid2: light-dark(#a99576, #a99576);
+  --accent-text1: light-dark(#6f6048, #cbb696);
+  --accent-text2: light-dark(#343029, #f2e6d4);
+
+  --staff: var(--accent-solid1);
+  --primigenios: #A53E67;
+  --arquitectos: #0C459C;
+  --sabios: #00674E;
+  --caoticos: #5A4160;
+  --exterminadores: #A53E4A;
+
+  --shadow-lg: 0 6px 18px light-dark(rgba(0,0,0,.12),rgba(0,0,0,.3));
+  --shadow-xl: 0 12px 36px light-dark(rgba(0,0,0,.08),rgba(0,0,0,.3));
+
+  --transition-ease: all .5s ease-in-out;
+
+  --f-xs: clamp(0.5628rem, 0.6716rem + -0.1404vw, 0.64rem);
+  --f-s: clamp(0.7502rem, 0.8204rem + -0.0906vw, 0.8rem);
+  --f-base: clamp(1rem, 1rem + 0vw, 1rem);
+  --f-l: clamp(1.25rem, 1.216rem + 0.1509vw, 1.333rem);
+  --f-xl: clamp(1.5625rem, 1.4748rem + 0.3898vw, 1.7769rem);
+  --f-2xl: clamp(1.9531rem, 1.7832rem + 0.7554vw, 2.3686rem);
+  --f-3xl: clamp(2.4414rem, 2.1485rem + 1.3017vw, 3.1573rem);
+  --f-4xl: clamp(3.0518rem, 2.5785rem + 2.1036vw, 4.2087rem);
+  --f-5xl: clamp(3.8147rem, 3.0802rem + 3.2646vw, 5.6102rem);
+
+  --f-deco: 'DM Serif Display', serif;
+  --f-mono: 'DM Mono', monospace;
+  --f-sans: 'DM Sans', sans-serif;
+
+  --br: 5px;
+  --br-l: 1rem;
+  --br-pill: 999px;
+
+  --spacing-3xs: clamp(0.25rem, 0.3381rem + -0.1136vw, 0.3125rem);
+  --spacing-2xs: clamp(0.5rem, 0.5881rem + -0.1136vw, 0.5625rem);
+  --spacing-xs: clamp(0.75rem, 0.9261rem + -0.2273vw, 0.875rem);
+  --spacing-s: clamp(1rem, 1.1761rem + -0.2273vw, 1.125rem);
+  --spacing: clamp(1.5rem, 1.7642rem + -0.3409vw, 1.6875rem);
+  --spacing-l: clamp(2rem, 2.3523rem + -0.4545vw, 2.25rem);
+  --spacing-xl: clamp(3rem, 3.5284rem + -0.6818vw, 3.375rem);
+  --spacing-2xl: clamp(4rem, 4.7045rem + -0.9091vw, 4.5rem);
+
+  --nav-size: 50px;
+}
+
+html { view-transition-name: foro; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--f-sans);
+  font-size: var(--f-base);
+  background: var(--mono-surface1);
+  color: var(--mono-text2);
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+/* ── NAV ── */
+.site-nav {
+  height: var(--nav-size);
+  background: color-mix(in srgb, var(--mono-surface1), transparent 50%);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--mono-border1);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 var(--spacing-l);
+  position: sticky; top: 0; z-index: 50;
+}
+.site-nav .brand {
+  font: italic var(--f-l) var(--f-deco);
+  color: var(--accent-text1);
+  text-decoration: none;
+}
+.site-nav .nav-links {
+  display: flex; gap: var(--spacing-s); align-items: center;
+  list-style: none;
+}
+.site-nav .nav-links a {
+  font: 300 var(--f-s) var(--f-sans);
+  color: var(--mono-text1);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  transition: color .2s;
+}
+.site-nav .nav-links a:hover { color: var(--accent-text1); }
+
+/* ── HEADER ── */
+.page-header {
+  padding: var(--spacing-2xl) var(--spacing-l) var(--spacing-xl);
+  text-align: center;
+  border-bottom: 1px solid var(--mono-border1);
+  position: relative;
+  overflow: hidden;
+}
+.page-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 0%, color-mix(in srgb, var(--accent-solid1), transparent 85%), transparent);
+  pointer-events: none;
+}
+.page-header h1 {
+  font: var(--f-5xl) 'DM Serif Display', serif;
+  color: var(--mono-text2);
+  line-height: 1;
+  margin-bottom: var(--spacing-xs);
+}
+.page-header p {
+  font: 300 var(--f-s) var(--f-sans);
+  color: var(--mono-text1);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  margin-bottom: var(--spacing);
+}
+
+/* ── FILTERS ── */
+.filters {
+  display: flex; flex-wrap: wrap; gap: var(--spacing-2xs);
+  justify-content: center;
+  padding: var(--spacing) var(--spacing-l);
+  border-bottom: 1px solid var(--mono-border1);
+  background: var(--mono-surface2);
+  position: sticky; top: var(--nav-size); z-index: 40;
+}
+.filter-btn {
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .1em;
+  padding: var(--spacing-3xs) var(--spacing-xs);
+  border: 1px solid var(--mono-border2);
+  background: var(--mono-component1);
+  color: var(--mono-text1);
+  border-radius: var(--br-pill);
+  cursor: pointer;
+  transition: var(--transition-ease);
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--grupo-color, var(--accent-solid1));
+  border-color: var(--grupo-color, var(--accent-solid1));
+  color: #fff;
+}
+.filter-btn[data-grupo="primigenios"] { --grupo-color: var(--primigenios); }
+.filter-btn[data-grupo="arquitectos"] { --grupo-color: var(--arquitectos); }
+.filter-btn[data-grupo="sabios"]       { --grupo-color: var(--sabios); }
+.filter-btn[data-grupo="caoticos"]     { --grupo-color: var(--caoticos); }
+.filter-btn[data-grupo="exterminadores"] { --grupo-color: var(--exterminadores); }
+.filter-btn[data-grupo="staff"]        { --grupo-color: var(--staff); }
+.filter-btn.active { box-shadow: 0 0 0 3px color-mix(in srgb, var(--grupo-color, var(--accent-solid1)), transparent 60%); }
+
+/* ── GRID ── */
+.pnj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--spacing);
+  padding: var(--spacing-xl) var(--spacing-l);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ── CARD ── */
+.pnj-card {
+  background: var(--mono-surface2);
+  border: 1px solid var(--mono-border1);
+  border-radius: var(--br);
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition-ease);
+  position: relative;
+  display: flex; flex-direction: column;
+  container-type: inline-size;
+}
+.pnj-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--accent-border2);
+}
+.pnj-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, color-mix(in srgb, var(--grupo-color, var(--accent-solid1)), transparent 30%) 100%);
+  pointer-events: none; z-index: 1;
+  opacity: 0; transition: opacity .5s ease;
+}
+.pnj-card:hover::before { opacity: 1; }
+
+.card-img-wrap {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: var(--mono-component1);
+  position: relative;
+}
+.card-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .7s ease;
+}
+.pnj-card:hover .card-img-wrap img { transform: scale(1.04); }
+
+.card-img-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 4rem; color: var(--mono-border2);
+}
+
+.card-grupo-pill {
+  position: absolute; top: var(--spacing-xs); left: var(--spacing-xs);
+  background: var(--grupo-color, var(--accent-solid1));
+  color: #fff;
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .1em;
+  padding: 2px var(--spacing-2xs);
+  border-radius: var(--br-pill);
+  z-index: 2;
+}
+
+.card-body {
+  padding: var(--spacing-s);
+  flex: 1; display: flex; flex-direction: column; gap: var(--spacing-2xs);
+  position: relative; z-index: 2;
+}
+.card-name {
+  font: italic var(--f-l) var(--f-deco);
+  color: var(--mono-text2);
+  line-height: 1.2;
+}
+.card-meta {
+  font: 300 var(--f-xs) var(--f-mono);
+  color: var(--mono-text1);
+  display: flex; gap: var(--spacing-xs); flex-wrap: wrap;
+}
+.card-meta span { display: flex; align-items: center; gap: .3em; }
+.card-desc {
+  font: 300 var(--f-s) var(--f-sans);
+  color: var(--mono-text1);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+.card-footer {
+  margin-top: auto;
+  padding-top: var(--spacing-xs);
+  border-top: 1px solid var(--mono-border1);
+  display: flex; justify-content: flex-end;
+}
+.card-order-badge {
+  font: var(--f-xs) var(--f-mono);
+  color: var(--mono-solid1);
+}
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: var(--spacing-2xl);
+  color: var(--mono-text1);
+}
+.empty-state .icon { font-size: 3rem; margin-bottom: var(--spacing-s); opacity: .4; }
+.empty-state p { font: 300 var(--f-s) var(--f-mono); letter-spacing: .1em; text-transform: uppercase; }
+
+/* ── DETAIL DRAWER ── */
+.detail-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 100;
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s ease;
+}
+.detail-overlay.open {
+  opacity: 1; pointer-events: all;
+}
+.detail-drawer {
+  position: fixed; top: 0; right: 0;
+  height: 100vh; width: min(520px, 100vw);
+  background: var(--mono-surface1);
+  border-left: 1px solid var(--mono-border1);
+  z-index: 101;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+}
+.detail-drawer.open { transform: translateX(0); }
+
+.detail-img-wrap {
+  aspect-ratio: 3/2;
+  overflow: hidden;
+  background: var(--mono-component1);
+  position: relative;
+}
+.detail-img-wrap img { width:100%;height:100%;object-fit:cover; }
+.detail-img-gradient {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, var(--mono-surface1));
+}
+.detail-content { padding: var(--spacing-l); }
+.detail-grupo-pill {
+  display: inline-block;
+  background: var(--grupo-color, var(--accent-solid1));
+  color: #fff;
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .1em;
+  padding: 3px var(--spacing-2xs);
+  border-radius: var(--br-pill);
+  margin-bottom: var(--spacing-xs);
+}
+.detail-name {
+  font: italic var(--f-3xl) var(--f-deco);
+  line-height: 1.1;
+  margin-bottom: var(--spacing-xs);
+}
+.detail-meta {
+  display: flex; flex-wrap: wrap; gap: var(--spacing-xs);
+  margin-bottom: var(--spacing);
+  font: 300 var(--f-xs) var(--f-mono);
+  color: var(--mono-text1);
+  text-transform: uppercase; letter-spacing: .08em;
+}
+.detail-meta span { display: flex; align-items: center; gap: .3em; }
+.detail-divider {
+  border: none; border-top: 1px solid var(--mono-border1);
+  margin: var(--spacing) 0;
+}
+.detail-historia {
+  font: 300 var(--f-base) var(--f-sans);
+  color: var(--mono-text2);
+  line-height: 1.7;
+}
+.detail-close {
+  position: absolute; top: var(--spacing-s); right: var(--spacing-s);
+  background: var(--mono-component2); border: 1px solid var(--mono-border2);
+  color: var(--mono-text2); width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--br-pill); cursor: pointer; z-index: 5;
+  font-size: 1.1rem;
+  transition: var(--transition-ease);
+}
+.detail-close:hover { background: var(--mono-component3); }
+
+/* ── LOADER ── */
+.loader {
+  grid-column: 1/-1;
+  display: flex; justify-content: center; padding: var(--spacing-2xl);
+}
+.loader-dots { display: flex; gap: .5rem; }
+.loader-dots span {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent-solid1);
+  animation: bounce 1.2s infinite;
+}
+.loader-dots span:nth-child(2) { animation-delay: .2s; }
+.loader-dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes bounce {
+  0%,60%,100% { transform: translateY(0); opacity: .5; }
+  30% { transform: translateY(-8px); opacity: 1; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .pnj-grid { grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: var(--spacing-xs); padding: var(--spacing-s); }
+  .detail-drawer { width: 100vw; }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="brand" href="#">Spectra</a>
+  <ul class="nav-links">
+    <li><a href="#">Inicio</a></li>
+    <li><a href="#">Memberlist</a></li>
+    <li><a href="#">PNJs</a></li>
+  </ul>
+</nav>
+
+<header class="page-header">
+  <h1>Personajes</h1>
+  <p>No jugables · Parlamentos de Spectra</p>
+</header>
+
+<div class="filters" id="filters">
+  <button class="filter-btn active" data-grupo="all">Todos</button>
+  <button class="filter-btn" data-grupo="primigenios">Primigenios</button>
+  <button class="filter-btn" data-grupo="arquitectos">Arquitectos</button>
+  <button class="filter-btn" data-grupo="sabios">Sabios</button>
+  <button class="filter-btn" data-grupo="caoticos">Caóticos</button>
+  <button class="filter-btn" data-grupo="exterminadores">Exterminadores</button>
+  <button class="filter-btn" data-grupo="staff">Staff</button>
+</div>
+
+<div class="pnj-grid" id="pnjGrid">
+  <div class="loader">
+    <div class="loader-dots"><span></span><span></span><span></span></div>
+  </div>
+</div>
+
+<!-- Detail drawer -->
+<div class="detail-overlay" id="detailOverlay" onclick="closeDetail()"></div>
+<div class="detail-drawer" id="detailDrawer">
+  <button class="detail-close" onclick="closeDetail()"><i class="bi bi-x"></i></button>
+  <div class="detail-img-wrap">
+    <img id="detailImg" src="" alt="">
+    <div class="detail-img-gradient"></div>
+  </div>
+  <div class="detail-content">
+    <span class="detail-grupo-pill" id="detailGrupo"></span>
+    <div class="detail-name" id="detailName"></div>
+    <div class="detail-meta" id="detailMeta"></div>
+    <hr class="detail-divider">
+    <div class="detail-historia" id="detailHistoria"></div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA_DTdVWhe54PRrPlFFmIkdbMuotiSssZU",
   authDomain: "spectra-85df4.firebaseapp.com",
   projectId: "spectra-85df4",
   storageBucket: "spectra-85df4.firebasestorage.app",
   messagingSenderId: "321843589344",
   appId: "1:321843589344:web:714ca78124d8aef4d66085"
-    };
+};
 
-    const app = initializeApp(firebaseConfig);
-    const db  = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
 
-    const PARLAMENTOS = ["Todos","Primigenios","Arquitectos","Sabios","Caóticos","Staff"];
+const GRUPOS_COLOR = {
+  primigenios: '#A53E67', arquitectos: '#0C459C',
+  sabios: '#00674E', caoticos: '#5A4160',
+  exterminadores: '#A53E4A', staff: '#b5a081'
+};
 
-    /* Colores exactos del root del foro */
-    const COLORES = {
-      Primigenios: "#A53E67",
-      Arquitectos: "#0C459C",
-      Sabios:      "#00674E",
-      "Caóticos":  "#5A4160",
-      Staff:       "#b5a081",
-    };
+let allPNJs = [];
+let activeFilter = 'all';
 
-    let allPNJs = [];
+async function loadPNJs() {
+  try {
+    const q = query(collection(db, 'pnjs'), orderBy('orden', 'asc'));
+    const snap = await getDocs(q);
+    allPNJs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch(e) {
+    // Fallback without ordering if field doesn't exist yet
+    const snap = await getDocs(collection(db, 'pnjs'));
+    allPNJs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    allPNJs.sort((a,b) => (a.orden||0) - (b.orden||0));
+  }
+  renderGrid();
+}
 
-    function colorParl(p) { return COLORES[p] || "#b5a081"; }
+function renderGrid() {
+  const grid = document.getElementById('pnjGrid');
+  const filtered = activeFilter === 'all' ? allPNJs : allPNJs.filter(p => p.grupo === activeFilter);
 
-    async function cargarPNJs() {
-      const el = document.getElementById("loading");
-      try {
-        const snap = await getDocs(query(collection(db,"pnjs"), orderBy("orden","asc")));
-        allPNJs = snap.docs.map(d=>({id:d.id,...d.data()})).filter(p=>p.activo!==false);
-        renderFiltros();
-        renderCards(allPNJs);
-        el.style.display = "none";
-      } catch(err) {
-        console.error(err);
-        el.textContent = "Error al cargar los personajes.";
-      }
-    }
+  if (!filtered.length) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="icon"><i class="bi bi-person-slash"></i></div>
+        <p>No hay personajes en este parlamento</p>
+      </div>`;
+    return;
+  }
 
-    function renderFiltros() {
-      const bar = document.getElementById("filtros");
-      bar.innerHTML = "";
-      PARLAMENTOS.forEach((p,i) => {
-        const btn = document.createElement("button");
-        btn.className = "filtro-btn" + (i===0 ? " activo" : "");
-        btn.textContent = p;
-        if (COLORES[p]) btn.style.setProperty("--parl", COLORES[p]);
-        btn.addEventListener("click", () => {
-          document.querySelectorAll(".filtro-btn").forEach(b=>b.classList.remove("activo"));
-          btn.classList.add("activo");
-          renderCards(p==="Todos" ? allPNJs : allPNJs.filter(x=>x.parlamento===p));
-        });
-        bar.appendChild(btn);
-      });
-    }
-
-    function renderCards(lista) {
-      const grid = document.getElementById("grid");
-      if (!lista.length) {
-        grid.innerHTML = '<p class="grid-vacio">No hay personajes en este parlamento todavía.</p>';
-        return;
-      }
-      grid.innerHTML = lista.map(p=>`
-        <article class="card" style="--poster:${colorParl(p.parlamento)}">
-          <div class="card-img-wrap">
-            <img src="${p.imagen||'https://placehold.co/400x500/191918/494844?text=?'}"
-                 alt="${p.nombre||''}" loading="lazy"
-                 onerror="this.src='https://placehold.co/400x500/191918/494844?text=?'"/>
-            <span class="card-tag">${p.parlamento||'—'}</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-nombre">${p.nombre||'Sin nombre'}</h3>
-            ${p.edad?`<p class="card-edad">${p.edad} años</p>`:''}
-            <p class="card-historia">${(p.historia||'').slice(0,115)}${(p.historia||'').length>115?'…':''}</p>
-            <button class="card-btn" onclick="abrirModal('${p.id}')">Leer más</button>
-          </div>
-        </article>`).join("");
-    }
-
-    window.abrirModal = function(id) {
-      const p = allPNJs.find(x=>x.id===id);
-      if (!p) return;
-      document.getElementById("m-img").src              = p.imagen||"https://placehold.co/400x600/191918/494844?text=?";
-      document.getElementById("m-nombre").textContent   = p.nombre||"";
-      document.getElementById("m-edad").textContent     = p.edad?`${p.edad} años`:"";
-      document.getElementById("m-parl").textContent     = p.parlamento||"";
-      document.getElementById("m-parl").style.setProperty("--acc", colorParl(p.parlamento));
-      document.getElementById("m-historia").textContent = p.historia||"";
-      document.getElementById("modal-overlay").showPopover();
-    };
-
-    window.cerrarModal = function() {
-      document.getElementById("modal-overlay").hidePopover();
-    };
-
-    window.addEventListener("DOMContentLoaded", cargarPNJs);
-
-    /* auto-resize si está en iframe de Foroactivo */
-    function enviarAltura() {
-      parent.postMessage({type:"pnjs-height", height:document.body.scrollHeight},"*");
-    }
-    window.addEventListener("load", enviarAltura);
-    window.addEventListener("resize", enviarAltura);
-  </script>
-
-  <style>
-    /* ══ Variables — mismo root que el foro ══ */
-    :root {
-      color-scheme: dark light;
-
-      --mono-surface1:    light-dark(#fdfdfc,#111110);
-      --mono-surface2:    light-dark(#f9f9f8,#191918);
-      --mono-component1:  light-dark(#f1f0ef,#222221);
-      --mono-component2:  light-dark(#e9e8e6,#2a2a28);
-      --mono-border1:     light-dark(#dad9d6,#3b3a37);
-      --mono-border2:     light-dark(#cfceca,#494844);
-      --mono-text1:       light-dark(#63635e,#b5b3ad);
-      --mono-text2:       light-dark(#21201c,#eeeeec);
-
-      --accent-border2:   light-dark(#cfbfa8,#574a38);
-      --accent-solid1:    light-dark(#b5a081,#b5a081);
-      --accent-solid2:    light-dark(#a99576,#a99576);
-      --accent-text1:     light-dark(#6f6048,#cbb696);
-
-      --overlay-strong:   light-dark(rgba(0,0,0,.3),rgba(0,0,0,.55));
-      --shadow-lg:  0 6px 18px  light-dark(rgba(0,0,0,.12),rgba(0,0,0,.28));
-      --shadow-xl:  0 12px 36px light-dark(rgba(0,0,0,.08),rgba(0,0,0,.36));
-
-      --br:    5px;
-      --br-l:  1rem;
-      --br-pill: 999px;
-
-      --spacing-3xs: clamp(.25rem,  .3381rem + -.1136vw,.3125rem);
-      --spacing-2xs: clamp(.5rem,   .5881rem + -.1136vw,.5625rem);
-      --spacing-xs:  clamp(.75rem,  .9261rem + -.2273vw,.875rem);
-      --spacing-s:   clamp(1rem,    1.1761rem + -.2273vw,1.125rem);
-      --spacing:     clamp(1.5rem,  1.7642rem + -.3409vw,1.6875rem);
-      --spacing-l:   clamp(2rem,    2.3523rem + -.4545vw,2.25rem);
-      --spacing-xl:  clamp(3rem,    3.5284rem + -.6818vw,3.375rem);
-
-      --f-xs:  clamp(.5628rem,.6716rem + -.1404vw,.64rem);
-      --f-s:   clamp(.7502rem,.8204rem + -.0906vw,.8rem);
-      --f-base:clamp(1rem,1rem,1rem);
-      --f-l:   clamp(1.25rem,1.216rem + .1509vw,1.333rem);
-      --f-xl:  clamp(1.5625rem,1.4748rem + .3898vw,1.7769rem);
-      --f-2xl: clamp(1.9531rem,1.7832rem + .7554vw,2.3686rem);
-      --f-5xl: clamp(3.8147rem,3.0802rem + 3.2646vw,5.6102rem);
-
-      --f-display:      "DM Serif Display", serif;
-      --f-display-sans: "DM Sans", sans-serif;
-      --f-p:            "DM Sans", sans-serif;
-      --f-mono:         "DM Mono", monospace;
-
-      --transition-ease: all .4s ease-in-out;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font: var(--f-base) var(--f-p);
-      background: var(--mono-surface1);
-      color: var(--mono-text2);
-      min-height: 100vh;
-      overflow-x: clip;
-    }
-
-    /* ── Header ── */
-    .pnj-header {
-      text-align: center;
-      padding: var(--spacing-xl) var(--spacing-s) var(--spacing-l);
-      border-bottom: 1px solid var(--mono-border1);
-    }
-    .pnj-eyebrow {
-      font: var(--f-xs) var(--f-mono);
-      letter-spacing: .28em;
-      text-transform: uppercase;
-      color: var(--accent-text1);
-      margin-bottom: var(--spacing-2xs);
-    }
-    .pnj-title {
-      font: var(--f-5xl) var(--f-display);
-      color: var(--mono-text2);
-      line-height: 1;
-      margin-bottom: var(--spacing-2xs);
-    }
-    .pnj-subtitle {
-      font: 300 var(--f-s) var(--f-display-sans);
-      color: var(--mono-text1);
-    }
-
-    /* ── Filtros ── */
-    #filtros {
-      display: flex; flex-wrap: wrap; gap: var(--spacing-2xs);
-      justify-content: center;
-      padding: var(--spacing) var(--spacing-s) var(--spacing-xs);
-    }
-    .filtro-btn {
-      font: 500 var(--f-s) var(--f-display);
-      text-transform: uppercase; letter-spacing: .07em;
-      padding: var(--spacing-3xs) var(--spacing-xs);
-      border-radius: var(--br);
-      border: 1px solid var(--mono-border2);
-      background: var(--mono-component1);
-      color: var(--mono-text1);
-      cursor: pointer;
-      transition: var(--transition-ease);
-    }
-    .filtro-btn:hover {
-      border-color: var(--parl, var(--accent-border2));
-      color: var(--parl, var(--accent-text1));
-    }
-    .filtro-btn.activo {
-      background: var(--parl, var(--accent-solid1));
-      border-color: var(--parl, var(--accent-solid1));
-      color: #fdfdfc;
-    }
-
-    /* ── Loading ── */
-    #loading {
-      text-align: center;
-      padding: var(--spacing-xl);
-      color: var(--mono-text1);
-      font: var(--f-s) var(--f-mono);
-      letter-spacing: .1em;
-    }
-
-    /* ── Grid ── */
-    #grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-      gap: var(--spacing);
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: var(--spacing-xs) var(--spacing) var(--spacing-xl);
-    }
-    .grid-vacio {
-      grid-column: 1/-1;
-      text-align: center;
-      color: var(--mono-text1);
-      padding: var(--spacing-xl);
-      font: 300 var(--f-s) var(--f-display-sans);
-    }
-
-    /* ── Card ── */
-    .card {
-      background: var(--mono-surface2);
-      border: 1px solid var(--mono-border1);
-      border-radius: var(--br-l);
-      overflow: hidden;
-      display: flex; flex-direction: column;
-      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: color-mix(in srgb, var(--poster, var(--accent-solid1)), transparent 30%);
-      box-shadow: var(--shadow-xl),
-                  0 0 0 1px color-mix(in srgb, var(--poster, var(--accent-solid1)), transparent 65%);
-    }
-
-    .card-img-wrap {
-      position: relative; aspect-ratio: 4/5; overflow: hidden;
-    }
-    .card-img-wrap img {
-      width:100%; height:100%; object-fit:cover; display:block;
-      transition: transform .5s ease;
-    }
-    .card:hover .card-img-wrap img { transform: scale(1.05); }
-    .card-img-wrap::after {
-      content: "";
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        to top,
-        var(--mono-surface2) 0%,
-        color-mix(in srgb, var(--mono-surface2), transparent 55%) 35%,
-        transparent 65%
-      );
-    }
-
-    .card-tag {
-      position: absolute; bottom: var(--spacing-xs); left: var(--spacing-xs); z-index: 1;
-      font: var(--f-xs) var(--f-mono);
-      letter-spacing: .14em; text-transform: uppercase;
-      color: var(--poster, var(--accent-text1));
-      background: color-mix(in srgb, var(--mono-surface1), transparent 15%);
-      padding: var(--spacing-3xs) var(--spacing-2xs);
-      border-radius: var(--br-pill);
-      border: 1px solid color-mix(in srgb, var(--poster, var(--accent-border2)), transparent 40%);
-      backdrop-filter: blur(4px);
-    }
-
-    .card-body {
-      padding: var(--spacing-s); display:flex; flex-direction:column; flex:1;
-      gap: var(--spacing-3xs);
-    }
-    .card-nombre {
-      font: 100 var(--f-xl) var(--f-display-sans);
-      color: var(--mono-text2); line-height: 1.15;
-    }
-    .card-edad {
-      font: var(--f-xs) var(--f-mono);
-      color: var(--mono-text1); letter-spacing: .06em;
-    }
-    .card-historia {
-      font: 300 var(--f-s) var(--f-display-sans);
-      line-height: 1.65; color: var(--mono-text1); flex:1;
-    }
-    .card-btn {
-      margin-top: var(--spacing-2xs); align-self: flex-start;
-      font: 500 var(--f-s) var(--f-display);
-      text-transform: uppercase; letter-spacing: .08em;
-      padding: var(--spacing-3xs) var(--spacing-xs);
-      border-radius: var(--br);
-      border: 1px solid var(--poster, var(--accent-border2));
-      background: transparent;
-      color: var(--poster, var(--accent-text1));
-      cursor: pointer;
-      transition: var(--transition-ease);
-    }
-    .card-btn:hover {
-      background: var(--poster, var(--accent-solid1));
-      color: #fdfdfc;
-    }
-
-    /* ── Modal (Popover API) ── */
-    #modal-overlay {
-      position: fixed; inset:0;
-      width:100vw; height:100vh;
-      max-width:none; max-height:none; margin:0;
-      background: var(--overlay-strong);
-      backdrop-filter: blur(6px);
-      display: flex; align-items:center; justify-content:center;
-      padding: var(--spacing-s);
-      border: 0;
-      opacity: 0;
-      transition: opacity .25s ease, overlay .25s allow-discrete, display .25s allow-discrete;
-    }
-    #modal-overlay:popover-open {
-      opacity: 1;
-    }
-    @starting-style {
-      #modal-overlay:popover-open { opacity: 0; }
-    }
-
-    #modal {
-      background: var(--mono-surface2);
-      border: 1px solid var(--mono-border2);
-      border-radius: var(--br-l);
-      width: min(700px, 100%);
-      max-height: 90vh;
-      overflow-y: auto;
-      display: flex; flex-direction: column;
-      box-shadow: var(--shadow-xl);
-      animation: modalIn .3s ease;
-    }
-    @keyframes modalIn {
-      from { transform: translateY(14px) scale(.97); opacity:0; }
-      to   { transform: none; opacity:1; }
-    }
-
-    .modal-inner { display: flex; }
-    #m-img {
-      width: 220px; min-height: 320px;
-      object-fit: cover; flex-shrink:0; display:block;
-    }
-    .modal-info {
-      padding: var(--spacing-l) var(--spacing-s);
-      display: flex; flex-direction:column; gap: var(--spacing-2xs); flex:1;
-    }
-    #m-parl {
-      font: var(--f-xs) var(--f-mono);
-      letter-spacing: .18em; text-transform:uppercase;
-      color: var(--acc, var(--accent-text1));
-      border-left: 2px solid var(--acc, var(--accent-solid1));
-      padding-left: var(--spacing-2xs);
-    }
-    #m-nombre {
-      font: 100 var(--f-2xl) var(--f-display-sans);
-      color: var(--mono-text2); line-height:1.1;
-    }
-    #m-edad {
-      font: var(--f-s) var(--f-mono);
-      color: var(--mono-text1);
-    }
-    .modal-divider {
-      height:1px; background:var(--mono-border1);
-      margin: var(--spacing-3xs) 0;
-    }
-    #m-historia {
-      font: 300 var(--f-base) var(--f-display-sans);
-      line-height:1.75; color:var(--mono-text2); white-space:pre-wrap;
-    }
-    .modal-footer {
-      padding: var(--spacing-xs) var(--spacing-s) var(--spacing-s);
-      display:flex; justify-content:flex-end;
-    }
-    .modal-close {
-      font: 500 var(--f-s) var(--f-display);
-      text-transform:uppercase; letter-spacing:.08em;
-      padding: var(--spacing-3xs) var(--spacing-xs);
-      border-radius: var(--br);
-      border: 1px solid var(--mono-border2);
-      background: transparent; color: var(--mono-text1);
-      cursor:pointer; transition: var(--transition-ease);
-    }
-    .modal-close:hover {
-      border-color: var(--accent-border2);
-      color: var(--accent-text1);
-    }
-
-    @media (max-width:520px) {
-      .modal-inner { flex-direction:column; }
-      #m-img { width:100%; min-height:180px; max-height:240px; }
-    }
-  </style>
-</head>
-<body>
-
-  <header class="pnj-header">
-    <p class="pnj-eyebrow">Spectra · Universo Expandido</p>
-    <h1 class="pnj-title">Personajes No Jugables</h1>
-    <p class="pnj-subtitle">Figuras que habitan el mundo de Spectra</p>
-  </header>
-
-  <nav id="filtros" aria-label="Filtrar por parlamento"></nav>
-  <p id="loading">Cargando personajes…</p>
-  <main id="grid"></main>
-
-  <div id="modal-overlay" popover="auto"
-       onclick="if(event.target===this)cerrarModal()">
-    <div id="modal" role="dialog" aria-modal="true" aria-labelledby="m-nombre">
-      <div class="modal-inner">
-        <img id="m-img" src="" alt=""/>
-        <div class="modal-info">
-          <p id="m-parl"></p>
-          <h2 id="m-nombre"></h2>
-          <p id="m-edad"></p>
-          <div class="modal-divider"></div>
-          <p id="m-historia"></p>
+  grid.innerHTML = filtered.map((p, i) => {
+    const color = GRUPOS_COLOR[p.grupo] || '#b5a081';
+    return `
+      <article class="pnj-card" style="--grupo-color:${color}" onclick="openDetail('${p.id}')" 
+               data-grupo="${p.grupo||''}" data-order="${p.orden||i}">
+        <div class="card-img-wrap">
+          ${p.imagen
+            ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy">`
+            : `<div class="card-img-placeholder"><i class="bi bi-person"></i></div>`}
+          <span class="card-grupo-pill">${p.grupo||'—'}</span>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button class="modal-close" onclick="cerrarModal()">Cerrar</button>
-      </div>
-    </div>
-  </div>
+        <div class="card-body">
+          <div class="card-name">${p.nombre||'Sin nombre'}</div>
+          <div class="card-meta">
+            ${p.edad ? `<span><i class="bi bi-hourglass-split"></i>${p.edad}</span>` : ''}
+            ${p.ocupacion ? `<span><i class="bi bi-briefcase"></i>${p.ocupacion}</span>` : ''}
+          </div>
+          ${p.historia ? `<p class="card-desc">${p.historia}</p>` : ''}
+        </div>
+      </article>`;
+  }).join('');
+}
 
+// ── FILTERS ──
+document.getElementById('filters').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  activeFilter = btn.dataset.grupo;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b === btn));
+  renderGrid();
+});
+
+// ── DETAIL ──
+window.openDetail = (id) => {
+  const p = allPNJs.find(x => x.id === id);
+  if (!p) return;
+  const color = GRUPOS_COLOR[p.grupo] || '#b5a081';
+
+  const drawerGrupo = document.getElementById('detailGrupo');
+  drawerGrupo.textContent = p.grupo || '—';
+  drawerGrupo.style.setProperty('--grupo-color', color);
+  document.getElementById('detailDrawer').style.setProperty('--grupo-color', color);
+
+  const img = document.getElementById('detailImg');
+  if (p.imagen) { img.src = p.imagen; img.style.display = 'block'; }
+  else { img.style.display = 'none'; }
+
+  document.getElementById('detailName').textContent = p.nombre || 'Sin nombre';
+  document.getElementById('detailMeta').innerHTML = [
+    p.edad ? `<span><i class="bi bi-hourglass-split"></i>${p.edad}</span>` : '',
+    p.ocupacion ? `<span><i class="bi bi-briefcase"></i>${p.ocupacion}</span>` : '',
+  ].join('');
+  document.getElementById('detailHistoria').textContent = p.historia || 'Sin descripción.';
+
+  document.getElementById('detailOverlay').classList.add('open');
+  document.getElementById('detailDrawer').classList.add('open');
+};
+
+window.closeDetail = () => {
+  document.getElementById('detailOverlay').classList.remove('open');
+  document.getElementById('detailDrawer').classList.remove('open');
+};
+
+loadPNJs();
+</script>
 </body>
 </html>
