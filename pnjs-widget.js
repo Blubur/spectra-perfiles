@@ -25,8 +25,7 @@
     arquitectos: "#0C459C",
     sabios: "#00674E",
     caoticos: "#5A4160",
-    exterminadores: "#A53E4A",
-    staff: "#b5a081"
+    exterminadores: "#A53E4A"
   };
 
   var grupos = [
@@ -35,8 +34,7 @@
     ["arquitectos", "Arquitectos"],
     ["sabios", "Sabios"],
     ["caoticos", "Caóticos"],
-    ["exterminadores", "Exterminadores"],
-    ["staff", "Staff"]
+    ["exterminadores", "Exterminadores"]
   ];
 
   var allPNJs = [];
