@@ -355,7 +355,7 @@
     root.innerHTML = `
       <section class="sp-header">
         <h1>Personajes</h1>
-        <p>No jugables · Parlamentos de Spectra</p>
+        <p>No jugables · Spectra</p>
       </section>
       <div class="sp-filters" data-role="filters"></div>
       <div class="sp-grid" data-role="grid">
