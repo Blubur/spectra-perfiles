@@ -2,149 +2,11 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta nombre="viewport" content="width=device-width, initial-scale=1.0">
 <title>Personajes No Jugables — Spectra</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=DM+Sans:wght@200;300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-
-:root {
-  color-scheme: dark light;
-
-  --mono-surface1: light-dark(#fdfdfc, #111110);
-  --mono-surface2: light-dark(#f9f9f8, #191918);
-  --mono-component1: light-dark(#f1f0ef, #222221);
-  --mono-component2: light-dark(#e9e8e6, #2a2a28);
-  --mono-component3: light-dark(#e2e1de, #31312e);
-  --mono-border1: light-dark(#dad9d6, #3b3a37);
-  --mono-border2: light-dark(#cfceca, #494844);
-  --mono-border3: light-dark(#bcbbb5, #62605b);
-  --mono-solid1: light-dark(#8d8d86, #6f6d66);
-  --mono-solid2: light-dark(#82827c, #7c7b74);
-  --mono-text1: light-dark(#63635e, #b5b3ad);
-  --mono-text2: light-dark(#21201c, #eeeeec);
-
-  --accent-surface1: light-dark(#fbfaf9, #13110f);
-  --accent-surface2: light-dark(#f8f6f3, #1b1916);
-  --accent-component1: light-dark(#f0ece6, #25221d);
-  --accent-border1: light-dark(#dacebd, #453c2f);
-  --accent-border2: light-dark(#cfbfa8, #574a38);
-  --accent-border3: light-dark(#bea98a, #726148);
-  --accent-solid1: light-dark(#b5a081, #b5a081);
-  --accent-solid2: light-dark(#a99576, #a99576);
-  --accent-text1: light-dark(#6f6048, #cbb696);
-  --accent-text2: light-dark(#343029, #f2e6d4);
-
-  --staff: var(--accent-solid1);
-  --primigenios: #A53E67;
-  --arquitectos: #0C459C;
-  --sabios: #00674E;
-  --caoticos: #5A4160;
-  --exterminadores: #A53E4A;
-
-  --shadow-lg: 0 6px 18px light-dark(rgba(0,0,0,.12),rgba(0,0,0,.3));
-  --shadow-xl: 0 12px 36px light-dark(rgba(0,0,0,.08),rgba(0,0,0,.3));
-
-  --transition-ease: all .5s ease-in-out;
-
-  --f-xs: clamp(0.5628rem, 0.6716rem + -0.1404vw, 0.64rem);
-  --f-s: clamp(0.7502rem, 0.8204rem + -0.0906vw, 0.8rem);
-  --f-base: clamp(1rem, 1rem + 0vw, 1rem);
-  --f-l: clamp(1.25rem, 1.216rem + 0.1509vw, 1.333rem);
-  --f-xl: clamp(1.5625rem, 1.4748rem + 0.3898vw, 1.7769rem);
-  --f-2xl: clamp(1.9531rem, 1.7832rem + 0.7554vw, 2.3686rem);
-  --f-3xl: clamp(2.4414rem, 2.1485rem + 1.3017vw, 3.1573rem);
-  --f-4xl: clamp(3.0518rem, 2.5785rem + 2.1036vw, 4.2087rem);
-  --f-5xl: clamp(3.8147rem, 3.0802rem + 3.2646vw, 5.6102rem);
-
-  --f-deco: 'DM Serif Display', serif;
-  --f-mono: 'DM Mono', monospace;
-  --f-sans: 'DM Sans', sans-serif;
-
-  --br: 5px;
-  --br-l: 1rem;
-  --br-pill: 999px;
-
-  --spacing-3xs: clamp(0.25rem, 0.3381rem + -0.1136vw, 0.3125rem);
-  --spacing-2xs: clamp(0.5rem, 0.5881rem + -0.1136vw, 0.5625rem);
-  --spacing-xs: clamp(0.75rem, 0.9261rem + -0.2273vw, 0.875rem);
-  --spacing-s: clamp(1rem, 1.1761rem + -0.2273vw, 1.125rem);
-  --spacing: clamp(1.5rem, 1.7642rem + -0.3409vw, 1.6875rem);
-  --spacing-l: clamp(2rem, 2.3523rem + -0.4545vw, 2.25rem);
-  --spacing-xl: clamp(3rem, 3.5284rem + -0.6818vw, 3.375rem);
-  --spacing-2xl: clamp(4rem, 4.7045rem + -0.9091vw, 4.5rem);
-
-  --nav-size: 50px;
-}
-
-html { view-transition-name: foro; scroll-behavior: smooth; }
-
-body {
-  font-family: var(--f-sans);
-  font-size: var(--f-base);
-  background: var(--mono-surface1);
-  color: var(--mono-text2);
-  min-height: 100vh;
-  overflow-x: clip;
-}
-
-/* ── NAV ── */
-.site-nav {
-  height: var(--nav-size);
-  background: color-mix(in srgb, var(--mono-surface1), transparent 50%);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--mono-border1);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 var(--spacing-l);
-  position: sticky; top: 0; z-index: 50;
-}
-.site-nav .brand {
-  font: italic var(--f-l) var(--f-deco);
-  color: var(--accent-text1);
-  text-decoration: none;
-}
-.site-nav .nav-links {
-  display: flex; gap: var(--spacing-s); align-items: center;
-  list-style: none;
-}
-.site-nav .nav-links a {
-  font: 300 var(--f-s) var(--f-sans);
-  color: var(--mono-text1);
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  transition: color .2s;
-}
-.site-nav .nav-links a:hover { color: var(--accent-text1); }
-
-/* ── HEADER ── */
-.page-header {
-  padding: var(--spacing-2xl) var(--spacing-l) var(--spacing-xl);
-  text-align: center;
-  border-bottom: 1px solid var(--mono-border1);
-  position: relative;
-  overflow: hidden;
-}
-.page-header::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 70% 60% at 50% 0%, color-mix(in srgb, var(--accent-solid1), transparent 85%), transparent);
-  pointer-events: none;
-}
-.page-header h1 {
-  font: var(--f-5xl) 'DM Serif Display', serif;
-  color: var(--mono-text2);
-  line-height: 1;
-  margin-bottom: var(--spacing-xs);
-}
-.page-header p {
-  font: 300 var(--f-s) var(--f-sans);
-  color: var(--mono-text1);
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  margin-bottom: var(--spacing);
-}
 
 /* ── FILTERS ── */
 .filters {
@@ -162,14 +24,14 @@ body {
   border: 1px solid var(--mono-border2);
   background: var(--mono-component1);
   color: var(--mono-text1);
-  border-radius: var(--br-pill);
+  border-radius: var(--br-tag);
   cursor: pointer;
   transition: var(--transition-ease);
 }
 .filter-btn:hover, .filter-btn.active {
   background: var(--grupo-color, var(--accent-solid1));
   border-color: var(--grupo-color, var(--accent-solid1));
-  color: #fff;
+  color: var(--mono-text1);
 }
 .filter-btn[data-grupo="primigenios"] { --grupo-color: var(--primigenios); }
 .filter-btn[data-grupo="arquitectos"] { --grupo-color: var(--arquitectos); }
@@ -188,7 +50,7 @@ body {
   margin: 0 auto;
 }
 
-/* ── CARD ── */
+/* ──cards ── */
 .pnj-card {
   background: var(--mono-surface2);
   border: 1px solid var(--mono-border1);
@@ -233,14 +95,14 @@ body {
   font-size: 4rem; color: var(--mono-border2);
 }
 
-.card-grupo-pill {
+.card-grupo-tag {
   position: absolute; top: var(--spacing-xs); left: var(--spacing-xs);
   background: var(--grupo-color, var(--accent-solid1));
-  color: #fff;
+  color: var(--mono-text1);
   font: 300 var(--f-xs) var(--f-mono);
   text-transform: uppercase; letter-spacing: .1em;
   padding: 2px var(--spacing-2xs);
-  border-radius: var(--br-pill);
+  border-radius: var(--br-tag);
   z-index: 2;
 }
 
@@ -249,7 +111,7 @@ body {
   flex: 1; display: flex; flex-direction: column; gap: var(--spacing-2xs);
   position: relative; z-index: 2;
 }
-.card-name {
+.card-nombre {
   font: italic var(--f-l) var(--f-deco);
   color: var(--mono-text2);
   line-height: 1.2;
@@ -281,7 +143,7 @@ body {
   color: var(--mono-solid1);
 }
 
-/* ── EMPTY STATE ── */
+/* ──si nada── */
 .empty-state {
   grid-column: 1/-1;
   text-align: center;
@@ -291,18 +153,18 @@ body {
 .empty-state .icon { font-size: 3rem; margin-bottom: var(--spacing-s); opacity: .4; }
 .empty-state p { font: 300 var(--f-s) var(--f-mono); letter-spacing: .1em; text-transform: uppercase; }
 
-/* ── DETAIL DRAWER ── */
-.detail-overlay {
+/* ── detalle carta ── */
+.detalle-overlay {
   position: fixed; inset: 0;
   background: rgba(0,0,0,.6);
   z-index: 100;
   opacity: 0; pointer-events: none;
   transition: opacity .4s ease;
 }
-.detail-overlay.open {
+.detalle-overlay.open {
   opacity: 1; pointer-events: all;
 }
-.detail-drawer {
+.detalle-carta {
   position: fixed; top: 0; right: 0;
   height: 100vh; width: min(520px, 100vw);
   background: var(--mono-surface1);
@@ -312,62 +174,62 @@ body {
   transform: translateX(100%);
   transition: transform .5s cubic-bezier(.4,0,.2,1);
 }
-.detail-drawer.open { transform: translateX(0); }
+.detalle-carta.open { transform: translateX(0); }
 
-.detail-img-wrap {
+.detalle-img-wrap {
   aspect-ratio: 3/2;
   overflow: hidden;
   background: var(--mono-component1);
   position: relative;
 }
-.detail-img-wrap img { width:100%;height:100%;object-fit:cover; }
-.detail-img-gradient {
+.detalle-img-wrap img { width:100%;height:100%;object-fit:cover; }
+.detalle-img-gradient {
   position: absolute; inset: 0;
   background: linear-gradient(to bottom, transparent 40%, var(--mono-surface1));
 }
-.detail-content { padding: var(--spacing-l); }
-.detail-grupo-pill {
+.detalle-content { padding: var(--spacing-l); }
+.detalle-grupo-tag {
   display: inline-block;
   background: var(--grupo-color, var(--accent-solid1));
-  color: #fff;
+  color:var(--mono-text1);
   font: 300 var(--f-xs) var(--f-mono);
   text-transform: uppercase; letter-spacing: .1em;
   padding: 3px var(--spacing-2xs);
-  border-radius: var(--br-pill);
+  border-radius: var(--br-tag);
   margin-bottom: var(--spacing-xs);
 }
-.detail-name {
+.detalle-nombre {
   font: italic var(--f-3xl) var(--f-deco);
   line-height: 1.1;
   margin-bottom: var(--spacing-xs);
 }
-.detail-meta {
+.detalle-meta {
   display: flex; flex-wrap: wrap; gap: var(--spacing-xs);
   margin-bottom: var(--spacing);
   font: 300 var(--f-xs) var(--f-mono);
   color: var(--mono-text1);
   text-transform: uppercase; letter-spacing: .08em;
 }
-.detail-meta span { display: flex; align-items: center; gap: .3em; }
-.detail-divider {
+.detalle-meta span { display: flex; align-items: center; gap: .3em; }
+.detalle-divider {
   border: none; border-top: 1px solid var(--mono-border1);
   margin: var(--spacing) 0;
 }
-.detail-historia {
+.detalle-historia {
   font: 300 var(--f-base) var(--f-sans);
   color: var(--mono-text2);
   line-height: 1.7;
 }
-.detail-close {
+.detalle-close {
   position: absolute; top: var(--spacing-s); right: var(--spacing-s);
   background: var(--mono-component2); border: 1px solid var(--mono-border2);
   color: var(--mono-text2); width: 36px; height: 36px;
   display: flex; align-items: center; justify-content: center;
-  border-radius: var(--br-pill); cursor: pointer; z-index: 5;
+  border-radius: var(--br-tag); cursor: pointer; z-index: 5;
   font-size: 1.1rem;
   transition: var(--transition-ease);
 }
-.detail-close:hover { background: var(--mono-component3); }
+.detalle-close:hover { background: var(--mono-component3); }
 
 /* ── LOADER ── */
 .loader {
@@ -390,7 +252,7 @@ body {
 /* ── RESPONSIVE ── */
 @media (max-width: 600px) {
   .pnj-grid { grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: var(--spacing-xs); padding: var(--spacing-s); }
-  .detail-drawer { width: 100vw; }
+  .detalle-carta { width: 100vw; }
 }
 </style>
 </head>
@@ -407,7 +269,7 @@ body {
 
 <header class="page-header">
   <h1>Personajes</h1>
-  <p>No jugables · Parlamentos de Spectra</p>
+  <p>No jugables · Spectra</p>
 </header>
 
 <div class="filters" id="filters">
@@ -425,20 +287,20 @@ body {
   </div>
 </div>
 
-<!-- Detail drawer -->
-<div class="detail-overlay" id="detailOverlay" onclick="closeDetail()"></div>
-<div class="detail-drawer" id="detailDrawer">
-  <button class="detail-close" onclick="closeDetail()"><i class="bi bi-x"></i></button>
-  <div class="detail-img-wrap">
-    <img id="detailImg" src="" alt="">
-    <div class="detail-img-gradient"></div>
+<!-- abrir carta -->
+<div class="detalle-overlay" id="detalleOverlay" onclick="closedetalle()"></div>
+<div class="detalle-carta" id="detallecarta">
+  <button class="detalle-close" onclick="closedetalle()"><i class="bi bi-x"></i></button>
+  <div class="detalle-img-wrap">
+    <img id="detalleImg" src="" alt="">
+    <div class="detalle-img-gradient"></div>
   </div>
-  <div class="detail-content">
-    <span class="detail-grupo-pill" id="detailGrupo"></span>
-    <div class="detail-name" id="detailName"></div>
-    <div class="detail-meta" id="detailMeta"></div>
-    <hr class="detail-divider">
-    <div class="detail-historia" id="detailHistoria"></div>
+  <div class="detalle-content">
+    <span class="detalle-grupo-tag" id="detalleGrupo"></span>
+    <div class="detalle-nombre" id="detallenombre"></div>
+    <div class="detalle-meta" id="detalleMeta"></div>
+    <hr class="detalle-divider">
+    <div class="detalle-historia" id="detalleHistoria"></div>
   </div>
 </div>
 
@@ -497,16 +359,16 @@ function renderGrid() {
   grid.innerHTML = filtered.map((p, i) => {
     const color = GRUPOS_COLOR[p.grupo] || '#b5a081';
     return `
-      <article class="pnj-card" style="--grupo-color:${color}" onclick="openDetail('${p.id}')" 
+      <article class="pnj-card" style="--grupo-color:${color}" onclick="opendetalle('${p.id}')" 
                data-grupo="${p.grupo||''}" data-order="${p.orden||i}">
         <div class="card-img-wrap">
           ${p.imagen
             ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy">`
             : `<div class="card-img-placeholder"><i class="bi bi-person"></i></div>`}
-          <span class="card-grupo-pill">${p.grupo||'—'}</span>
+          <span class="card-grupo-tag">${p.grupo||'—'}</span>
         </div>
         <div class="card-body">
-          <div class="card-name">${p.nombre||'Sin nombre'}</div>
+          <div class="card-nombre">${p.nombre||'Sin nombre'}</div>
           <div class="card-meta">
             ${p.edad ? `<span><i class="bi bi-hourglass-split"></i>${p.edad}</span>` : ''}
             ${p.ocupacion ? `<span><i class="bi bi-briefcase"></i>${p.ocupacion}</span>` : ''}
@@ -517,7 +379,7 @@ function renderGrid() {
   }).join('');
 }
 
-// ── FILTERS ──
+// ──filtra ──
 document.getElementById('filters').addEventListener('click', e => {
   const btn = e.target.closest('.filter-btn');
   if (!btn) return;
@@ -526,35 +388,35 @@ document.getElementById('filters').addEventListener('click', e => {
   renderGrid();
 });
 
-// ── DETAIL ──
-window.openDetail = (id) => {
+// ──detalle──
+window.opendetalle = (id) => {
   const p = allPNJs.find(x => x.id === id);
   if (!p) return;
   const color = GRUPOS_COLOR[p.grupo] || '#b5a081';
 
-  const drawerGrupo = document.getElementById('detailGrupo');
-  drawerGrupo.textContent = p.grupo || '—';
-  drawerGrupo.style.setProperty('--grupo-color', color);
-  document.getElementById('detailDrawer').style.setProperty('--grupo-color', color);
+  const cartaGrupo = document.getElementById('detalleGrupo');
+  cartaGrupo.textContent = p.grupo || '—';
+  cartaGrupo.style.setProperty('--grupo-color', color);
+  document.getElementById('detallecarta').style.setProperty('--grupo-color', color);
 
-  const img = document.getElementById('detailImg');
+  const img = document.getElementById('detalleImg');
   if (p.imagen) { img.src = p.imagen; img.style.display = 'block'; }
   else { img.style.display = 'none'; }
 
-  document.getElementById('detailName').textContent = p.nombre || 'Sin nombre';
-  document.getElementById('detailMeta').innerHTML = [
+  document.getElementById('detallenombre').textContent = p.nombre || 'Sin nombre';
+  document.getElementById('detalleMeta').innerHTML = [
     p.edad ? `<span><i class="bi bi-hourglass-split"></i>${p.edad}</span>` : '',
     p.ocupacion ? `<span><i class="bi bi-briefcase"></i>${p.ocupacion}</span>` : '',
   ].join('');
-  document.getElementById('detailHistoria').textContent = p.historia || 'Sin descripción.';
+  document.getElementById('detalleHistoria').textContent = p.historia || 'Sin descripción.';
 
-  document.getElementById('detailOverlay').classList.add('open');
-  document.getElementById('detailDrawer').classList.add('open');
+  document.getElementById('detalleOverlay').classList.add('open');
+  document.getElementById('detallecarta').classList.add('open');
 };
 
-window.closeDetail = () => {
-  document.getElementById('detailOverlay').classList.remove('open');
-  document.getElementById('detailDrawer').classList.remove('open');
+window.closedetalle = () => {
+  document.getElementById('detalleOverlay').classList.remove('open');
+  document.getElementById('detallecarta').classList.remove('open');
 };
 
 loadPNJs();
