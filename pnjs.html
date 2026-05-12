@@ -176,7 +176,6 @@ body {
 .filter-btn[data-grupo="sabios"]       { --grupo-color: var(--sabios); }
 .filter-btn[data-grupo="caoticos"]     { --grupo-color: var(--caoticos); }
 .filter-btn[data-grupo="exterminadores"] { --grupo-color: var(--exterminadores); }
-.filter-btn[data-grupo="staff"]        { --grupo-color: var(--staff); }
 .filter-btn.active { box-shadow: 0 0 0 3px color-mix(in srgb, var(--grupo-color, var(--accent-solid1)), transparent 60%); }
 
 /* ── GRID ── */
@@ -418,7 +417,6 @@ body {
   <button class="filter-btn" data-grupo="sabios">Sabios</button>
   <button class="filter-btn" data-grupo="caoticos">Caóticos</button>
   <button class="filter-btn" data-grupo="exterminadores">Exterminadores</button>
-  <button class="filter-btn" data-grupo="staff">Staff</button>
 </div>
 
 <div class="pnj-grid" id="pnjGrid">
@@ -463,7 +461,7 @@ const db  = getFirestore(app);
 const GRUPOS_COLOR = {
   primigenios: '#A53E67', arquitectos: '#0C459C',
   sabios: '#00674E', caoticos: '#5A4160',
-  exterminadores: '#A53E4A', staff: '#b5a081'
+  exterminadores: '#A53E4A'
 };
 
 let allPNJs = [];
