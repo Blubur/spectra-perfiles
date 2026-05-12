@@ -513,7 +513,7 @@
     root = document.getElementById(WIDGET_ID);
     if (!root) return;
 
-    root.classList.add("s-post-wide"); // ← añadido
+    root.classList.add("s-post-wide"); 
 
     loadStyleHref(FONT_URL);
     loadStyleHref(ICONS_URL);
