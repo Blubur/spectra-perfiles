@@ -143,7 +143,6 @@
         grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         gap: 1.6rem;
         padding: 3rem 2rem;
-        max-width: 1200px;
         margin: 0 auto;
       }
       #spectra-pnjs .sp-card {
@@ -513,6 +512,8 @@
   function start() {
     root = document.getElementById(WIDGET_ID);
     if (!root) return;
+
+    root.classList.add("s-post-wide"); // ← añadido
 
     loadStyleHref(FONT_URL);
     loadStyleHref(ICONS_URL);
