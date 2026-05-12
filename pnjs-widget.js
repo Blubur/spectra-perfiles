@@ -82,30 +82,7 @@
     var style = document.createElement("style");
     style.id = "spectra-pnjs-style";
     style.textContent = `
-      #spectra-pnjs, #spectra-pnjs * { box-sizing: border-box; }
-      #spectra-pnjs {
-        color-scheme: dark light;
-        --mono-surface1: light-dark(#fdfdfc, #111110);
-        --mono-surface2: light-dark(#f9f9f8, #191918);
-        --mono-component1: light-dark(#f1f0ef, #222221);
-        --mono-component2: light-dark(#e9e8e6, #2a2a28);
-        --mono-border1: light-dark(#dad9d6, #3b3a37);
-        --mono-border2: light-dark(#cfceca, #494844);
-        --mono-text1: light-dark(#63635e, #b5b3ad);
-        --mono-text2: light-dark(#21201c, #eeeeec);
-        --accent-solid1: #b5a081;
-        --accent-text1: light-dark(#6f6048, #cbb696);
-        --shadow-xl: 0 12px 36px light-dark(rgba(0,0,0,.08),rgba(0,0,0,.3));
-        --f-deco: 'DM Serif Display', serif;
-        --f-mono: 'DM Mono', monospace;
-        --f-sans: 'DM Sans', sans-serif;
-        --br: 5px;
-        --br-pill: 999px;
-        font-family: var(--f-sans);
-        background: var(--mono-surface1);
-        color: var(--mono-text2);
-        width: 100%;
-      }
+      
       #spectra-pnjs .sp-header {
         padding: clamp(3rem, 6vw, 4.5rem) 2rem 3rem;
         text-align: center;
