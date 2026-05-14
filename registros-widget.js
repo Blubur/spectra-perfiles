@@ -30,7 +30,6 @@
     staff:          "#b5a081"
   };
 
-  /* ── estado ── */
   var allRows   = [];
   var filtroE   = "all";
   var filtroTxt = "";
@@ -104,164 +103,224 @@
     if (document.getElementById("spectra-registros-style")) return;
     var style = document.createElement("style");
     style.id = "spectra-registros-style";
-    style.textContent = [
-
-      /* ── toolbar ── */
-      "#spectra-registros .sr-toolbar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;padding:.85rem 0;border-bottom:1px solid var(--mono-border1,#3b3a37);margin-bottom:.5rem;}",
-
-      "#spectra-registros .sr-search{flex:1;min-width:140px;background:var(--mono-component1,#222221);border:1px solid var(--mono-border2,#494844);border-radius:999px;padding:.35rem .9rem;font:300 .75rem var(--f-mono,'DM Mono',monospace);color:var(--mono-text2,#eeeeec);outline:none;transition:border-color .2s;}",
-      "#spectra-registros .sr-search:focus{border-color:var(--accent-border2,#574a38);}",
-      "#spectra-registros .sr-search::placeholder{color:var(--mono-text1,#b5b3ad);}",
-
-      "#spectra-registros .sr-pills{display:flex;flex-wrap:wrap;gap:.35rem;}",
-
-      "#spectra-registros .sr-pill{font:300 .6rem var(--f-mono,'DM Mono',monospace);text-transform:uppercase;letter-spacing:.08em;padding:.2rem .6rem;border:1px solid var(--mono-border2,#494844);background:var(--mono-component1,#222221);color:var(--mono-text1,#b5b3ad);border-radius:999px;cursor:pointer;transition:all .25s ease;user-select:none;}",
-      "#spectra-registros .sr-pill:hover{border-color:var(--accent-border2,#574a38);color:var(--accent-text1,#cbb696);}",
-      "#spectra-registros .sr-pill.active{background:var(--pill-bg,var(--accent-solid1,#b5a081));border-color:var(--pill-bg,var(--accent-solid1,#b5a081));color:#fff;}",
-
-      "#spectra-registros .sr-count{font:300 .6rem var(--f-mono,'DM Mono',monospace);color:var(--mono-text1,#b5b3ad);margin-left:auto;white-space:nowrap;}",
-
-      /* ── cabecera columnas ── */
-      "#spectra-registros .sr-head{display:grid;grid-template-columns:1.2fr .9fr .9fr .9fr .8fr;border-bottom:2px solid var(--mono-border2,#494844);padding-bottom:.4rem;margin-bottom:.2rem;}",
-
-      "#spectra-registros .sr-th{font:300 .6rem var(--f-mono,'DM Mono',monospace);text-transform:uppercase;letter-spacing:.12em;color:var(--mono-text1,#b5b3ad);padding:.35rem .5rem;cursor:pointer;user-select:none;white-space:nowrap;transition:color .2s;}",
-      "#spectra-registros .sr-th:hover{color:var(--accent-text1,#cbb696);}",
-      "#spectra-registros .sr-th.asc::after{content:' ↑';color:var(--accent-solid1,#b5a081);}",
-      "#spectra-registros .sr-th.desc::after{content:' ↓';color:var(--accent-solid1,#b5a081);}",
-      "#spectra-registros .sr-th.nosort{cursor:default;}",
-      "#spectra-registros .sr-th.nosort:hover{color:var(--mono-text1,#b5b3ad);}",
-
-      /* ── filas ── */
-      "#spectra-registros .sr-body{display:flex;flex-direction:column;}",
-
-      "#spectra-registros .sr-row{display:grid;grid-template-columns:1.2fr .9fr .9fr .9fr .8fr;border-bottom:1px solid var(--mono-border1,#3b3a37);padding:.55rem 0;align-items:center;transition:background .15s;}",
-      "#spectra-registros .sr-row:last-child{border-bottom:none;}",
-      "#spectra-registros .sr-row:hover{background:var(--mono-component1,#222221);border-radius:3px;}",
-
-      "#spectra-registros .sr-td{padding:0 .5rem;}",
-
-      /* celda personaje */
-      "#spectra-registros .sr-char{display:flex;flex-direction:column;gap:2px;}",
-      "#spectra-registros .sr-char-name{font:italic 1rem var(--f-deco,'DM Serif Display',serif);color:var(--mono-text2,#eeeeec);line-height:1.2;}",
-      "#spectra-registros .sr-char-link{font:300 .6rem var(--f-mono,'DM Mono',monospace);color:var(--accent-text1,#cbb696);text-decoration:none;opacity:.7;transition:opacity .2s;display:inline-flex;align-items:center;gap:.25em;}",
-      "#spectra-registros .sr-char-link:hover{opacity:1;text-decoration:underline;}",
-      "#spectra-registros .sr-char-link::after{content:'↗';font-size:.55rem;}",
-
-      /* celda parlamento */
-      "#spectra-registros .sr-parl{font:300 .6rem var(--f-mono,'DM Mono',monospace);text-transform:uppercase;letter-spacing:.06em;display:inline-flex;align-items:center;gap:.4em;}",
-      "#spectra-registros .sr-parl::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--parl-c,#b5b3ad);flex-shrink:0;}",
-
-      /* celda FC */
-      "#spectra-registros .sr-fc{font:300 .72rem var(--f-mono,'DM Mono',monospace);color:var(--mono-text1,#b5b3ad);}",
-      "#spectra-registros .sr-fc.empty{opacity:.3;}",
-
-      /* estado */
-      "#spectra-registros .sr-estado{display:flex;flex-direction:column;gap:.3rem;}",
-
-      "#spectra-registros .sr-badge{display:inline-flex;align-items:center;gap:.3em;font:300 .58rem var(--f-mono,'DM Mono',monospace);text-transform:uppercase;letter-spacing:.06em;padding:2px .5rem;border-radius:999px;border:1px solid;white-space:nowrap;width:fit-content;}",
-      "#spectra-registros .sr-badge-activo{background:var(--success-surface,#0f2e22);border-color:var(--success-border,#1b5745);color:var(--success-text,#adf0d4);}",
-      "#spectra-registros .sr-badge-inactivo{background:var(--mono-component1,#222221);border-color:var(--mono-border2,#494844);color:var(--mono-text1,#b5b3ad);}",
-      "#spectra-registros .sr-badge-reserva{background:var(--warning-surface,#331e0b);border-color:var(--warning-border,#66350c);color:var(--warning-text,#ffa057);}",
-
-      "#spectra-registros .sr-reserva-chip{font:300 .58rem var(--f-mono,'DM Mono',monospace);color:var(--warning-text,#ffa057);display:inline-flex;align-items:center;gap:.25em;white-space:nowrap;}",
-
-      /* empty / loader */
-      "#spectra-registros .sr-empty,#spectra-registros .sr-loader{text-align:center;padding:3rem 1rem;color:var(--mono-text1,#b5b3ad);font:300 .75rem var(--f-mono,'DM Mono',monospace);text-transform:uppercase;letter-spacing:.1em;}",
-
-      "#spectra-registros .sr-dots{display:inline-flex;gap:.4rem;}",
-      "#spectra-registros .sr-dots span{width:7px;height:7px;border-radius:50%;background:var(--accent-solid1,#b5a081);animation:srBounce 1.2s infinite;}",
-      "#spectra-registros .sr-dots span:nth-child(2){animation-delay:.2s;}",
-      "#spectra-registros .sr-dots span:nth-child(3){animation-delay:.4s;}",
-      "@keyframes srBounce{0%,60%,100%{transform:translateY(0);opacity:.4;}30%{transform:translateY(-7px);opacity:1;}}",
-
-      /* responsive */
-      "@media(max-width:640px){",
-        "#spectra-registros .sr-head,#spectra-registros .sr-row{grid-template-columns:1.2fr .9fr .8fr;}",
-        "#spectra-registros .sr-th:nth-child(4),#spectra-registros .sr-td:nth-child(4){display:none;}",
-      "}",
-      "@media(max-width:420px){",
-        "#spectra-registros .sr-head,#spectra-registros .sr-row{grid-template-columns:1.3fr .8fr;}",
-        "#spectra-registros .sr-th:nth-child(3),#spectra-registros .sr-td:nth-child(3),",
-        "#spectra-registros .sr-th:nth-child(5),#spectra-registros .sr-td:nth-child(5){display:none;}",
-      "}"
-
-    ].join("");
+    style.textContent = `
+      #spectra-registros .sr-header {
+        padding: clamp(3rem, 6vw, 4.5rem) 2rem 3rem;
+        text-align: center;
+        border-bottom: 1px solid var(--mono-border1, #3b3a37);
+        position: relative;
+        overflow: hidden;
+      }
+      #spectra-registros .sr-header::before {
+        content: "";
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse 70% 60% at 50% 0%, color-mix(in srgb, var(--accent-solid1, #b5a081), transparent 85%), transparent);
+        pointer-events: none;
+      }
+      #spectra-registros .sr-header h1 {
+        position: relative;
+        font: clamp(3.8rem, 6vw, 5.6rem) var(--f-deco, 'DM Serif Display', serif);
+        font-style: italic;
+        line-height: 1;
+        margin: 0 0 .75rem;
+        color: var(--mono-text2, #eeeeec);
+      }
+      #spectra-registros .sr-header p {
+        position: relative;
+        font: 300 .78rem var(--f-sans, 'DM Sans', sans-serif);
+        color: var(--mono-text1, #b5b3ad);
+        text-transform: uppercase;
+        letter-spacing: .12em;
+        margin: 0;
+      }
+      #spectra-registros .sr-toolbar {
+        display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
+        padding: 1rem 2rem;
+        border-bottom: 1px solid var(--mono-border1, #3b3a37);
+        background: var(--mono-surface2, #191918);
+      }
+      #spectra-registros .sr-search {
+        flex: 1; min-width: 140px;
+        background: var(--mono-component1, #222221);
+        border: 1px solid var(--mono-border2, #494844);
+        border-radius: 999px;
+        padding: .35rem .9rem;
+        font: 300 .75rem var(--f-mono, 'DM Mono', monospace);
+        color: var(--mono-text2, #eeeeec);
+        outline: none;
+        transition: border-color .2s;
+      }
+      #spectra-registros .sr-search:focus { border-color: var(--accent-border2, #574a38); }
+      #spectra-registros .sr-search::placeholder { color: var(--mono-text1, #b5b3ad); }
+      #spectra-registros .sr-pills { display: flex; flex-wrap: wrap; gap: .35rem; }
+      #spectra-registros .sr-pill {
+        font: 300 .6rem var(--f-mono, 'DM Mono', monospace);
+        text-transform: uppercase; letter-spacing: .08em;
+        padding: .2rem .6rem;
+        border: 1px solid var(--mono-border2, #494844);
+        background: var(--mono-component1, #222221);
+        color: var(--mono-text1, #b5b3ad);
+        border-radius: 999px; cursor: pointer;
+        transition: all .25s ease; user-select: none;
+      }
+      #spectra-registros .sr-pill:hover { border-color: var(--accent-border2, #574a38); color: var(--accent-text1, #cbb696); }
+      #spectra-registros .sr-pill.active {
+        background: var(--pill-bg, var(--accent-solid1, #b5a081));
+        border-color: var(--pill-bg, var(--accent-solid1, #b5a081));
+        color: #fff;
+      }
+      #spectra-registros .sr-count {
+        font: 300 .6rem var(--f-mono, 'DM Mono', monospace);
+        color: var(--mono-text1, #b5b3ad);
+        margin-left: auto; white-space: nowrap;
+      }
+      #spectra-registros .sr-table-wrap { padding: 1.5rem 2rem; }
+      #spectra-registros .sr-head {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr 1fr 1fr .9fr;
+        border-bottom: 2px solid var(--mono-border2, #494844);
+        padding-bottom: .4rem; margin-bottom: .2rem;
+      }
+      #spectra-registros .sr-th {
+        font: 300 .6rem var(--f-mono, 'DM Mono', monospace);
+        text-transform: uppercase; letter-spacing: .12em;
+        color: var(--mono-text1, #b5b3ad);
+        padding: .35rem .5rem;
+        cursor: pointer; user-select: none; white-space: nowrap;
+        transition: color .2s;
+      }
+      #spectra-registros .sr-th:hover { color: var(--accent-text1, #cbb696); }
+      #spectra-registros .sr-th.asc::after  { content: " ↑"; color: var(--accent-solid1, #b5a081); }
+      #spectra-registros .sr-th.desc::after { content: " ↓"; color: var(--accent-solid1, #b5a081); }
+      #spectra-registros .sr-th.nosort { cursor: default; }
+      #spectra-registros .sr-th.nosort:hover { color: var(--mono-text1, #b5b3ad); }
+      #spectra-registros .sr-body { display: flex; flex-direction: column; }
+      #spectra-registros .sr-row {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr 1fr 1fr .9fr;
+        border-bottom: 1px solid var(--mono-border1, #3b3a37);
+        padding: .55rem 0; align-items: center; transition: background .15s;
+      }
+      #spectra-registros .sr-row:last-child { border-bottom: none; }
+      #spectra-registros .sr-row:hover { background: var(--mono-component1, #222221); border-radius: 3px; }
+      #spectra-registros .sr-td { padding: 0 .5rem; }
+      #spectra-registros .sr-char { display: flex; flex-direction: column; gap: 2px; }
+      #spectra-registros .sr-char-name {
+        font: italic 1rem var(--f-deco, 'DM Serif Display', serif);
+        color: var(--mono-text2, #eeeeec); line-height: 1.2;
+      }
+      #spectra-registros .sr-char-link {
+        font: 300 .6rem var(--f-mono, 'DM Mono', monospace);
+        color: var(--accent-text1, #cbb696);
+        text-decoration: none; opacity: .7; transition: opacity .2s;
+        display: inline-flex; align-items: center; gap: .25em;
+      }
+      #spectra-registros .sr-char-link:hover { opacity: 1; text-decoration: underline; }
+      #spectra-registros .sr-char-link::after { content: "↗"; font-size: .55rem; }
+      #spectra-registros .sr-parl {
+        font: 300 .6rem var(--f-mono, 'DM Mono', monospace);
+        text-transform: uppercase; letter-spacing: .06em;
+        display: inline-flex; align-items: center; gap: .4em;
+      }
+      #spectra-registros .sr-parl::before {
+        content: ""; width: 6px; height: 6px; border-radius: 50%;
+        background: var(--parl-c, #b5b3ad); flex-shrink: 0;
+      }
+      #spectra-registros .sr-fc {
+        font: 300 .72rem var(--f-mono, 'DM Mono', monospace);
+        color: var(--mono-text1, #b5b3ad);
+      }
+      #spectra-registros .sr-fc.empty { opacity: .3; }
+      #spectra-registros .sr-estado { display: flex; flex-direction: column; gap: .3rem; }
+      #spectra-registros .sr-badge {
+        display: inline-flex; align-items: center; gap: .3em;
+        font: 300 .58rem var(--f-mono, 'DM Mono', monospace);
+        text-transform: uppercase; letter-spacing: .06em;
+        padding: 2px .5rem; border-radius: 999px; border: 1px solid;
+        white-space: nowrap; width: fit-content;
+      }
+      #spectra-registros .sr-badge-activo   { background: var(--success-surface, #0f2e22); border-color: var(--success-border, #1b5745); color: var(--success-text, #adf0d4); }
+      #spectra-registros .sr-badge-inactivo { background: var(--mono-component1, #222221); border-color: var(--mono-border2, #494844);   color: var(--mono-text1, #b5b3ad); }
+      #spectra-registros .sr-badge-reserva  { background: var(--warning-surface, #331e0b); border-color: var(--warning-border, #66350c); color: var(--warning-text, #ffa057); }
+      #spectra-registros .sr-reserva-chip {
+        font: 300 .58rem var(--f-mono, 'DM Mono', monospace);
+        color: var(--warning-text, #ffa057);
+        display: inline-flex; align-items: center; gap: .25em; white-space: nowrap;
+      }
+      #spectra-registros .sr-empty,
+      #spectra-registros .sr-loader,
+      #spectra-registros .sr-error {
+        text-align: center; padding: 3rem 1rem;
+        color: var(--mono-text1, #b5b3ad);
+        font: 300 .8rem var(--f-mono, 'DM Mono', monospace);
+        text-transform: uppercase; letter-spacing: .1em;
+      }
+      #spectra-registros .sr-dots { display: inline-flex; gap: .4rem; }
+      #spectra-registros .sr-dots span {
+        width: 7px; height: 7px; border-radius: 50%;
+        background: var(--accent-solid1, #b5a081);
+        animation: srBounce 1.2s infinite;
+      }
+      #spectra-registros .sr-dots span:nth-child(2) { animation-delay: .2s; }
+      #spectra-registros .sr-dots span:nth-child(3) { animation-delay: .4s; }
+      @keyframes srBounce {
+        0%,60%,100% { transform: translateY(0); opacity: .4; }
+        30% { transform: translateY(-7px); opacity: 1; }
+      }
+      @media (max-width: 640px) {
+        #spectra-registros .sr-head,
+        #spectra-registros .sr-row { grid-template-columns: 1.3fr 1fr .9fr; }
+        #spectra-registros .sr-th:nth-child(4),
+        #spectra-registros .sr-td:nth-child(4) { display: none; }
+        #spectra-registros .sr-table-wrap { padding: 1rem; }
+        #spectra-registros .sr-toolbar { padding: .75rem 1rem; }
+      }
+      @media (max-width: 400px) {
+        #spectra-registros .sr-head,
+        #spectra-registros .sr-row { grid-template-columns: 1.3fr 1fr; }
+        #spectra-registros .sr-th:nth-child(3),
+        #spectra-registros .sr-td:nth-child(3) { display: none; }
+      }
+    `;
     document.head.appendChild(style);
   }
 
   /* ══════════════════════════════════════════════════════════════
-     RENDER SHELL
+     RENDER SHELL — todo dentro de root, igual que pnjs-widget
   ══════════════════════════════════════════════════════════════ */
 
   function renderShell() {
     root.innerHTML =
+      '<section class="sr-header">' +
+        '<h1>Registro</h1>' +
+        '<p>Personajes jugables · Parlamentos de Spectra</p>' +
+      '</section>' +
       '<div class="sr-toolbar">' +
         '<input class="sr-search" type="search" placeholder="Buscar personaje, FC, jugador…" autocomplete="off">' +
         '<div class="sr-pills">' +
-          pill("all",      "Todos",     "") +
-          pill("activo",   "Activos",   "#00674E") +
-          pill("inactivo", "Inactivos", "#494844") +
-          pill("reserva",  "Reservas",  "#A53E4A") +
-        "</div>" +
-        '<span class="sr-count" id="sr-count"></span>' +
-      "</div>" +
-      '<div class="sr-head" id="sr-head"></div>' +
-      '<div class="sr-body" id="sr-body">' +
-        '<div class="sr-loader"><div class="sr-dots"><span></span><span></span><span></span></div></div>' +
-      "</div>";
+          mkPill("all",      "Todos",     "") +
+          mkPill("activo",   "Activos",   "#00674E") +
+          mkPill("inactivo", "Inactivos", "#6f6d66") +
+          mkPill("reserva",  "Reservas",  "#A53E4A") +
+        '</div>' +
+        '<span class="sr-count" data-role="count"></span>' +
+      '</div>' +
+      '<div class="sr-table-wrap">' +
+        '<div class="sr-head" data-role="head"></div>' +
+        '<div class="sr-body" data-role="body">' +
+          '<div class="sr-loader"><div class="sr-dots"><span></span><span></span><span></span></div></div>' +
+        '</div>' +
+      '</div>';
 
     renderHead();
-    bindToolbar();
-  }
 
-  function pill(f, label, bg) {
-    var style = bg ? ' style="--pill-bg:' + bg + '"' : "";
-    var active = f === filtroE ? " active" : "";
-    return '<span class="sr-pill' + active + '" data-f="' + f + '"' + style + ">" + label + "</span>";
-  }
-
-  /* ── cabecera con sort ── */
-  var COLS = [
-    { col: "charName",   label: "Personaje" },
-    { col: "parlamento", label: "Parlamento" },
-    { col: "faceclaim1", label: "Faceclaim 1" },
-    { col: "faceclaim2", label: "Faceclaim 2" },
-    { col: "",           label: "Estado", nosort: true }
-  ];
-
-  function renderHead() {
-    var head = document.getElementById("sr-head");
-    if (!head) return;
-    head.innerHTML = COLS.map(function (c) {
-      var cls = "sr-th" + (c.nosort ? " nosort" : "");
-      if (!c.nosort && sortCol === c.col) cls += " " + sortDir;
-      var attr = c.nosort ? "" : ' data-col="' + c.col + '"';
-      return '<span class="' + cls + '"' + attr + ">" + c.label + "</span>";
-    }).join("");
-
-    head.querySelectorAll(".sr-th[data-col]").forEach(function (th) {
-      th.addEventListener("click", function () {
-        var col = th.dataset.col;
-        sortDir = (sortCol === col && sortDir === "asc") ? "desc" : "asc";
-        sortCol = col;
-        head.querySelectorAll(".sr-th").forEach(function (t) { t.classList.remove("asc","desc"); });
-        th.classList.add(sortDir);
-        renderBody();
-      });
-    });
-  }
-
-  /* ── toolbar eventos ── */
-  function bindToolbar() {
-    var search = root.querySelector(".sr-search");
     var timer;
-    search.addEventListener("input", function () {
+    root.querySelector(".sr-search").addEventListener("input", function (e) {
       clearTimeout(timer);
-      var val = search.value;
+      var val = e.target.value;
       timer = setTimeout(function () {
         filtroTxt = val.trim().toLowerCase();
         renderBody();
-        updateCount();
       }, 180);
     });
 
@@ -273,7 +332,41 @@
         b.classList.toggle("active", b === btn);
       });
       renderBody();
-      updateCount();
+    });
+  }
+
+  function mkPill(f, label, bg) {
+    var style = bg ? ' style="--pill-bg:' + bg + '"' : "";
+    return '<span class="sr-pill' + (f === filtroE ? " active" : "") + '" data-f="' + f + '"' + style + '>' + label + '</span>';
+  }
+
+  var COLS = [
+    { col: "charName",   label: "Personaje" },
+    { col: "parlamento", label: "Parlamento" },
+    { col: "faceclaim1", label: "Faceclaim 1" },
+    { col: "faceclaim2", label: "Faceclaim 2" },
+    { col: "",           label: "Estado", nosort: true }
+  ];
+
+  function renderHead() {
+    var head = root.querySelector('[data-role="head"]');
+    if (!head) return;
+    head.innerHTML = COLS.map(function (c) {
+      var cls = "sr-th" + (c.nosort ? " nosort" : "");
+      if (!c.nosort && sortCol === c.col) cls += " " + sortDir;
+      var attr = c.nosort ? "" : ' data-col="' + c.col + '"';
+      return '<span class="' + cls + '"' + attr + '>' + c.label + '</span>';
+    }).join("");
+
+    head.querySelectorAll(".sr-th[data-col]").forEach(function (th) {
+      th.addEventListener("click", function () {
+        var col = th.dataset.col;
+        sortDir = (sortCol === col && sortDir === "asc") ? "desc" : "asc";
+        sortCol = col;
+        head.querySelectorAll(".sr-th").forEach(function (t) { t.classList.remove("asc", "desc"); });
+        th.classList.add(sortDir);
+        renderBody();
+      });
     });
   }
 
@@ -281,8 +374,11 @@
      RENDER BODY
   ══════════════════════════════════════════════════════════════ */
 
-  function getFiltered() {
-    return allRows.filter(function (r) {
+  function renderBody() {
+    var body = root.querySelector('[data-role="body"]');
+    if (!body) return;
+
+    var filtered = allRows.filter(function (r) {
       if (filtroE !== "all" && r.estado !== filtroE) return false;
       if (filtroTxt) {
         var hay = (r.charName + r.username + r.parlamento + r.faceclaim1 + r.faceclaim2).toLowerCase();
@@ -296,70 +392,57 @@
       if (va > vb) return sortDir === "asc" ?  1 : -1;
       return 0;
     });
-  }
 
-  function renderBody() {
-    var body = document.getElementById("sr-body");
-    if (!body) return;
-    var filtered = getFiltered();
-    updateCount(filtered.length);
+    var countEl = root.querySelector('[data-role="count"]');
+    if (countEl) countEl.textContent = filtered.length + " registro" + (filtered.length !== 1 ? "s" : "");
 
     if (!filtered.length) {
       body.innerHTML = '<div class="sr-empty">Sin resultados</div>';
       return;
     }
 
-    body.innerHTML = filtered.map(rowHTML).join("");
+    body.innerHTML = filtered.map(function (r) {
+      var color = PARL_COLOR[r.parlamento] || "#b5b3ad";
+
+      var charCell =
+        '<div class="sr-char">' +
+          '<span class="sr-char-name">' + esc(r.charName) + '</span>' +
+          (r.numUsuario
+            ? '<a class="sr-char-link" href="/u' + esc(r.numUsuario) + '">' + esc(r.username) + '</a>'
+            : '') +
+        '</div>';
+
+      var parlCell = '<span class="sr-parl" style="--parl-c:' + color + '">' + esc(r.parlamento || "—") + '</span>';
+      var fc1Cell  = '<span class="sr-fc' + (r.faceclaim1 ? '' : ' empty') + '">' + esc(r.faceclaim1 || "—") + '</span>';
+      var fc2Cell  = '<span class="sr-fc' + (r.faceclaim2 ? '' : ' empty') + '">' + esc(r.faceclaim2 || "—") + '</span>';
+
+      var badgeMap = {
+        activo:   ["sr-badge-activo",   "✓ Activo"],
+        inactivo: ["sr-badge-inactivo", "— Inactivo"],
+        reserva:  ["sr-badge-reserva",  "◷ Reserva"]
+      };
+      var ep = badgeMap[r.estado] || ["sr-badge-inactivo", "—"];
+      var estadoCell =
+        '<div class="sr-estado">' +
+          '<span class="sr-badge ' + ep[0] + '">' + ep[1] + '</span>' +
+          (r.estado === "reserva" && r.fechaReserva
+            ? '<span class="sr-reserva-chip">⧗ ' + esc(fmtDate(r.fechaReserva)) + '</span>'
+            : '') +
+        '</div>';
+
+      return '<div class="sr-row">' +
+        '<div class="sr-td">' + charCell + '</div>' +
+        '<div class="sr-td">' + parlCell + '</div>' +
+        '<div class="sr-td">' + fc1Cell  + '</div>' +
+        '<div class="sr-td">' + fc2Cell  + '</div>' +
+        '<div class="sr-td">' + estadoCell + '</div>' +
+      '</div>';
+    }).join("");
   }
 
-  function rowHTML(r) {
-    var color = PARL_COLOR[r.parlamento] || "#b5b3ad";
-
-    /* Personaje */
-    var charCell =
-      '<div class="sr-char">' +
-        '<span class="sr-char-name">' + esc(r.charName) + "</span>" +
-        (r.numUsuario
-          ? '<a class="sr-char-link" href="/u' + esc(r.numUsuario) + '">' + esc(r.username) + "</a>"
-          : "") +
-      "</div>";
-
-    /* Parlamento */
-    var parlCell = '<span class="sr-parl" style="--parl-c:' + color + '">' + esc(r.parlamento || "—") + "</span>";
-
-    /* FCs */
-    var fc1Cell = '<span class="sr-fc' + (r.faceclaim1 ? "" : " empty") + '">' + esc(r.faceclaim1 || "—") + "</span>";
-    var fc2Cell = '<span class="sr-fc' + (r.faceclaim2 ? "" : " empty") + '">' + esc(r.faceclaim2 || "—") + "</span>";
-
-    /* Estado */
-    var badgeMap = {
-      activo:   ["sr-badge-activo",   "✓ Activo"],
-      inactivo: ["sr-badge-inactivo", "— Inactivo"],
-      reserva:  ["sr-badge-reserva",  "◷ Reserva"]
-    };
-    var ep = badgeMap[r.estado] || ["sr-badge-inactivo", "—"];
-    var estadoCell =
-      '<div class="sr-estado">' +
-        '<span class="sr-badge ' + ep[0] + '">' + ep[1] + "</span>" +
-        (r.estado === "reserva" && r.fechaReserva
-          ? '<span class="sr-reserva-chip">⧗ ' + esc(fmtDate(r.fechaReserva)) + "</span>"
-          : "") +
-      "</div>";
-
-    return '<div class="sr-row">' +
-      '<div class="sr-td">' + charCell + "</div>" +
-      '<div class="sr-td">' + parlCell + "</div>" +
-      '<div class="sr-td">' + fc1Cell + "</div>" +
-      '<div class="sr-td">' + fc2Cell + "</div>" +
-      '<div class="sr-td">' + estadoCell + "</div>" +
-    "</div>";
-  }
-
-  function updateCount(n) {
-    var el = document.getElementById("sr-count");
-    if (!el) return;
-    var total = (n !== undefined) ? n : allRows.length;
-    el.textContent = total + " registro" + (total !== 1 ? "s" : "");
+  function renderError(msg) {
+    var body = root && root.querySelector('[data-role="body"]');
+    if (body) body.innerHTML = '<div class="sr-error">' + esc(msg) + '</div>';
   }
 
   /* ══════════════════════════════════════════════════════════════
@@ -367,35 +450,31 @@
   ══════════════════════════════════════════════════════════════ */
 
   function fetchData(db) {
-    db.collection("users").get()
-      .then(function (snap) {
-        allRows = [];
-        snap.forEach(function (d) {
-          var u   = d.data();
-          var reg = u.registro || {};
-          if (!reg.estado) return;
-          allRows.push({
-            username:     u.username      || d.id,
-            numUsuario:   reg.numUsuario   || null,
-            charName:     u.charName      || u.username || d.id,
-            parlamento:   u.parlamento    || "",
-            faceclaim1:   reg.faceclaim1   || "",
-            faceclaim2:   reg.faceclaim2   || "",
-            estado:       reg.estado       || "",
-            fechaReserva: reg.fechaReserva || ""
-          });
+    db.collection("users").onSnapshot(function (snap) {
+      allRows = [];
+      snap.forEach(function (d) {
+        var u   = d.data();
+        var reg = u.registro || {};
+        if (!reg.estado) return;
+        allRows.push({
+          username:     u.username      || d.id,
+          numUsuario:   reg.numUsuario   || null,
+          charName:     u.charName      || u.username || d.id,
+          parlamento:   u.parlamento    || "",
+          faceclaim1:   reg.faceclaim1   || "",
+          faceclaim2:   reg.faceclaim2   || "",
+          estado:       reg.estado       || "",
+          fechaReserva: reg.fechaReserva || ""
         });
-        renderBody();
-      })
-      .catch(function (err) {
-        var body = document.getElementById("sr-body");
-        if (body) body.innerHTML = '<div class="sr-empty">Error al cargar los datos.</div>';
-        console.warn("[spectra-registros]", err);
       });
+      renderBody();
+    }, function (err) {
+      renderError("No se pudieron cargar los registros: " + err.message);
+    });
   }
 
   /* ══════════════════════════════════════════════════════════════
-     INICIO
+     INICIO — exactamente igual que pnjs-widget
   ══════════════════════════════════════════════════════════════ */
 
   function start() {
@@ -411,12 +490,11 @@
       .then(function () {
         var app = initFirebaseApp();
         var db  = firebase.firestore(app);
+        if (db.enableNetwork) db.enableNetwork().catch(function () {});
         fetchData(db);
       })
       .catch(function (err) {
-        var body = document.getElementById("sr-body");
-        if (body) body.innerHTML = '<div class="sr-empty">No se pudo iniciar Firebase.</div>';
-        console.warn("[spectra-registros]", err);
+        renderError("No se pudo iniciar Firebase: " + err.message);
       });
   }
 
