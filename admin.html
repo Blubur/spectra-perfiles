@@ -93,20 +93,16 @@
 
   --nav-size: 50px;
 
-  /* button tokens */
   --button-surface: var(--accent-solid1);
   --button-surface-hover: var(--accent-solid2);
   --button-text: #FBFBFA;
   --button-br: var(--br);
   --button-border: var(--accent-border3);
 
-  /* input tokens */
   --input-surface: var(--mono-component2);
   --input-border: var(--mono-border2);
   --input-br: var(--br);
 }
-
-/* ─────────────────────────── BASE ─────────────────────────── */
 
 html { view-transition-name: foro; }
 
@@ -119,8 +115,7 @@ body {
   overflow-x: clip;
 }
 
-/* ─────────────────────────── NAV ─────────────────────────── */
-
+/* ─── NAV ─── */
 .admin-nav {
   height: var(--nav-size);
   background: color-mix(in srgb, var(--mono-surface1), transparent 50%);
@@ -168,8 +163,7 @@ body {
 .nav-tab:hover { color: var(--accent-text1); }
 .nav-tab.active { color: var(--accent-text1); border-bottom-color: var(--accent-solid1); }
 
-/* ─────────────────────────── BUTTONS ─────────────────────────── */
-
+/* ─── BUTTONS ─── */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-2xs);
   padding: var(--spacing-button);
@@ -211,8 +205,7 @@ body {
 }
 .btn:disabled { background: var(--mono-solid2); border-color: var(--mono-solid1); opacity: .6; cursor: not-allowed; }
 
-/* ─────────────────────────── INPUTS ─────────────────────────── */
-
+/* ─── INPUTS ─── */
 .field { display: flex; flex-direction: column; gap: var(--spacing-2xs); }
 .field label {
   font: var(--f-base) var(--f-deco);
@@ -236,8 +229,7 @@ body {
 .field textarea { resize: vertical; min-height: 100px; }
 .field small { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
 
-/* ─────────────────────────── LAYOUT ─────────────────────────── */
-
+/* ─── LAYOUT ─── */
 .page { display: none; padding: var(--spacing-l); max-width: 1100px; margin: 0 auto; animation: fadeUp .35s ease both; }
 .page.active { display: block; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
@@ -256,8 +248,7 @@ body {
   letter-spacing: .12em;
 }
 
-/* ─────────────────────────── CARDS ─────────────────────────── */
-
+/* ─── CARDS ─── */
 .card {
   background: var(--mono-surface2);
   border: 1px solid var(--mono-border1);
@@ -278,15 +269,13 @@ body {
 }
 .card-actions { display: flex; gap: var(--spacing-2xs); }
 
-/* ─────────────────────────── GRID UTILS ─────────────────────────── */
-
+/* ─── GRID ─── */
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-s); }
 .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--spacing-s); }
 .flex-col { display: flex; flex-direction: column; gap: var(--spacing-xs); }
 .flex-row { display: flex; gap: var(--spacing-xs); align-items: center; }
 
-/* ─────────────────────────── TABLE ─────────────────────────── */
-
+/* ─── TABLE ─── */
 .data-table { width: 100%; border-collapse: collapse; }
 .data-table th {
   font: 300 var(--f-xs) var(--f-mono);
@@ -305,11 +294,9 @@ body {
 }
 .data-table tr:last-child td { border-bottom: none; }
 .data-table tr:hover td { background: var(--mono-component1); }
-.data-table .overflow-x { overflow-x: auto; }
 .table-wrap { overflow-x: auto; }
 
-/* ─────────────────────────── BADGES ─────────────────────────── */
-
+/* ─── BADGES ─── */
 .badge {
   display: inline-flex; align-items: center; gap: .3em;
   font: 300 var(--f-xs) var(--f-mono);
@@ -324,8 +311,7 @@ body {
 .badge-success { background: var(--success-surface); border-color: var(--success-border); color: var(--success-text); }
 .badge-danger  { background: var(--danger-surface); border-color: var(--danger-border); color: var(--danger-text); }
 
-/* ─────────────────────────── PARLAMENTO TABS ─────────────────────────── */
-
+/* ─── PARL TABS ─── */
 .parl-tabs { display: flex; flex-wrap: wrap; gap: var(--spacing-2xs); margin-bottom: var(--spacing-s); }
 .parl-tab {
   padding: var(--spacing-3xs) var(--spacing-xs);
@@ -346,45 +332,7 @@ body {
 .parl-tab[data-p="caoticos"]    { --grupo-color: #5A4160; }
 .parl-tab[data-p="staff"]       { --grupo-color: var(--accent-solid1); }
 
-/* ─────────────────────────── SKILL ROWS ─────────────────────────── */
-
-.skill-def-item {
-  display: grid; grid-template-columns: 2rem 1fr auto auto;
-  gap: var(--spacing-xs); align-items: center;
-  padding: var(--spacing-xs);
-  border: 1px solid var(--mono-border1);
-  border-radius: var(--br);
-  margin-bottom: var(--spacing-2xs);
-  background: var(--mono-component1);
-  transition: var(--transition-ease);
-}
-.skill-def-item:hover { border-color: var(--accent-border2); }
-.skill-icon { font-size: 1.2rem; text-align: center; }
-.skill-info .name { font: 500 var(--f-base) var(--f-sans); }
-.skill-info .desc { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); margin-top: 2px; }
-.skill-max { font: 300 var(--f-xs) var(--f-mono); color: var(--accent-text1); white-space: nowrap; }
-
-.skill-level-row {
-  display: flex; align-items: center; gap: var(--spacing-xs);
-  padding: var(--spacing-xs) 0;
-  border-bottom: 1px solid var(--mono-border1);
-}
-.skill-level-row:last-child { border-bottom: none; }
-.skill-level-icon { font-size: 1.1rem; width: 1.5rem; text-align: center; flex-shrink: 0; }
-.skill-level-name { flex: 1; font: 300 var(--f-base) var(--f-sans); }
-.skill-bar-wrap { width: 80px; height: 3px; background: var(--mono-border1); border-radius: var(--br-pill); overflow: hidden; flex-shrink: 0; }
-.skill-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-border2), var(--accent-solid1)); border-radius: var(--br-pill); }
-.skill-level-input {
-  width: 52px; background: var(--input-surface); border: 1px solid var(--input-border);
-  border-radius: var(--br); padding: var(--spacing-3xs) var(--spacing-2xs);
-  font: var(--f-mono); font-size: var(--f-xs); text-align: center;
-  color: var(--mono-text2); outline: none;
-}
-.skill-level-input:focus { border-color: var(--accent-border2); }
-.skill-level-max { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); white-space: nowrap; }
-
-/* ─────────────────────────── VISIBILITY ─────────────────────────── */
-
+/* ─── VISIBILITY ─── */
 .vis-row {
   display: flex; align-items: center; justify-content: space-between;
   padding: var(--spacing-xs) 0;
@@ -411,9 +359,7 @@ body {
 .toggle-wrap input:checked ~ .toggle-track { background: var(--accent-solid1); }
 .toggle-wrap input:checked ~ .toggle-track .toggle-thumb { left: 19px; }
 
-/* ─────────────────────────── PNJ SECTION ─────────────────────────── */
-
-/* PNJ preview card in admin */
+/* ─── PNJ ─── */
 .pnj-thumb-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -429,11 +375,7 @@ body {
   position: relative;
 }
 .pnj-thumb:hover { border-color: var(--accent-border2); box-shadow: var(--shadow-lg); }
-.pnj-thumb-img {
-  aspect-ratio: 3/2;
-  overflow: hidden;
-  background: var(--mono-component2);
-}
+.pnj-thumb-img { aspect-ratio: 3/2; overflow: hidden; background: var(--mono-component2); }
 .pnj-thumb-img img { width: 100%; height: 100%; object-fit: cover; }
 .pnj-thumb-img .no-img {
   width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
@@ -459,9 +401,7 @@ body {
   border-radius: var(--br-small); padding: 2px 4px;
 }
 .drag-handle:active { cursor: grabbing; }
-.pnj-thumb.dragging { opacity: .5; }
 
-/* List view for PNJs */
 .pnj-list { display: none; flex-direction: column; gap: 0; margin-top: var(--spacing-s); }
 .pnj-list-row {
   display: grid; grid-template-columns: auto 1fr auto auto auto;
@@ -477,8 +417,7 @@ body {
 .pnj-list-info .name { font: italic var(--f-base) var(--f-deco); }
 .pnj-list-info .meta { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
 
-/* ─────────────────────────── MODAL / DRAWER ─────────────────────────── */
-
+/* ─── MODAL ─── */
 .modal-overlay {
   position: fixed; inset: 0;
   background: var(--overlay-strong);
@@ -505,11 +444,9 @@ body {
 .modal-title em { font-style: italic; color: var(--accent-text1); }
 .modal-actions { display: flex; gap: var(--spacing-xs); justify-content: flex-end; margin-top: var(--spacing); }
 
-/* Form layout helpers */
 .form-list { display: flex; flex-direction: column; gap: var(--spacing-xs); }
 
-/* ─────────────────────────── LOGIN ─────────────────────────── */
-
+/* ─── LOGIN ─── */
 #loginWrap {
   min-height: 100vh; display: flex; align-items: center; justify-content: center;
   background: var(--mono-surface1);
@@ -539,8 +476,7 @@ body {
 .login-card .field { text-align: left; margin-bottom: var(--spacing-s); }
 .login-card .btn { width: 100%; }
 
-/* ─────────────────────────── TOAST ─────────────────────────── */
-
+/* ─── TOAST ─── */
 #toast {
   position: fixed; bottom: var(--spacing); right: var(--spacing);
   background: var(--mono-component3); color: var(--mono-text2);
@@ -560,8 +496,7 @@ body {
 #toast.err { background: var(--danger-surface); border-color: var(--danger-border); color: var(--danger-text); }
 #toast.ok  { background: var(--success-surface); border-color: var(--success-border); color: var(--success-text); }
 
-/* ─────────────────────────── EMPTY STATE ─────────────────────────── */
-
+/* ─── EMPTY ─── */
 .empty {
   text-align: center; padding: var(--spacing-xl);
   color: var(--mono-text1);
@@ -570,8 +505,7 @@ body {
 }
 .empty i { display: block; font-size: 2.5rem; opacity: .3; margin-bottom: var(--spacing-xs); }
 
-/* ─────────────────────────── VIEW TOGGLE ─────────────────────────── */
-
+/* ─── VIEW TOGGLE ─── */
 .view-toggle { display: flex; border: 1px solid var(--mono-border2); border-radius: var(--br); overflow: hidden; }
 .view-btn {
   padding: var(--spacing-3xs) var(--spacing-xs);
@@ -580,8 +514,7 @@ body {
 }
 .view-btn.active, .view-btn:hover { background: var(--mono-component2); color: var(--accent-text1); }
 
-/* ─────────────────────────── IMAGE PREVIEW ─────────────────────────── */
-
+/* ─── IMAGE PREVIEW ─── */
 .img-preview-wrap {
   width: 100%; aspect-ratio: 16/9;
   background: var(--mono-component2);
@@ -593,8 +526,7 @@ body {
 .img-preview-wrap img { width: 100%; height: 100%; object-fit: cover; }
 .img-preview-wrap .placeholder { color: var(--mono-border2); font-size: 2rem; }
 
-/* ─────────────────────────── REGISTRO ─────────────────────────── */
-
+/* ─── ESTADO PILLS ─── */
 .modal-section-title {
   font: 300 var(--f-xs) var(--f-mono);
   text-transform: uppercase; letter-spacing: .1em;
@@ -617,8 +549,7 @@ body {
 .estado-inactivo { background: var(--mono-component2); border-color: var(--mono-border2);   color: var(--mono-text1); }
 .estado-reserva  { background: var(--warning-surface); border-color: var(--warning-border); color: var(--warning-text); }
 
-/* ─────────────────────────── TIENDA ITEMS ─────────────────────────── */
-
+/* ─── TIENDA ─── */
 .tienda-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -645,11 +576,7 @@ body {
   position: relative;
 }
 .tienda-item-media img { width: 100%; height: 100%; object-fit: cover; }
-.tienda-item-media .media-svg {
-  width: 60%; height: 60%;
-  color: var(--accent-solid1);
-  display: flex; align-items: center; justify-content: center;
-}
+.tienda-item-media .media-svg { width: 60%; height: 60%; color: var(--accent-solid1); display: flex; align-items: center; justify-content: center; }
 .tienda-item-media .media-svg svg { width: 100%; height: 100%; }
 .tienda-item-media .no-media { font-size: 2.5rem; color: var(--mono-border2); }
 
@@ -668,13 +595,8 @@ body {
 .tienda-item-name { font: italic var(--f-base) var(--f-deco); }
 .tienda-item-desc { font: 300 var(--f-xs) var(--f-sans); color: var(--mono-text1); flex: 1; }
 .tienda-item-bonus { font: 300 var(--f-xs) var(--f-mono); color: var(--accent-text1); }
-.tienda-item-price {
-  font: 500 var(--f-l) var(--f-deco);
-  color: var(--accent-text1);
-  display: flex; align-items: baseline; gap: .3em;
-}
+.tienda-item-price { font: 500 var(--f-l) var(--f-deco); color: var(--accent-text1); display: flex; align-items: baseline; gap: .3em; }
 .tienda-item-price small { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
-
 .tienda-item-tags { display: flex; flex-wrap: wrap; gap: var(--spacing-3xs); margin-top: var(--spacing-3xs); }
 .tienda-tag {
   font: 300 var(--f-xs) var(--f-mono);
@@ -702,7 +624,6 @@ body {
   border-radius: var(--br-small);
 }
 
-/* ── Tienda list view ── */
 .tienda-list-row {
   display: grid; grid-template-columns: 56px 1fr auto auto auto auto;
   gap: var(--spacing-xs); align-items: center;
@@ -726,10 +647,8 @@ body {
 .tienda-list-info .name { font: italic var(--f-base) var(--f-deco); }
 .tienda-list-info .meta { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
 
-/* ── Tienda filter tabs ── */
 .tienda-cat-tabs { display: flex; flex-wrap: wrap; gap: var(--spacing-2xs); margin-bottom: var(--spacing-s); }
 
-/* ── SVG textarea preview ── */
 .svg-preview-wrap {
   width: 100%; aspect-ratio: 4/3;
   background: var(--mono-component2);
@@ -741,18 +660,83 @@ body {
 }
 .svg-preview-wrap svg { max-width: 60%; max-height: 60%; }
 
+/* ─── USER GRID (same style as PNJ/tienda) ─── */
+.user-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--spacing-s);
+  margin-top: var(--spacing-s);
+}
+.user-card {
+  background: var(--mono-component1);
+  border: 1px solid var(--mono-border1);
+  border-radius: var(--br);
+  overflow: hidden;
+  transition: var(--transition-ease);
+  position: relative;
+  display: flex; flex-direction: column;
+}
+.user-card:hover { border-color: var(--accent-border2); box-shadow: var(--shadow-lg); }
+.user-card-header {
+  padding: var(--spacing-xs);
+  border-bottom: 1px solid var(--mono-border1);
+  display: flex; align-items: center; gap: var(--spacing-xs);
+}
+.user-card-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--mono-component2);
+  display: flex; align-items: center; justify-content: center;
+  font: italic var(--f-l) var(--f-deco);
+  color: var(--accent-text1);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.user-card-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.user-card-username {
+  font: 300 var(--f-xs) var(--f-mono);
+  color: var(--accent-text1);
+  text-decoration: none;
+}
+.user-card-username:hover { text-decoration: underline; }
+.user-card-body { padding: var(--spacing-xs); flex: 1; display: flex; flex-direction: column; gap: var(--spacing-3xs); }
+.user-card-charname { font: italic var(--f-base) var(--f-deco); }
+.user-card-meta { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
+.user-card-actions {
+  display: flex; gap: var(--spacing-2xs); margin-top: var(--spacing-xs);
+  padding-top: var(--spacing-xs); border-top: 1px solid var(--mono-border1);
+  padding: var(--spacing-xs);
+}
+.user-card-actions .btn { flex: 1; }
+
+/* Table view user link */
+.user-link {
+  font: 300 var(--f-xs) var(--f-mono);
+  color: var(--accent-text1);
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: .3em;
+}
+.user-link:hover { text-decoration: underline; }
+.user-link i { opacity: .6; font-size: .7rem; }
+
+/* Reserva date inline */
+.reserva-date {
+  display: block;
+  font: 300 var(--f-xs) var(--f-mono);
+  color: var(--warning-text);
+  margin-top: 2px;
+}
+
 @media(max-width:700px) {
   .tienda-grid { grid-template-columns: 1fr 1fr; }
   .tienda-list-row { grid-template-columns: 56px 1fr auto auto; }
   .tienda-list-row .tienda-list-price, .tienda-list-row .tienda-list-orden { display: none; }
+  .user-grid { grid-template-columns: 1fr 1fr; }
 }
-
-
 </style>
 </head>
 <body>
 
-<!-- ─────────── LOGIN ─────────── -->
+<!-- LOGIN -->
 <div id="loginWrap">
   <div class="login-card">
     <div class="login-logo">Spectra</div>
@@ -767,16 +751,13 @@ body {
   </div>
 </div>
 
-<!-- ─────────── ADMIN UI ─────────── -->
+<!-- ADMIN UI -->
 <div id="adminUI" style="display:none;">
 
   <nav class="admin-nav">
     <div class="nav-brand">Spectra <small>Admin</small></div>
     <button class="nav-tab active" data-page="usuarios" onclick="goTo('usuarios')">
       <i class="bi bi-people"></i> Usuarios
-    </button>
-    <button class="nav-tab" data-page="habilidades" onclick="goTo('habilidades')">
-      <i class="bi bi-stars"></i> Habilidades
     </button>
     <button class="nav-tab" data-page="pnjs" onclick="goTo('pnjs')">
       <i class="bi bi-person-vcard"></i> PNJs
@@ -791,48 +772,53 @@ body {
 
   <!-- ══ TAB: USUARIOS ══ -->
   <div class="page active" id="page-usuarios">
-    <div class="page-header">
-      <div class="page-title">Gestión de <em>usuarios</em></div>
-      <div class="page-subtitle">Asigna parlamentos · Edita habilidades · Aprueba solicitudes</div>
+    <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:var(--spacing-xs);">
+      <div>
+        <div class="page-title">Gestión de <em>usuarios</em></div>
+        <div class="page-subtitle">Crea · Edita · Asigna parlamentos · Estado</div>
+      </div>
+      <div style="display:flex;gap:var(--spacing-xs);align-items:center;flex-wrap:wrap;">
+        <div class="view-toggle">
+          <button class="view-btn active" id="userViewGrid" onclick="setUserView('grid')" title="Vista cuadrícula"><i class="bi bi-grid-3x3-gap"></i></button>
+          <button class="view-btn" id="userViewList" onclick="setUserView('list')" title="Vista tabla"><i class="bi bi-list-ul"></i></button>
+        </div>
+        <button class="btn" onclick="openAddUser()">
+          <i class="bi bi-person-plus"></i> Nuevo usuario
+        </button>
+      </div>
     </div>
 
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title" id="usersCountLabel">Usuarios</span>
-      </div>
+    <!-- Parlamento filter pills -->
+    <div class="parl-tabs" id="userFilterTabs">
+      <button class="parl-tab active" data-g="all">Todos</button>
+      <button class="parl-tab" data-p="primigenios" data-g="primigenios">Primigenios</button>
+      <button class="parl-tab" data-p="arquitectos" data-g="arquitectos">Arquitectos</button>
+      <button class="parl-tab" data-p="sabios" data-g="sabios">Sabios</button>
+      <button class="parl-tab" data-p="caoticos" data-g="caoticos">Caóticos</button>
+      <button class="parl-tab" data-g="staff">Staff</button>
+    </div>
+
+    <!-- Grid view -->
+    <div class="user-grid" id="userGrid"></div>
+
+    <!-- Table view -->
+    <div class="card" id="userTable" style="display:none; padding:0;">
       <div class="table-wrap">
         <table class="data-table">
           <thead>
             <tr>
-              <th>Usuario</th><th>Personaje</th><th>Parlamento</th><th>FC 1</th><th>FC 2</th><th>Estado</th><th>Acción</th>
+              <th>Usuario</th>
+              <th>Personaje</th>
+              <th>Parlamento</th>
+              <th>FC 1</th>
+              <th>FC 2</th>
+              <th>Estado</th>
+              <th>Reserva hasta</th>
+              <th>Acción</th>
             </tr>
           </thead>
           <tbody id="usersTableBody"></tbody>
         </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══ TAB: HABILIDADES ══ -->
-  <div class="page" id="page-habilidades">
-    <div class="page-header">
-      <div class="page-title">Definir <em>habilidades</em></div>
-      <div class="page-subtitle">Por parlamento · Los usuarios ven sus niveles en el perfil</div>
-    </div>
-
-    <div class="parl-tabs" id="parlTabs"></div>
-
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">Habilidades · <span id="skillsParlLabel" style="color:var(--accent-text1)">—</span></span>
-        <div class="card-actions">
-          <button class="btn btn-ghost btn-sm" onclick="openAddSkill()">
-            <i class="bi bi-plus-lg"></i> Añadir
-          </button>
-        </div>
-      </div>
-      <div id="skillsDefList">
-        <div class="empty"><i class="bi bi-stars"></i>Sin habilidades definidas</div>
       </div>
     </div>
   </div>
@@ -855,7 +841,6 @@ body {
       </div>
     </div>
 
-    <!-- PNJ filter pills -->
     <div class="parl-tabs" id="pnjFilterTabs">
       <button class="parl-tab active" data-g="all">Todos</button>
       <button class="parl-tab" data-p="primigenios" data-g="primigenios">Primigenios</button>
@@ -866,11 +851,8 @@ body {
       <button class="parl-tab" data-p="staff" data-g="staff">Staff</button>
     </div>
 
-    <!-- Grid view -->
     <div class="pnj-thumb-grid" id="pnjGrid"></div>
-    <!-- List view -->
     <div class="pnj-list card" id="pnjList" style="display:none;"></div>
-
   </div>
 
   <!-- ══ TAB: TIENDA ══ -->
@@ -891,14 +873,11 @@ body {
       </div>
     </div>
 
-    <!-- Category filter pills (rendered dynamically) -->
     <div class="tienda-cat-tabs" id="tiendaCatTabs">
       <button class="parl-tab active" data-cat="all">Todos</button>
     </div>
 
-    <!-- Grid view -->
     <div class="tienda-grid" id="tiendaGrid"></div>
-    <!-- List view -->
     <div class="card" id="tiendaList" style="display:none; padding:0;"></div>
   </div>
 
@@ -914,23 +893,44 @@ body {
   </div>
 </div>
 
-<!-- ═══════════════ MODAL: EDITAR USUARIO ═══════════════ -->
-<div class="modal-overlay" id="editUserModal">
-  <div class="modal">
-    <div class="modal-title">Editar <em id="editUserNameTitle">—</em></div>
+<!-- ═══════ MODAL: NUEVO / EDITAR USUARIO ═══════ -->
+<div class="modal-overlay" id="userModal">
+  <div class="modal" style="max-width:640px;">
+    <div class="modal-title" id="userModalTitle">Nuevo <em>usuario</em></div>
+    <input type="hidden" id="userEditId">
 
     <div class="form-list">
 
-      <div class="modal-section-title"><i class="bi bi-person-badge"></i> Registro</div>
+      <div class="modal-section-title"><i class="bi bi-person"></i> Datos del usuario</div>
 
       <div class="grid-2">
         <div class="field">
+          <label>Username (Foroactivo)</label>
+          <input type="text" id="uUsername" placeholder="Ej: Mara_Voss">
+          <small>Se usa como identificador único</small>
+        </div>
+        <div class="field">
           <label>Nº usuario Foroactivo</label>
-          <input type="number" id="editNumUsuario" placeholder="Ej: 42" min="1">
+          <input type="number" id="uNumUsuario" placeholder="Ej: 42" min="1">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Enlace a su perfil</label>
+        <input type="url" id="uPerfilUrl" placeholder="https://spectra.foroactivo.com/u42">
+        <small>URL al perfil público en Foroactivo</small>
+      </div>
+
+      <div class="modal-section-title"><i class="bi bi-person-badge"></i> Personaje y registro</div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Nombre del personaje</label>
+          <input type="text" id="uCharName" placeholder="Ej: Mara Voss">
         </div>
         <div class="field">
           <label>Estado</label>
-          <select id="editEstado">
+          <select id="uEstado" onchange="onUserEstadoChange()">
             <option value="">Sin asignar</option>
             <option value="activo">Personaje activo</option>
             <option value="inactivo">Personaje inactivo</option>
@@ -939,29 +939,29 @@ body {
         </div>
       </div>
 
+      <div id="uReservaWrap" style="display:none;">
+        <div class="field">
+          <label>Fecha fin de reserva</label>
+          <input type="date" id="uFechaReserva">
+        </div>
+      </div>
+
       <div class="grid-2">
         <div class="field">
           <label>Faceclaim 1</label>
-          <input type="text" id="editFaceclaim1" placeholder="Nombre del FC">
+          <input type="text" id="uFaceclaim1" placeholder="Nombre del FC">
         </div>
         <div class="field">
           <label>Faceclaim 2</label>
-          <input type="text" id="editFaceclaim2" placeholder="Nombre del FC">
+          <input type="text" id="uFaceclaim2" placeholder="Nombre del FC (opcional)">
         </div>
       </div>
 
-      <div id="editReservaWrap" style="display:none;">
-        <div class="field">
-          <label>Fecha fin de reserva</label>
-          <input type="date" id="editFechaReserva">
-        </div>
-      </div>
-
-      <div class="modal-section-title"><i class="bi bi-people"></i> Parlamento y habilidades</div>
+      <div class="modal-section-title"><i class="bi bi-people"></i> Parlamento</div>
 
       <div class="field">
         <label>Parlamento</label>
-        <select id="editParlamento" onchange="onParlamentoChange()">
+        <select id="uParlamento">
           <option value="">Sin asignar</option>
           <option value="primigenios">Primigenios</option>
           <option value="arquitectos">Arquitectos</option>
@@ -971,54 +971,42 @@ body {
         </select>
       </div>
 
-      <div id="editSkillsRows"><div class="empty" style="padding:var(--spacing-s) 0;"><i class="bi bi-stars"></i>Asigna un parlamento</div></div>
+      <div class="modal-section-title"><i class="bi bi-link-45deg"></i> Enlaces</div>
 
-    </div>
-
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeEditUser()">Cancelar</button>
-      <button class="btn" onclick="saveUserEdits()">Guardar</button>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════ MODAL: NUEVA HABILIDAD ═══════════════ -->
-<div class="modal-overlay" id="addSkillModal">
-  <div class="modal">
-    <div class="modal-title">Nueva <em>habilidad</em></div>
-    <div class="form-list">
       <div class="grid-2">
         <div class="field">
-          <label>Icono (emoji)</label>
-          <input type="text" id="newSkillIcon" placeholder="⚔️" maxlength="4">
+          <label>Enlace a ficha</label>
+          <input type="url" id="uFichaUrl" placeholder="https://...">
         </div>
         <div class="field">
-          <label>Clave interna</label>
-          <input type="text" id="newSkillKey" placeholder="magia_ofensiva">
-          <small>sin espacios</small>
+          <label>Enlace a baúl</label>
+          <input type="url" id="uBaulUrl" placeholder="https://...">
         </div>
       </div>
+
       <div class="field">
-        <label>Nombre visible</label>
-        <input type="text" id="newSkillName" placeholder="Magia Ofensiva">
+        <label>Descripción del personaje</label>
+        <textarea id="uCharDesc" rows="3" placeholder="Breve descripción del personaje..."></textarea>
       </div>
+
       <div class="field">
-        <label>Descripción corta</label>
-        <input type="text" id="newSkillDesc" placeholder="Dominio del ataque mágico">
+        <label>Orden de aparición</label>
+        <input type="number" id="uOrden" value="0" min="0">
+        <small>Menor número = aparece antes</small>
       </div>
-      <div class="field">
-        <label>Nivel máximo</label>
-        <input type="number" id="newSkillMax" value="5" min="1" max="20">
-      </div>
+
     </div>
+
     <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeAddSkill()">Cancelar</button>
-      <button class="btn" onclick="saveNewSkill()">Añadir</button>
+      <button class="btn btn-ghost" onclick="closeUserModal()">Cancelar</button>
+      <button class="btn" onclick="saveUser()">
+        <i class="bi bi-check-lg"></i> Guardar usuario
+      </button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════ MODAL: NUEVO / EDITAR PNJ ═══════════════ -->
+<!-- ═══════ MODAL: NUEVO / EDITAR PNJ ═══════ -->
 <div class="modal-overlay" id="pnjModal">
   <div class="modal" style="max-width:640px;">
     <div class="modal-title" id="pnjModalTitle">Nuevo <em>PNJ</em></div>
@@ -1085,7 +1073,7 @@ body {
   </div>
 </div>
 
-<!-- ═══════════════ MODAL: NUEVO / EDITAR ITEM TIENDA ═══════════════ -->
+<!-- ═══════ MODAL: NUEVO / EDITAR ITEM TIENDA ═══════ -->
 <div class="modal-overlay" id="itemModal">
   <div class="modal" style="max-width:680px;">
     <div class="modal-title" id="itemModalTitle">Nuevo <em>item</em></div>
@@ -1194,7 +1182,6 @@ const firebaseConfig = {
 };
 
 const ADMIN_PASSWORD = 'Spectra4*';
-const PARLAMENTOS = ['primigenios','arquitectos','sabios','caoticos','staff'];
 const GRUPOS_COLOR = {
   primigenios: '#A53E67', arquitectos: '#0C459C',
   sabios: '#00674E', caoticos: '#5A4160',
@@ -1206,7 +1193,6 @@ const db  = getFirestore(app);
 
 // ── STATE ──
 let allUsers = {};
-let skillsConfig = {};
 let visConfig = {};
 let allPNJs = [];
 let allItems = [];
@@ -1215,8 +1201,8 @@ let tiendaView = 'grid';
 let imgType = 'svg';
 let pnjFilter = 'all';
 let pnjView = 'grid';
-let currentParlamento = PARLAMENTOS[0];
-let editingUser = null;
+let userFilter = 'all';
+let userView = 'grid';
 
 const fieldsDef = [
   { key: 'charName',      label: 'Nombre del personaje' },
@@ -1225,8 +1211,13 @@ const fieldsDef = [
   { key: 'charDesc',      label: 'Descripción' },
   { key: 'fichaUrl',      label: 'Enlace a ficha' },
   { key: 'baulUrl',       label: 'Enlace a baúl' },
-  { key: 'skills',        label: 'Habilidades / niveles' },
 ];
+
+// ── ESC TO CLOSE ALL MODALS ──
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  document.querySelectorAll('.modal-overlay.show').forEach(m => m.classList.remove('show'));
+});
 
 // ── LOGIN ──
 window.adminLogin = () => {
@@ -1239,29 +1230,18 @@ window.adminLogin = () => {
 };
 
 async function loadAll() {
-  // Users
   const uSnap = await getDocs(collection(db,'users'));
   allUsers = {};
   uSnap.forEach(d => { allUsers[d.id] = d.data(); });
 
-  // Skills config
-  const sc = await getDoc(doc(db,'config','skills'));
-  skillsConfig = sc.exists() ? sc.data() : {};
-
-  // Field visibility
   const vc = await getDoc(doc(db,'config','fieldVisibility'));
   visConfig = vc.exists() ? vc.data() : {};
   fieldsDef.forEach(f => { if (visConfig[f.key] === undefined) visConfig[f.key] = true; });
 
-  // PNJs
   await loadPNJs();
-
-  // Tienda items
   await loadItems();
 
   renderUsers();
-  renderParlTabs();
-  renderSkillsDef();
   renderVisibility();
 }
 
@@ -1279,185 +1259,212 @@ function estadoPill(estado) {
   return `<span class="estado-pill ${cls}"><i class="bi ${icon}"></i>${label}</span>`;
 }
 
+function getUserList() {
+  let users = Object.entries(allUsers).map(([id, data]) => ({ _id: id, ...data }));
+  if (userFilter !== 'all') users = users.filter(u => u.parlamento === userFilter);
+  return users;
+}
+
 function renderUsers() {
-  const users = Object.values(allUsers);
-  document.getElementById('usersCountLabel').textContent = `${users.length} usuario${users.length !== 1 ? 's' : ''}`;
+  const users = getUserList();
 
-  document.getElementById('usersTableBody').innerHTML = users.map(u => {
-    const pending = hasPendingSkills(u);
-    const parlColor = GRUPOS_COLOR[u.parlamento] || 'var(--mono-text1)';
-    return `
-      <tr>
-        <td style="font:300 var(--f-xs) var(--f-mono);">${u.username || '—'}</td>
-        <td>${u.charName || '—'}</td>
-        <td>
-          <span style="display:inline-flex;align-items:center;gap:.4em;font:300 var(--f-xs) var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:${parlColor};">
-            <span style="width:6px;height:6px;border-radius:50%;background:${parlColor};flex-shrink:0;"></span>
-            ${u.parlamento || '—'}
-          </span>
-        </td>
-        <td style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">${u.registro?.faceclaim1 || '—'}</td>
-        <td style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">${u.registro?.faceclaim2 || '—'}</td>
-        <td>${estadoPill(u.registro?.estado)}</td>
-        <td>
-          <button class="btn btn-ghost btn-sm" onclick="openEditUser('${u.username}')">
-            <i class="bi bi-pencil"></i> Editar
-          </button>
-        </td>
-      </tr>`;
-  }).join('') || `<tr><td colspan="7"><div class="empty"><i class="bi bi-people"></i>Sin usuarios registrados</div></td></tr>`;
+  if (userView === 'grid') {
+    document.getElementById('userGrid').style.display = '';
+    document.getElementById('userTable').style.display = 'none';
+    document.getElementById('userGrid').innerHTML = users.length
+      ? users.map(u => userCardHTML(u)).join('')
+      : `<div class="empty" style="grid-column:1/-1"><i class="bi bi-people"></i>Sin usuarios en este grupo</div>`;
+  } else {
+    document.getElementById('userGrid').style.display = 'none';
+    document.getElementById('userTable').style.display = 'block';
+    const parlColor = u => GRUPOS_COLOR[u.parlamento] || 'var(--mono-text1)';
+    document.getElementById('usersTableBody').innerHTML = users.map(u => {
+      const reg = u.registro || {};
+      const profileLink = reg.perfilUrl
+        ? `<a class="user-link" href="${reg.perfilUrl}" target="_blank">${u.username || u._id}<i class="bi bi-box-arrow-up-right"></i></a>`
+        : `<span style="font:300 var(--f-xs) var(--f-mono);">${u.username || u._id || '—'}</span>`;
+      const reservaDate = reg.estado === 'reserva' && reg.fechaReserva
+        ? `<span class="reserva-date"><i class="bi bi-calendar-x"></i> hasta ${reg.fechaReserva}</span>`
+        : '';
+      return `
+        <tr>
+          <td>${profileLink}</td>
+          <td>${u.charName || '—'}</td>
+          <td>
+            <span style="display:inline-flex;align-items:center;gap:.4em;font:300 var(--f-xs) var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:${parlColor(u)};">
+              <span style="width:6px;height:6px;border-radius:50%;background:${parlColor(u)};flex-shrink:0;"></span>
+              ${u.parlamento || '—'}
+            </span>
+          </td>
+          <td style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">${reg.faceclaim1 || '—'}</td>
+          <td style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">${reg.faceclaim2 || '—'}</td>
+          <td>${estadoPill(reg.estado)}</td>
+          <td style="font:300 var(--f-xs) var(--f-mono);color:var(--warning-text);">${reg.estado === 'reserva' && reg.fechaReserva ? reg.fechaReserva : '—'}</td>
+          <td>
+            <button class="btn btn-ghost btn-sm" onclick="openEditUser('${u._id}')">
+              <i class="bi bi-pencil"></i> Editar
+            </button>
+          </td>
+        </tr>`;
+    }).join('') || `<tr><td colspan="8"><div class="empty"><i class="bi bi-people"></i>Sin usuarios registrados</div></td></tr>`;
+  }
 }
 
-function hasPendingSkills(u) {
-  if (!u.skills) return false;
-  return Object.values(u.skills).some(s => s.pending);
-}
-
-// ── EDIT USER MODAL ──
-window.openEditUser = (username) => {
-  editingUser = username;
-  const u = allUsers[username];
+function userCardHTML(u) {
   const reg = u.registro || {};
-  document.getElementById('editUserNameTitle').textContent = username;
-  document.getElementById('editNumUsuario').value   = reg.numUsuario   || '';
-  document.getElementById('editEstado').value       = reg.estado       || '';
-  document.getElementById('editFaceclaim1').value   = reg.faceclaim1   || '';
-  document.getElementById('editFaceclaim2').value   = reg.faceclaim2   || '';
-  document.getElementById('editFechaReserva').value = reg.fechaReserva || '';
-  document.getElementById('editReservaWrap').style.display = reg.estado === 'reserva' ? '' : 'none';
-  document.getElementById('editEstado').onchange = () => {
-    document.getElementById('editReservaWrap').style.display =
-      document.getElementById('editEstado').value === 'reserva' ? '' : 'none';
-  };
-  document.getElementById('editParlamento').value = u.parlamento || '';
-  renderEditSkills(u.parlamento || '', u.skills || {});
-  document.getElementById('editUserModal').classList.add('show');
-};
-
-window.onParlamentoChange = () => {
-  const u = allUsers[editingUser];
-  const parl = document.getElementById('editParlamento').value;
-  renderEditSkills(parl, u.skills || {});
-};
-
-function renderEditSkills(parl, userSkills) {
-  const skills = skillsConfig[parl] || [];
-  document.getElementById('editSkillsRows').innerHTML = skills.length
-    ? skills.map(sk => {
-        const us = userSkills[sk.key] || { level: 0 };
-        const pct = Math.round((us.level / (sk.maxLevel || 5)) * 100);
-        return `
-          <div class="skill-level-row">
-            <span class="skill-level-icon">${sk.icon}</span>
-            <span class="skill-level-name">${sk.name}</span>
-            <div class="skill-bar-wrap">
-              <div class="skill-bar-fill" style="width:${pct}%"></div>
-            </div>
-            <input class="skill-level-input" type="number" min="0" max="${sk.maxLevel||5}"
-                   value="${us.level}" id="skillinput_${sk.key}">
-            <span class="skill-level-max">/ ${sk.maxLevel||5}</span>
-            ${us.pending ? '<span class="badge badge-pending"><i class="bi bi-hourglass-split"></i>Solicitud</span>' : ''}
-          </div>`;
-      }).join('')
-    : '<div class="empty" style="padding:var(--spacing-s) 0;"><i class="bi bi-stars"></i>Sin habilidades en este parlamento</div>';
+  const color = GRUPOS_COLOR[u.parlamento] || 'var(--accent-solid1)';
+  const initial = (u.username || u._id || '?')[0].toUpperCase();
+  const profileLink = reg.perfilUrl
+    ? `<a class="user-card-username" href="${reg.perfilUrl}" target="_blank">${u.username || u._id}<i class="bi bi-box-arrow-up-right" style="font-size:.65rem;"></i></a>`
+    : `<span class="user-card-username">${u.username || u._id || '—'}</span>`;
+  const reservaBadge = reg.estado === 'reserva' && reg.fechaReserva
+    ? `<div class="user-card-meta" style="color:var(--warning-text);"><i class="bi bi-calendar-x"></i> Reserva hasta ${reg.fechaReserva}</div>`
+    : '';
+  return `
+    <div class="user-card">
+      <div class="user-card-header">
+        <div class="user-card-avatar" style="border:2px solid ${color};">
+          ${initial}
+        </div>
+        <div style="flex:1;min-width:0;">
+          ${profileLink}
+          <div style="font:300 var(--f-xs) var(--f-mono);color:${color};text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">${u.parlamento || '—'}</div>
+        </div>
+        ${estadoPill(reg.estado)}
+      </div>
+      <div class="user-card-body">
+        <div class="user-card-charname">${u.charName || '—'}</div>
+        ${reg.faceclaim1 ? `<div class="user-card-meta">FC: ${reg.faceclaim1}${reg.faceclaim2 ? ` · ${reg.faceclaim2}` : ''}</div>` : ''}
+        ${reservaBadge}
+        ${u.charDesc ? `<div class="user-card-meta" style="margin-top:var(--spacing-3xs);">${u.charDesc.substring(0,80)}${u.charDesc.length > 80 ? '…' : ''}</div>` : ''}
+      </div>
+      <div class="user-card-actions">
+        <button class="btn btn-ghost btn-sm" onclick="openEditUser('${u._id}')">
+          <i class="bi bi-pencil"></i> Editar
+        </button>
+        <button class="btn btn-danger btn-sm" onclick="deleteUser('${u._id}','${(u.username||u._id||'').replace(/'/g,'')}')">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+    </div>`;
 }
 
-window.saveUserEdits = async () => {
-  const u = allUsers[editingUser];
-  const newParl = document.getElementById('editParlamento').value;
-  const skills = skillsConfig[newParl] || [];
-  const newSkills = { ...(u.skills || {}) };
-
-  skills.forEach(sk => {
-    const inp = document.getElementById(`skillinput_${sk.key}`);
-    if (inp) {
-      const level = Math.min(parseInt(inp.value) || 0, sk.maxLevel || 5);
-      newSkills[sk.key] = { level, maxLevel: sk.maxLevel || 5, pending: false };
-    }
-  });
-
-  const newRegistro = {
-    numUsuario:   parseInt(document.getElementById('editNumUsuario').value) || null,
-    estado:       document.getElementById('editEstado').value,
-    faceclaim1:   document.getElementById('editFaceclaim1').value.trim(),
-    faceclaim2:   document.getElementById('editFaceclaim2').value.trim(),
-    fechaReserva: document.getElementById('editEstado').value === 'reserva'
-                    ? document.getElementById('editFechaReserva').value
-                    : ''
-  };
-
-  await updateDoc(doc(db,'users', editingUser), { parlamento: newParl, skills: newSkills, registro: newRegistro });
-  allUsers[editingUser] = { ...u, parlamento: newParl, skills: newSkills, registro: newRegistro };
+// ── USER FILTER ──
+document.getElementById('userFilterTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.parl-tab');
+  if (!btn) return;
+  userFilter = btn.dataset.g;
+  document.querySelectorAll('#userFilterTabs .parl-tab').forEach(b => b.classList.toggle('active', b === btn));
   renderUsers();
-  closeEditUser();
-  toast(`Perfil de ${editingUser} actualizado`, 'ok');
+});
+
+// ── USER VIEW ──
+window.setUserView = (v) => {
+  userView = v;
+  document.getElementById('userViewGrid').classList.toggle('active', v === 'grid');
+  document.getElementById('userViewList').classList.toggle('active', v === 'list');
+  renderUsers();
 };
 
-window.closeEditUser = () => {
-  document.getElementById('editUserModal').classList.remove('show');
-  editingUser = null;
+// ── USER MODAL: OPEN/CLOSE ──
+window.openAddUser = () => {
+  document.getElementById('userModalTitle').innerHTML = 'Nuevo <em>usuario</em>';
+  document.getElementById('userEditId').value = '';
+  ['uUsername','uNumUsuario','uPerfilUrl','uCharName','uFaceclaim1','uFaceclaim2',
+   'uFechaReserva','uFichaUrl','uBaulUrl','uCharDesc'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  document.getElementById('uEstado').value = '';
+  document.getElementById('uParlamento').value = '';
+  document.getElementById('uOrden').value = Object.keys(allUsers).length;
+  document.getElementById('uReservaWrap').style.display = 'none';
+  document.getElementById('userModal').classList.add('show');
 };
 
-// ══════════════════════════════
-//  HABILIDADES
-// ══════════════════════════════
-function renderParlTabs() {
-  document.getElementById('parlTabs').innerHTML = PARLAMENTOS.map(p => `
-    <button class="parl-tab ${p === currentParlamento ? 'active' : ''}" data-p="${p}" onclick="selectParlamento('${p}')">${p.toUpperCase()}</button>
-  `).join('');
-}
-
-window.selectParlamento = (p) => {
-  currentParlamento = p;
-  renderParlTabs();
-  renderSkillsDef();
+window.openEditUser = (userId) => {
+  const u = allUsers[userId];
+  if (!u) return;
+  const reg = u.registro || {};
+  document.getElementById('userModalTitle').innerHTML = 'Editar <em>usuario</em>';
+  document.getElementById('userEditId').value = userId;
+  document.getElementById('uUsername').value     = u.username      || userId;
+  document.getElementById('uNumUsuario').value   = reg.numUsuario  || '';
+  document.getElementById('uPerfilUrl').value    = reg.perfilUrl   || '';
+  document.getElementById('uCharName').value     = u.charName      || '';
+  document.getElementById('uEstado').value       = reg.estado      || '';
+  document.getElementById('uFaceclaim1').value   = reg.faceclaim1  || '';
+  document.getElementById('uFaceclaim2').value   = reg.faceclaim2  || '';
+  document.getElementById('uFechaReserva').value = reg.fechaReserva|| '';
+  document.getElementById('uParlamento').value   = u.parlamento    || '';
+  document.getElementById('uFichaUrl').value     = u.fichaUrl      || '';
+  document.getElementById('uBaulUrl').value      = u.baulUrl       || '';
+  document.getElementById('uCharDesc').value     = u.charDesc      || '';
+  document.getElementById('uOrden').value        = u.orden         ?? 0;
+  document.getElementById('uReservaWrap').style.display = reg.estado === 'reserva' ? '' : 'none';
+  document.getElementById('userModal').classList.add('show');
 };
 
-function renderSkillsDef() {
-  document.getElementById('skillsParlLabel').textContent = currentParlamento.toUpperCase();
-  const skills = skillsConfig[currentParlamento] || [];
-  document.getElementById('skillsDefList').innerHTML = skills.length
-    ? skills.map((sk, i) => `
-        <div class="skill-def-item">
-          <span class="skill-icon">${sk.icon}</span>
-          <div class="skill-info">
-            <div class="name">${sk.name}</div>
-            <div class="desc">${sk.description || ''}</div>
-          </div>
-          <span class="skill-max">Nv. máx. ${sk.maxLevel || 5}</span>
-          <button class="btn btn-danger btn-sm" onclick="deleteSkill(${i})">
-            <i class="bi bi-trash"></i>
-          </button>
-        </div>`)
-      .join('')
-    : '<div class="empty"><i class="bi bi-stars"></i>Sin habilidades definidas</div>';
-}
-
-window.openAddSkill  = () => document.getElementById('addSkillModal').classList.add('show');
-window.closeAddSkill = () => document.getElementById('addSkillModal').classList.remove('show');
-
-window.saveNewSkill = async () => {
-  const icon = document.getElementById('newSkillIcon').value.trim();
-  const key  = document.getElementById('newSkillKey').value.trim().replace(/\s+/g,'_');
-  const name = document.getElementById('newSkillName').value.trim();
-  const desc = document.getElementById('newSkillDesc').value.trim();
-  const max  = parseInt(document.getElementById('newSkillMax').value) || 5;
-  if (!key || !name) { toast('Clave y nombre son obligatorios', 'err'); return; }
-
-  if (!skillsConfig[currentParlamento]) skillsConfig[currentParlamento] = [];
-  skillsConfig[currentParlamento].push({ key, icon: icon || '⭐', name, description: desc, maxLevel: max });
-  await setDoc(doc(db,'config','skills'), skillsConfig);
-  renderSkillsDef();
-  closeAddSkill();
-  toast(`Habilidad "${name}" añadida`, 'ok');
+window.onUserEstadoChange = () => {
+  document.getElementById('uReservaWrap').style.display =
+    document.getElementById('uEstado').value === 'reserva' ? '' : 'none';
 };
 
-window.deleteSkill = async (idx) => {
-  if (!confirm('¿Eliminar esta habilidad?')) return;
-  skillsConfig[currentParlamento].splice(idx, 1);
-  await setDoc(doc(db,'config','skills'), skillsConfig);
-  renderSkillsDef();
-  toast('Habilidad eliminada');
+window.closeUserModal = () => document.getElementById('userModal').classList.remove('show');
+
+window.saveUser = async () => {
+  const username    = document.getElementById('uUsername').value.trim();
+  const numUsuario  = parseInt(document.getElementById('uNumUsuario').value) || null;
+  const perfilUrl   = document.getElementById('uPerfilUrl').value.trim();
+  const charName    = document.getElementById('uCharName').value.trim();
+  const estado      = document.getElementById('uEstado').value;
+  const faceclaim1  = document.getElementById('uFaceclaim1').value.trim();
+  const faceclaim2  = document.getElementById('uFaceclaim2').value.trim();
+  const fechaReserva= estado === 'reserva' ? document.getElementById('uFechaReserva').value : '';
+  const parlamento  = document.getElementById('uParlamento').value;
+  const fichaUrl    = document.getElementById('uFichaUrl').value.trim();
+  const baulUrl     = document.getElementById('uBaulUrl').value.trim();
+  const charDesc    = document.getElementById('uCharDesc').value.trim();
+  const orden       = parseInt(document.getElementById('uOrden').value) || 0;
+  const editId      = document.getElementById('userEditId').value;
+
+  if (!username) { toast('El username es obligatorio', 'err'); return; }
+
+  const data = {
+    username, charName, parlamento, fichaUrl, baulUrl, charDesc, orden,
+    registro: { numUsuario, perfilUrl, estado, faceclaim1, faceclaim2, fechaReserva },
+    updatedAt: Date.now()
+  };
+
+  try {
+    const docId = editId || username;
+    if (editId) {
+      await updateDoc(doc(db,'users', editId), data);
+      allUsers[editId] = { ...allUsers[editId], ...data };
+      toast(`"${username}" actualizado`, 'ok');
+    } else {
+      if (allUsers[docId]) { toast(`El username "${username}" ya existe`, 'err'); return; }
+      data.createdAt = Date.now();
+      await setDoc(doc(db,'users', docId), data);
+      allUsers[docId] = { ...data };
+      toast(`"${username}" creado`, 'ok');
+    }
+    renderUsers();
+    closeUserModal();
+  } catch(err) {
+    toast('Error al guardar: ' + err.message, 'err');
+  }
+};
+
+window.deleteUser = async (userId, username) => {
+  if (!confirm(`¿Eliminar al usuario "${username}"? Esta acción no se puede deshacer.`)) return;
+  try {
+    await deleteDoc(doc(db,'users', userId));
+    delete allUsers[userId];
+    renderUsers();
+    toast(`"${username}" eliminado`);
+  } catch(err) {
+    toast('Error al eliminar: ' + err.message, 'err');
+  }
 };
 
 // ══════════════════════════════
@@ -1550,7 +1557,6 @@ function pnjListRowHTML(p) {
     </div>`;
 }
 
-// ── PNJ FILTER ──
 document.getElementById('pnjFilterTabs').addEventListener('click', e => {
   const btn = e.target.closest('.parl-tab');
   if (!btn) return;
@@ -1559,7 +1565,6 @@ document.getElementById('pnjFilterTabs').addEventListener('click', e => {
   renderPNJs();
 });
 
-// ── PNJ VIEW TOGGLE ──
 window.setPnjView = (v) => {
   pnjView = v;
   document.getElementById('viewGrid').classList.toggle('active', v === 'grid');
@@ -1567,7 +1572,6 @@ window.setPnjView = (v) => {
   renderPNJs();
 };
 
-// ── PNJ MODAL: OPEN/CLOSE ──
 window.openAddPnj = () => {
   document.getElementById('pnjModalTitle').innerHTML = 'Nuevo <em>PNJ</em>';
   document.getElementById('pnjEditId').value = '';
@@ -1617,10 +1621,7 @@ window.savePnj = async () => {
 
   if (!nombre) { toast('El nombre es obligatorio', 'err'); return; }
 
-  const data = {
-    nombre, edad, grupo, ocupacion, imagen, historia, orden,
-    updatedAt: Date.now()
-  };
+  const data = { nombre, edad, grupo, ocupacion, imagen, historia, orden, updatedAt: Date.now() };
 
   try {
     if (editId) {
@@ -1672,8 +1673,7 @@ async function loadItems() {
 }
 
 function getCats() {
-  const cats = [...new Set(allItems.map(i => i.categoria).filter(Boolean))];
-  return cats;
+  return [...new Set(allItems.map(i => i.categoria).filter(Boolean))];
 }
 
 function renderCatTabs() {
@@ -1685,7 +1685,6 @@ function renderCatTabs() {
         return `<button class="parl-tab ${tiendaFilter===c?'active':''}" data-cat="${c}">${c} (${count})</button>`;
       }).join('');
 
-  // Repopulate datalist for modal
   const dl = document.getElementById('categoriasSuggestions');
   if (dl) dl.innerHTML = cats.map(c => `<option value="${c}">`).join('');
 
@@ -1701,13 +1700,9 @@ function renderCatTabs() {
 function itemMediaHTML(item, size = 'full') {
   const small = size === 'small';
   if (item.imagen_url) {
-    return small
-      ? `<img src="${item.imagen_url}" alt="" loading="lazy">`
-      : `<img src="${item.imagen_url}" alt="${item.nombre}" loading="lazy">`;
+    return `<img src="${item.imagen_url}" alt="${small ? '' : item.nombre}" loading="lazy">`;
   }
-  if (item.imagen_svg) {
-    return item.imagen_svg;
-  }
+  if (item.imagen_svg) return item.imagen_svg;
   return small
     ? `<i class="bi bi-bag" style="font-size:1.2rem;"></i>`
     : `<i class="bi bi-bag no-media" style="font-size:2.5rem;color:var(--mono-border2);"></i>`;
@@ -1731,15 +1726,14 @@ function renderItems() {
               <div class="tienda-item-name">${item.nombre || 'Sin nombre'}</div>
               ${item.descripcion ? `<div class="tienda-item-desc">${item.descripcion}</div>` : ''}
               ${item.bonus ? `<div class="tienda-item-bonus">${item.bonus}</div>` : ''}
-              <div class="tienda-item-price">${item.precio ?? '—'} <small>${window.SHOP_CONFIG_KEY || 'PUNTOS'}</small></div>
+              <div class="tienda-item-price">${item.precio ?? '—'} <small>PUNTOS</small></div>
               ${item.tags?.length ? `<div class="tienda-item-tags">${item.tags.map(t=>`<span class="tienda-tag">${t}</span>`).join('')}</div>` : ''}
               <div class="tienda-item-actions">
                 <button class="btn btn-ghost btn-sm" onclick="openEditItem('${item.id}')"><i class="bi bi-pencil"></i> Editar</button>
                 <button class="btn btn-danger btn-sm" onclick="deleteItem('${item.id}','${(item.nombre||'').replace(/'/g,'')}')"><i class="bi bi-trash"></i></button>
               </div>
             </div>
-          </div>`)
-        .join('')
+          </div>`).join('')
       : `<div class="empty" style="grid-column:1/-1"><i class="bi bi-bag-x"></i>Sin items en esta categoría</div>`;
   } else {
     document.getElementById('tiendaGrid').style.display = 'none';
@@ -1757,8 +1751,7 @@ function renderItems() {
             <span class="tienda-list-orden" style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">#${item.orden??'—'}</span>
             <button class="btn btn-ghost btn-sm" onclick="openEditItem('${item.id}')"><i class="bi bi-pencil"></i> Editar</button>
             <button class="btn btn-danger btn-sm" onclick="deleteItem('${item.id}','${(item.nombre||'').replace(/'/g,'')}')"><i class="bi bi-trash"></i></button>
-          </div>`)
-        .join('')
+          </div>`).join('')
       : `<div class="empty"><i class="bi bi-bag-x"></i>Sin items en esta categoría</div>`;
   }
 }
@@ -1770,7 +1763,6 @@ window.setTiendaView = (v) => {
   renderItems();
 };
 
-// ── IMG TYPE TOGGLE ──
 window.setImgType = (type) => {
   imgType = type;
   document.getElementById('imgTypeUrl').classList.toggle('btn', type === 'url');
@@ -1797,7 +1789,6 @@ window.previewItemImg = () => {
   }
 };
 
-// ── ITEM MODAL ──
 window.openAddItem = () => {
   document.getElementById('itemModalTitle').innerHTML = 'Nuevo <em>item</em>';
   document.getElementById('itemEditId').value = '';
@@ -1870,7 +1861,6 @@ window.saveItem = async () => {
       if (idx >= 0) allItems[idx] = { ...allItems[idx], ...data };
       toast(`"${nombre}" actualizado`, 'ok');
     } else {
-      // Check duplicate itemId
       if (allItems.some(x => x.itemId === itemIdVal)) {
         toast(`El ID "${itemIdVal}" ya existe`, 'err'); return;
       }
