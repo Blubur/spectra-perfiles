@@ -106,7 +106,6 @@
   --input-br: var(--br);
 }
 
-/* ─────────────────────────── BASE ─────────────────────────── */
 
 html { view-transition-name: foro; }
 
@@ -114,12 +113,11 @@ body {
   font-family: var(--f-sans);
   font-size: var(--f-base);
   background: var(--mono-surface1);
-  color: var(--mono-text2);
+  color: var(--mono-text1);
   min-height: 100vh;
   overflow-x: clip;
 }
 
-/* ─────────────────────────── NAV ─────────────────────────── */
 
 .admin-nav {
   height: var(--nav-size);
@@ -168,7 +166,6 @@ body {
 .nav-tab:hover { color: var(--accent-text1); }
 .nav-tab.active { color: var(--accent-text1); border-bottom-color: var(--accent-solid1); }
 
-/* ─────────────────────────── BUTTONS ─────────────────────────── */
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-2xs);
@@ -236,7 +233,6 @@ body {
 .field textarea { resize: vertical; min-height: 100px; }
 .field small { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
 
-/* ─────────────────────────── LAYOUT ─────────────────────────── */
 
 .page { display: none; padding: var(--spacing-l); max-width: 1100px; margin: 0 auto; animation: fadeUp .35s ease both; }
 .page.active { display: block; }
@@ -256,7 +252,6 @@ body {
   letter-spacing: .12em;
 }
 
-/* ─────────────────────────── CARDS ─────────────────────────── */
 
 .card {
   background: var(--mono-surface2);
@@ -278,14 +273,14 @@ body {
 }
 .card-actions { display: flex; gap: var(--spacing-2xs); }
 
-/* ─────────────────────────── GRID UTILS ─────────────────────────── */
+/* ───────────────────────────GRID─────────────────────────── */
 
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-s); }
 .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--spacing-s); }
 .flex-col { display: flex; flex-direction: column; gap: var(--spacing-xs); }
 .flex-row { display: flex; gap: var(--spacing-xs); align-items: center; }
 
-/* ─────────────────────────── TABLE ─────────────────────────── */
+/* ────────────────────────────────────────────── */
 
 .data-table { width: 100%; border-collapse: collapse; }
 .data-table th {
@@ -346,7 +341,6 @@ body {
 .parl-tab[data-p="caoticos"]    { --grupo-color: #5A4160; }
 .parl-tab[data-p="staff"]       { --grupo-color: var(--accent-solid1); }
 
-/* ─────────────────────────── SKILL ROWS ─────────────────────────── */
 
 .skill-def-item {
   display: grid; grid-template-columns: 2rem 1fr auto auto;
@@ -461,7 +455,7 @@ body {
 .drag-handle:active { cursor: grabbing; }
 .pnj-thumb.dragging { opacity: .5; }
 
-/* List view for PNJs */
+
 .pnj-list { display: none; flex-direction: column; gap: 0; margin-top: var(--spacing-s); }
 .pnj-list-row {
   display: grid; grid-template-columns: auto 1fr auto auto auto;
@@ -477,7 +471,7 @@ body {
 .pnj-list-info .name { font: italic var(--f-base) var(--f-deco); }
 .pnj-list-info .meta { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
 
-/* ─────────────────────────── MODAL / DRAWER ─────────────────────────── */
+/* ─────────────────────────── MODAL ─────────────────────────── */
 
 .modal-overlay {
   position: fixed; inset: 0;
@@ -580,8 +574,6 @@ body {
 }
 .view-btn.active, .view-btn:hover { background: var(--mono-component2); color: var(--accent-text1); }
 
-/* ─────────────────────────── IMAGE PREVIEW ─────────────────────────── */
-
 .img-preview-wrap {
   width: 100%; aspect-ratio: 16/9;
   background: var(--mono-component2);
@@ -678,8 +670,8 @@ body {
   border-radius: var(--br-small);
 }
 
-/* ── Tienda list view ── */
-.tienda-list-row {
+/*---lista---*/
+  .tienda-list-row {
   display: grid; grid-template-columns: 56px 1fr auto auto auto auto;
   gap: var(--spacing-xs); align-items: center;
   padding: var(--spacing-xs);
@@ -702,10 +694,9 @@ body {
 .tienda-list-info .name { font: italic var(--f-base) var(--f-deco); }
 .tienda-list-info .meta { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
 
-/* ── Tienda filter tabs ── */
 .tienda-cat-tabs { display: flex; flex-wrap: wrap; gap: var(--spacing-2xs); margin-bottom: var(--spacing-s); }
 
-/* ── SVG textarea preview ── */
+/*──SVG preview──*/
 .svg-preview-wrap {
   width: 100%; aspect-ratio: 4/3;
   background: var(--mono-component2);
@@ -728,7 +719,7 @@ body {
 </head>
 <body>
 
-<!-- ─────────── LOGIN ─────────── -->
+<!-- ───────────LOGIN─────────── -->
 <div id="loginWrap">
   <div class="login-card">
     <div class="login-logo">Spectra</div>
@@ -743,7 +734,7 @@ body {
   </div>
 </div>
 
-<!-- ─────────── ADMIN UI ─────────── -->
+<!-- ───────────ADMIN UI─────────── -->
 <div id="adminUI" style="display:none;">
 
   <nav class="admin-nav">
@@ -765,7 +756,7 @@ body {
     </button>
   </nav>
 
-  <!-- ══ TAB: USUARIOS ══ -->
+  <!--TAB USUARIOS -->
   <div class="page active" id="page-usuarios">
     <div class="page-header">
       <div class="page-title">Gestión de <em>usuarios</em></div>
@@ -790,7 +781,7 @@ body {
     </div>
   </div>
 
-  <!-- ══ TAB: HABILIDADES ══ -->
+  <!--TAB HABILIDADES-->
   <div class="page" id="page-habilidades">
     <div class="page-header">
       <div class="page-title">Definir <em>habilidades</em></div>
@@ -814,7 +805,7 @@ body {
     </div>
   </div>
 
-  <!-- ══ TAB: PNJs ══ -->
+  <!--TAB PNJ-->
   <div class="page" id="page-pnjs">
     <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:var(--spacing-xs);">
       <div>
@@ -832,7 +823,7 @@ body {
       </div>
     </div>
 
-    <!-- PNJ filter pills -->
+    <!-- PNJ filter-->
     <div class="parl-tabs" id="pnjFilterTabs">
       <button class="parl-tab active" data-g="all">Todos</button>
       <button class="parl-tab" data-p="primigenios" data-g="primigenios">Primigenios</button>
@@ -843,14 +834,13 @@ body {
       <button class="parl-tab" data-p="staff" data-g="staff">Staff</button>
     </div>
 
-    <!-- Grid view -->
+  
     <div class="pnj-thumb-grid" id="pnjGrid"></div>
-    <!-- List view -->
     <div class="pnj-list card" id="pnjList" style="display:none;"></div>
 
   </div>
 
-  <!-- ══ TAB: TIENDA ══ -->
+  <!--TAB TIENDA-->
   <div class="page" id="page-tienda">
     <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:var(--spacing-xs);">
       <div>
@@ -868,18 +858,15 @@ body {
       </div>
     </div>
 
-    <!-- Category filter pills (rendered dynamically) -->
     <div class="tienda-cat-tabs" id="tiendaCatTabs">
       <button class="parl-tab active" data-cat="all">Todos</button>
     </div>
 
-    <!-- Grid view -->
     <div class="tienda-grid" id="tiendaGrid"></div>
-    <!-- List view -->
     <div class="card" id="tiendaList" style="display:none; padding:0;"></div>
   </div>
 
-  <!-- ══ TAB: VISIBILIDAD ══ -->
+  <!--TAB VISIBILIDAD-->
   <div class="page" id="page-visibilidad">
     <div class="page-header">
       <div class="page-title">Visibilidad de <em>campos</em></div>
@@ -891,7 +878,7 @@ body {
   </div>
 </div>
 
-<!-- ═══════════════ MODAL: EDITAR USUARIO ═══════════════ -->
+<!--  MODAL EDITAR USUARIO -->
 <div class="modal-overlay" id="editUserModal">
   <div class="modal">
     <div class="modal-title">Editar <em id="editUserNameTitle">—</em></div>
@@ -922,7 +909,7 @@ body {
   </div>
 </div>
 
-<!-- ═══════════════ MODAL: NUEVA HABILIDAD ═══════════════ -->
+<!--MODAL NUEVA HABILIDAD-->
 <div class="modal-overlay" id="addSkillModal">
   <div class="modal">
     <div class="modal-title">Nueva <em>habilidad</em></div>
@@ -958,7 +945,7 @@ body {
   </div>
 </div>
 
-<!-- ═══════════════ MODAL: NUEVO / EDITAR PNJ ═══════════════ -->
+<!--MODAL NUEVO Y EDITAR PNJ-->
 <div class="modal-overlay" id="pnjModal">
   <div class="modal" style="max-width:640px;">
     <div class="modal-title" id="pnjModalTitle">Nuevo <em>PNJ</em></div>
@@ -1025,7 +1012,7 @@ body {
   </div>
 </div>
 
-<!-- ═══════════════ MODAL: NUEVO / EDITAR ITEM TIENDA ═══════════════ -->
+<!--MODAL NUEVO Y EDITAR ITEM TIENDA-->
 <div class="modal-overlay" id="itemModal">
   <div class="modal" style="max-width:680px;">
     <div class="modal-title" id="itemModalTitle">Nuevo <em>item</em></div>
@@ -1086,6 +1073,7 @@ body {
 
       <div class="field">
         <label>Imagen</label>
+        <small>Solo formato svg</small>
         <div style="display:flex;gap:var(--spacing-xs);margin-bottom:var(--spacing-2xs);">
           <button type="button" class="btn btn-ghost btn-sm" id="imgTypeUrl" onclick="setImgType('url')">URL de imagen</button>
           <button type="button" class="btn btn-sm" id="imgTypeSvg" onclick="setImgType('svg')">SVG inline</button>
@@ -1116,7 +1104,7 @@ body {
 <div id="toast"><i class="bi bi-check-circle"></i><span id="toastMsg"></span></div>
 
 
-<!-- ═══════════════ FIREBASE + LOGIC ═══════════════ -->
+<!-- FIREBASE-->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import {
