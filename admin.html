@@ -11,6 +11,10 @@
 
 :root {
   color-scheme: dark light;
+  interpolate-size: allow-keywords;
+  --mono-surface1: light-dark(white, black);
+
+  
 
   --mono-surface1: light-dark(#fdfdfc, #111110);
   --mono-surface2: light-dark(#f9f9f8, #191918);
@@ -113,6 +117,16 @@ body {
   color: var(--mono-text2);
   min-height: 100vh;
   overflow-x: clip;
+
+  color-scheme: dark;
+  transition: all .5s allow-discrete;
+  background: var(--mono-surface1);
+  
+  &:has(#theme-switch:checked), &.light-mode {
+    color-scheme: light;
+    transition: all .5s allow-discrete;
+  }
+  
 }
 
 /* ─── NAV ─── */
