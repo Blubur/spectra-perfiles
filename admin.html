@@ -1,15 +1,1128 @@
-<!-- ═══════════════════════════════════════════════════════════
-     SPECTRA · TIENDA — CARGADOR FIREBASE
-     Pega este bloque en el tema del foro EN LUGAR de:
-       window.TIENDA_HABILIDADES = [ ... ];
-       <script src="/19559.js"></script>
-     El resto del HTML (SHOP_CONFIG, form, templates) queda igual.
-════════════════════════════════════════════════════════════ -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de Administración — Spectra</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
+:root {
+  color-scheme: dark light;
+
+  --mono-surface1: light-dark(#fdfdfc, #111110);
+  --mono-surface2: light-dark(#f9f9f8, #191918);
+  --mono-component1: light-dark(#f1f0ef, #222221);
+  --mono-component2: light-dark(#e9e8e6, #2a2a28);
+  --mono-component3: light-dark(#e2e1de, #31312e);
+  --mono-border1: light-dark(#dad9d6, #3b3a37);
+  --mono-border2: light-dark(#cfceca, #494844);
+  --mono-border3: light-dark(#bcbbb5, #62605b);
+  --mono-solid1: light-dark(#8d8d86, #6f6d66);
+  --mono-solid2: light-dark(#82827c, #7c7b74);
+  --mono-text1: light-dark(#63635e, #b5b3ad);
+  --mono-text2: light-dark(#21201c, #eeeeec);
+
+  --accent-surface1: light-dark(#fbfaf9, #13110f);
+  --accent-surface2: light-dark(#f8f6f3, #1b1916);
+  --accent-component1: light-dark(#f0ece6, #25221d);
+  --accent-component2: light-dark(#e9e3da, #2e2a22);
+  --accent-component3: light-dark(#e2d9cc, #383228);
+  --accent-border1: light-dark(#dacebd, #453c2f);
+  --accent-border2: light-dark(#cfbfa8, #574a38);
+  --accent-border3: light-dark(#bea98a, #726148);
+  --accent-solid1: light-dark(#b5a081, #b5a081);
+  --accent-solid2: light-dark(#a99576, #a99576);
+  --accent-text1: light-dark(#6f6048, #cbb696);
+  --accent-text2: light-dark(#343029, #f2e6d4);
+
+  --danger-surface: light-dark(#feebe7, #391714);
+  --danger-border: light-dark(#fdbdaf, #6e2920);
+  --danger-text: light-dark(#d13415, #ff977d);
+  --success-text: light-dark(#1d3b31, #adf0d4);
+  --success-surface: light-dark(#e6f7ed, #0f2e22);
+  --success-border: light-dark(#acdec8, #1b5745);
+  --warning-text: light-dark(#cc4e00, #ffa057);
+  --warning-surface: light-dark(#ffefd6, #331e0b);
+  --warning-border: light-dark(#ffc182, #66350c);
+
+  --staff: var(--accent-solid1);
+  --primigenios: #A53E67;
+  --arquitectos: #0C459C;
+  --sabios: #00674E;
+  --caoticos: #5A4160;
+  --exterminadores: #A53E4A;
+
+  --overlay-strong: light-dark(rgba(0,0,0,.28), rgba(0,0,0,.5));
+  --shadow-sm: 0 1px 2px light-dark(rgba(0,0,0,.04),rgba(0,0,0,.14));
+  --shadow-md: 0 2px 4px light-dark(rgba(0,0,0,.04),rgba(0,0,0,.14));
+  --shadow-lg: 0 6px 18px light-dark(rgba(0,0,0,.12),rgba(0,0,0,.3));
+  --shadow-xl: 0 12px 36px light-dark(rgba(0,0,0,.08),rgba(0,0,0,.3));
+
+  --transition-ease: all .5s ease-in-out;
+
+  --f-xs: clamp(0.5628rem, 0.6716rem + -0.1404vw, 0.64rem);
+  --f-s: clamp(0.7502rem, 0.8204rem + -0.0906vw, 0.8rem);
+  --f-base: clamp(1rem, 1rem + 0vw, 1rem);
+  --f-l: clamp(1.25rem, 1.216rem + 0.1509vw, 1.333rem);
+  --f-xl: clamp(1.5625rem, 1.4748rem + 0.3898vw, 1.7769rem);
+  --f-2xl: clamp(1.9531rem, 1.7832rem + 0.7554vw, 2.3686rem);
+  --f-3xl: clamp(2.4414rem, 2.1485rem + 1.3017vw, 3.1573rem);
+  --f-5xl: clamp(3.8147rem, 3.0802rem + 3.2646vw, 5.6102rem);
+
+  --f-deco: 'DM Serif Display', serif;
+  --f-mono: 'DM Mono', monospace;
+  --f-sans: 'DM Sans', sans-serif;
+
+  --br-small: 3px;
+  --br: 5px;
+  --br-l: 1rem;
+  --br-pill: 999px;
+
+  --spacing-3xs: clamp(0.25rem, 0.3381rem + -0.1136vw, 0.3125rem);
+  --spacing-2xs: clamp(0.5rem, 0.5881rem + -0.1136vw, 0.5625rem);
+  --spacing-xs: clamp(0.75rem, 0.9261rem + -0.2273vw, 0.875rem);
+  --spacing-s: clamp(1rem, 1.1761rem + -0.2273vw, 1.125rem);
+  --spacing: clamp(1.5rem, 1.7642rem + -0.3409vw, 1.6875rem);
+  --spacing-l: clamp(2rem, 2.3523rem + -0.4545vw, 2.25rem);
+  --spacing-xl: clamp(3rem, 3.5284rem + -0.6818vw, 3.375rem);
+  --spacing-2xl: clamp(4rem, 4.7045rem + -0.9091vw, 4.5rem);
+  --spacing-button: var(--spacing-2xs) var(--spacing-s);
+
+  --nav-size: 50px;
+
+  /* button tokens */
+  --button-surface: var(--accent-solid1);
+  --button-surface-hover: var(--accent-solid2);
+  --button-text: #FBFBFA;
+  --button-br: var(--br);
+  --button-border: var(--accent-border3);
+
+  /* input tokens */
+  --input-surface: var(--mono-component2);
+  --input-border: var(--mono-border2);
+  --input-br: var(--br);
+}
+
+/* ─────────────────────────── BASE ─────────────────────────── */
+
+html { view-transition-name: foro; }
+
+body {
+  font-family: var(--f-sans);
+  font-size: var(--f-base);
+  background: var(--mono-surface1);
+  color: var(--mono-text2);
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+/* ─────────────────────────── NAV ─────────────────────────── */
+
+.admin-nav {
+  height: var(--nav-size);
+  background: color-mix(in srgb, var(--mono-surface1), transparent 50%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--mono-border1);
+  display: flex; align-items: stretch;
+  padding: 0 var(--spacing-l);
+  position: sticky; top: 0; z-index: 50;
+  gap: 0;
+  overflow-x: auto;
+}
+.admin-nav::-webkit-scrollbar { display: none; }
+
+.nav-brand {
+  font: italic var(--f-l) var(--f-deco);
+  color: var(--accent-text1);
+  display: flex; align-items: center;
+  padding-right: var(--spacing-s);
+  margin-right: var(--spacing-xs);
+  border-right: 1px solid var(--mono-border1);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.nav-brand small {
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--mono-text1);
+  margin-left: var(--spacing-xs);
+}
+
+.nav-tab {
+  display: flex; align-items: center; gap: var(--spacing-2xs);
+  padding: 0 var(--spacing-s);
+  font: 300 var(--f-xs) var(--f-mono);
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--mono-text1);
+  background: none; border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  transition: var(--transition-ease);
+}
+.nav-tab i { font-size: .8rem; opacity: .6; }
+.nav-tab:hover { color: var(--accent-text1); }
+.nav-tab.active { color: var(--accent-text1); border-bottom-color: var(--accent-solid1); }
+
+/* ─────────────────────────── BUTTONS ─────────────────────────── */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-2xs);
+  padding: var(--spacing-button);
+  font: 500 var(--f-s) var(--f-deco);
+  text-transform: uppercase; letter-spacing: .06em;
+  background: var(--button-surface); color: var(--button-text);
+  border: 1px solid var(--button-border);
+  border-radius: var(--button-br);
+  cursor: pointer;
+  transition: var(--transition-ease);
+  text-decoration: none;
+}
+.btn:hover { background: var(--button-surface-hover); box-shadow: var(--shadow-lg); }
+.btn-sm { padding: var(--spacing-3xs) var(--spacing-xs); font-size: var(--f-xs); }
+.btn-ghost {
+  --button-surface: transparent;
+  --button-surface-hover: var(--mono-component1);
+  --button-text: var(--mono-text1);
+  --button-border: var(--mono-border2);
+}
+.btn-ghost:hover { color: var(--accent-text1); border-color: var(--accent-border2); }
+.btn-danger {
+  --button-surface: var(--danger-surface);
+  --button-surface-hover: var(--danger-surface);
+  --button-text: var(--danger-text);
+  --button-border: var(--danger-border);
+}
+.btn-success {
+  --button-surface: var(--success-surface);
+  --button-surface-hover: var(--success-surface);
+  --button-text: var(--success-text);
+  --button-border: var(--success-border);
+}
+.btn-warning {
+  --button-surface: var(--warning-surface);
+  --button-surface-hover: var(--warning-surface);
+  --button-text: var(--warning-text);
+  --button-border: var(--warning-border);
+}
+.btn:disabled { background: var(--mono-solid2); border-color: var(--mono-solid1); opacity: .6; cursor: not-allowed; }
+
+/* ─────────────────────────── INPUTS ─────────────────────────── */
+
+.field { display: flex; flex-direction: column; gap: var(--spacing-2xs); }
+.field label {
+  font: var(--f-base) var(--f-deco);
+  color: var(--mono-text2);
+}
+.field input, .field select, .field textarea {
+  background: var(--input-surface);
+  border: 1px solid var(--input-border);
+  border-radius: var(--input-br);
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  font: 300 var(--f-base) var(--f-sans);
+  color: var(--mono-text2);
+  outline: none;
+  transition: border-color .2s;
+  width: 100%;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--accent-border2);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-solid1), transparent 80%);
+}
+.field textarea { resize: vertical; min-height: 100px; }
+.field small { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
+
+/* ─────────────────────────── LAYOUT ─────────────────────────── */
+
+.page { display: none; padding: var(--spacing-l); max-width: 1100px; margin: 0 auto; animation: fadeUp .35s ease both; }
+.page.active { display: block; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+.page-header { margin-bottom: var(--spacing-l); }
+.page-title {
+  font: 200 var(--f-2xl) var(--f-sans);
+  line-height: 1.1;
+  margin-bottom: var(--spacing-2xs);
+}
+.page-title em { font-style: italic; color: var(--accent-text1); font-weight: 300; }
+.page-subtitle {
+  font: 300 var(--f-xs) var(--f-mono);
+  color: var(--mono-text1);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+/* ─────────────────────────── CARDS ─────────────────────────── */
+
+.card {
+  background: var(--mono-surface2);
+  border: 1px solid var(--mono-border1);
+  border-radius: var(--br);
+  padding: var(--spacing-s);
+  margin-bottom: var(--spacing);
+}
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--mono-border1);
+  margin-bottom: var(--spacing-s);
+}
+.card-title {
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .14em;
+  color: var(--mono-text1);
+}
+.card-actions { display: flex; gap: var(--spacing-2xs); }
+
+/* ─────────────────────────── GRID UTILS ─────────────────────────── */
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-s); }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--spacing-s); }
+.flex-col { display: flex; flex-direction: column; gap: var(--spacing-xs); }
+.flex-row { display: flex; gap: var(--spacing-xs); align-items: center; }
+
+/* ─────────────────────────── TABLE ─────────────────────────── */
+
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th {
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--mono-text1);
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  text-align: left;
+  background: var(--mono-component1);
+  border-bottom: 1px solid var(--mono-border1);
+}
+.data-table td {
+  padding: var(--spacing-xs) var(--spacing-xs);
+  border-bottom: 1px solid var(--mono-border1);
+  font-size: var(--f-s);
+  vertical-align: middle;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--mono-component1); }
+.data-table .overflow-x { overflow-x: auto; }
+.table-wrap { overflow-x: auto; }
+
+/* ─────────────────────────── BADGES ─────────────────────────── */
+
+.badge {
+  display: inline-flex; align-items: center; gap: .3em;
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .06em;
+  padding: 2px var(--spacing-2xs);
+  border-radius: var(--br-pill);
+  border: 1px solid;
+  white-space: nowrap;
+}
+.badge-accent { background: var(--accent-component1); border-color: var(--accent-border2); color: var(--accent-text1); }
+.badge-pending { background: var(--warning-surface); border-color: var(--warning-border); color: var(--warning-text); }
+.badge-success { background: var(--success-surface); border-color: var(--success-border); color: var(--success-text); }
+.badge-danger  { background: var(--danger-surface); border-color: var(--danger-border); color: var(--danger-text); }
+
+/* ─────────────────────────── PARLAMENTO TABS ─────────────────────────── */
+
+.parl-tabs { display: flex; flex-wrap: wrap; gap: var(--spacing-2xs); margin-bottom: var(--spacing-s); }
+.parl-tab {
+  padding: var(--spacing-3xs) var(--spacing-xs);
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .1em;
+  background: var(--mono-component1);
+  border: 1px solid var(--mono-border2);
+  border-radius: var(--br-pill);
+  color: var(--mono-text1);
+  cursor: pointer;
+  transition: var(--transition-ease);
+}
+.parl-tab:hover { border-color: var(--accent-border2); color: var(--accent-text1); }
+.parl-tab.active { background: var(--grupo-color, var(--accent-solid1)); border-color: var(--grupo-color, var(--accent-solid1)); color: #fff; }
+.parl-tab[data-p="primigenios"] { --grupo-color: #A53E67; }
+.parl-tab[data-p="arquitectos"] { --grupo-color: #0C459C; }
+.parl-tab[data-p="sabios"]      { --grupo-color: #00674E; }
+.parl-tab[data-p="caoticos"]    { --grupo-color: #5A4160; }
+.parl-tab[data-p="staff"]       { --grupo-color: var(--accent-solid1); }
+
+/* ─────────────────────────── SKILL ROWS ─────────────────────────── */
+
+.skill-def-item {
+  display: grid; grid-template-columns: 2rem 1fr auto auto;
+  gap: var(--spacing-xs); align-items: center;
+  padding: var(--spacing-xs);
+  border: 1px solid var(--mono-border1);
+  border-radius: var(--br);
+  margin-bottom: var(--spacing-2xs);
+  background: var(--mono-component1);
+  transition: var(--transition-ease);
+}
+.skill-def-item:hover { border-color: var(--accent-border2); }
+.skill-icon { font-size: 1.2rem; text-align: center; }
+.skill-info .name { font: 500 var(--f-base) var(--f-sans); }
+.skill-info .desc { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); margin-top: 2px; }
+.skill-max { font: 300 var(--f-xs) var(--f-mono); color: var(--accent-text1); white-space: nowrap; }
+
+.skill-level-row {
+  display: flex; align-items: center; gap: var(--spacing-xs);
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--mono-border1);
+}
+.skill-level-row:last-child { border-bottom: none; }
+.skill-level-icon { font-size: 1.1rem; width: 1.5rem; text-align: center; flex-shrink: 0; }
+.skill-level-name { flex: 1; font: 300 var(--f-base) var(--f-sans); }
+.skill-bar-wrap { width: 80px; height: 3px; background: var(--mono-border1); border-radius: var(--br-pill); overflow: hidden; flex-shrink: 0; }
+.skill-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-border2), var(--accent-solid1)); border-radius: var(--br-pill); }
+.skill-level-input {
+  width: 52px; background: var(--input-surface); border: 1px solid var(--input-border);
+  border-radius: var(--br); padding: var(--spacing-3xs) var(--spacing-2xs);
+  font: var(--f-mono); font-size: var(--f-xs); text-align: center;
+  color: var(--mono-text2); outline: none;
+}
+.skill-level-input:focus { border-color: var(--accent-border2); }
+.skill-level-max { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); white-space: nowrap; }
+
+/* ─────────────────────────── VISIBILITY ─────────────────────────── */
+
+.vis-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--mono-border1);
+}
+.vis-row:last-child { border-bottom: none; }
+.vis-label .name { font: 300 var(--f-base) var(--f-sans); }
+.vis-label .key { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); margin-top: 2px; }
+
+.toggle-wrap { position: relative; width: 36px; height: 20px; cursor: pointer; flex-shrink: 0; }
+.toggle-wrap input { opacity: 0; width: 0; height: 0; position: absolute; }
+.toggle-track {
+  position: absolute; inset: 0;
+  background: var(--mono-border2);
+  border-radius: var(--br-pill);
+  transition: background .3s;
+}
+.toggle-thumb {
+  position: absolute; width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; top: 3px; left: 3px;
+  transition: left .3s;
+  box-shadow: var(--shadow-sm);
+}
+.toggle-wrap input:checked ~ .toggle-track { background: var(--accent-solid1); }
+.toggle-wrap input:checked ~ .toggle-track .toggle-thumb { left: 19px; }
+
+/* ─────────────────────────── PNJ SECTION ─────────────────────────── */
+
+/* PNJ preview card in admin */
+.pnj-thumb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-s);
+  margin-top: var(--spacing-s);
+}
+.pnj-thumb {
+  background: var(--mono-component1);
+  border: 1px solid var(--mono-border1);
+  border-radius: var(--br);
+  overflow: hidden;
+  transition: var(--transition-ease);
+  position: relative;
+}
+.pnj-thumb:hover { border-color: var(--accent-border2); box-shadow: var(--shadow-lg); }
+.pnj-thumb-img {
+  aspect-ratio: 3/2;
+  overflow: hidden;
+  background: var(--mono-component2);
+}
+.pnj-thumb-img img { width: 100%; height: 100%; object-fit: cover; }
+.pnj-thumb-img .no-img {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  color: var(--mono-border2); font-size: 2rem;
+}
+.pnj-thumb-body { padding: var(--spacing-xs); }
+.pnj-thumb-name { font: italic var(--f-base) var(--f-deco); margin-bottom: var(--spacing-3xs); }
+.pnj-thumb-meta { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
+.pnj-thumb-actions {
+  display: flex; gap: var(--spacing-2xs); margin-top: var(--spacing-xs);
+  padding-top: var(--spacing-xs); border-top: 1px solid var(--mono-border1);
+}
+.pnj-thumb-actions .btn { flex: 1; }
+.pnj-grupo-dot {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--grupo-color, var(--accent-solid1));
+  margin-right: .3em;
+}
+.drag-handle {
+  position: absolute; top: var(--spacing-2xs); right: var(--spacing-2xs);
+  color: var(--mono-text1); opacity: .4; cursor: grab; font-size: 1rem;
+  background: var(--mono-surface2); border: 1px solid var(--mono-border1);
+  border-radius: var(--br-small); padding: 2px 4px;
+}
+.drag-handle:active { cursor: grabbing; }
+.pnj-thumb.dragging { opacity: .5; }
+
+/* List view for PNJs */
+.pnj-list { display: none; flex-direction: column; gap: 0; margin-top: var(--spacing-s); }
+.pnj-list-row {
+  display: grid; grid-template-columns: auto 1fr auto auto auto;
+  gap: var(--spacing-xs); align-items: center;
+  padding: var(--spacing-xs) var(--spacing-xs);
+  border-bottom: 1px solid var(--mono-border1);
+  transition: background .2s;
+}
+.pnj-list-row:hover { background: var(--mono-component1); }
+.pnj-list-row:last-child { border-bottom: none; }
+.pnj-list-img { width: 48px; height: 48px; object-fit: cover; border-radius: var(--br); background: var(--mono-component2); flex-shrink: 0; }
+.pnj-list-img.placeholder { display: flex; align-items: center; justify-content: center; color: var(--mono-border2); }
+.pnj-list-info .name { font: italic var(--f-base) var(--f-deco); }
+.pnj-list-info .meta { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
+
+/* ─────────────────────────── MODAL / DRAWER ─────────────────────────── */
+
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: var(--overlay-strong);
+  z-index: 100;
+  display: none; align-items: center; justify-content: center;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--mono-surface1);
+  border: 1px solid var(--mono-border1);
+  border-radius: var(--br-l);
+  padding: var(--spacing-l);
+  width: 90%; max-width: 560px;
+  max-height: 85vh; overflow-y: auto;
+  animation: fadeUp .25s ease;
+  box-shadow: var(--shadow-xl);
+}
+.modal-title {
+  font: 200 var(--f-2xl) var(--f-sans);
+  margin-bottom: var(--spacing-s);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--mono-border1);
+}
+.modal-title em { font-style: italic; color: var(--accent-text1); }
+.modal-actions { display: flex; gap: var(--spacing-xs); justify-content: flex-end; margin-top: var(--spacing); }
+
+/* Form layout helpers */
+.form-list { display: flex; flex-direction: column; gap: var(--spacing-xs); }
+
+/* ─────────────────────────── LOGIN ─────────────────────────── */
+
+#loginWrap {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: var(--mono-surface1);
+  padding: var(--spacing-l);
+}
+.login-card {
+  width: 100%; max-width: 380px;
+  background: var(--mono-surface2);
+  border: 1px solid var(--mono-border1);
+  border-radius: var(--br-l);
+  padding: var(--spacing-xl);
+  text-align: center;
+  box-shadow: var(--shadow-xl);
+}
+.login-logo {
+  font: italic var(--f-3xl) var(--f-deco);
+  color: var(--accent-text1);
+  margin-bottom: var(--spacing-2xs);
+}
+.login-sub {
+  font: 300 var(--f-xs) var(--f-mono);
+  color: var(--mono-text1);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  margin-bottom: var(--spacing-l);
+}
+.login-card .field { text-align: left; margin-bottom: var(--spacing-s); }
+.login-card .btn { width: 100%; }
+
+/* ─────────────────────────── TOAST ─────────────────────────── */
+
+#toast {
+  position: fixed; bottom: var(--spacing); right: var(--spacing);
+  background: var(--mono-component3); color: var(--mono-text2);
+  border: 1px solid var(--mono-border2);
+  font: 300 var(--f-xs) var(--f-mono);
+  padding: var(--spacing-xs) var(--spacing-s);
+  border-radius: var(--br-l);
+  letter-spacing: .06em;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s, transform .3s;
+  transform: translateY(8px);
+  z-index: 200; max-width: 320px;
+  box-shadow: var(--shadow-lg);
+  display: flex; align-items: center; gap: var(--spacing-xs);
+}
+#toast.show { opacity: 1; transform: translateY(0); }
+#toast.err { background: var(--danger-surface); border-color: var(--danger-border); color: var(--danger-text); }
+#toast.ok  { background: var(--success-surface); border-color: var(--success-border); color: var(--success-text); }
+
+/* ─────────────────────────── EMPTY STATE ─────────────────────────── */
+
+.empty {
+  text-align: center; padding: var(--spacing-xl);
+  color: var(--mono-text1);
+  font: 300 var(--f-s) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .1em;
+}
+.empty i { display: block; font-size: 2.5rem; opacity: .3; margin-bottom: var(--spacing-xs); }
+
+/* ─────────────────────────── VIEW TOGGLE ─────────────────────────── */
+
+.view-toggle { display: flex; border: 1px solid var(--mono-border2); border-radius: var(--br); overflow: hidden; }
+.view-btn {
+  padding: var(--spacing-3xs) var(--spacing-xs);
+  background: none; border: none; color: var(--mono-text1); cursor: pointer;
+  transition: all .2s;
+}
+.view-btn.active, .view-btn:hover { background: var(--mono-component2); color: var(--accent-text1); }
+
+/* ─────────────────────────── IMAGE PREVIEW ─────────────────────────── */
+
+.img-preview-wrap {
+  width: 100%; aspect-ratio: 16/9;
+  background: var(--mono-component2);
+  border: 1px solid var(--mono-border1);
+  border-radius: var(--br);
+  overflow: hidden; display: flex; align-items: center; justify-content: center;
+  margin-top: var(--spacing-2xs);
+}
+.img-preview-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.img-preview-wrap .placeholder { color: var(--mono-border2); font-size: 2rem; }
+
+/* ─────────────────────────── TIENDA ITEMS ─────────────────────────── */
+
+.tienda-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--spacing-s);
+  margin-top: var(--spacing-s);
+}
+
+.tienda-item-card {
+  background: var(--mono-component1);
+  border: 1px solid var(--mono-border1);
+  border-radius: var(--br);
+  overflow: hidden;
+  transition: var(--transition-ease);
+  position: relative;
+  display: flex; flex-direction: column;
+}
+.tienda-item-card:hover { border-color: var(--accent-border2); box-shadow: var(--shadow-lg); }
+
+.tienda-item-media {
+  aspect-ratio: 4/3;
+  background: var(--mono-component2);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.tienda-item-media img { width: 100%; height: 100%; object-fit: cover; }
+.tienda-item-media .media-svg {
+  width: 60%; height: 60%;
+  color: var(--accent-solid1);
+  display: flex; align-items: center; justify-content: center;
+}
+.tienda-item-media .media-svg svg { width: 100%; height: 100%; }
+.tienda-item-media .no-media { font-size: 2.5rem; color: var(--mono-border2); }
+
+.tienda-item-cat {
+  position: absolute; top: var(--spacing-xs); left: var(--spacing-xs);
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .08em;
+  background: var(--mono-surface1);
+  border: 1px solid var(--mono-border2);
+  color: var(--mono-text1);
+  padding: 2px var(--spacing-2xs);
+  border-radius: var(--br-pill);
+}
+
+.tienda-item-body { padding: var(--spacing-xs); flex: 1; display: flex; flex-direction: column; gap: var(--spacing-3xs); }
+.tienda-item-name { font: italic var(--f-base) var(--f-deco); }
+.tienda-item-desc { font: 300 var(--f-xs) var(--f-sans); color: var(--mono-text1); flex: 1; }
+.tienda-item-bonus { font: 300 var(--f-xs) var(--f-mono); color: var(--accent-text1); }
+.tienda-item-price {
+  font: 500 var(--f-l) var(--f-deco);
+  color: var(--accent-text1);
+  display: flex; align-items: baseline; gap: .3em;
+}
+.tienda-item-price small { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
+
+.tienda-item-tags { display: flex; flex-wrap: wrap; gap: var(--spacing-3xs); margin-top: var(--spacing-3xs); }
+.tienda-tag {
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .06em;
+  background: var(--mono-component2);
+  border: 1px solid var(--mono-border1);
+  color: var(--mono-text1);
+  padding: 1px var(--spacing-3xs);
+  border-radius: var(--br-pill);
+}
+
+.tienda-item-actions {
+  display: flex; gap: var(--spacing-2xs); margin-top: var(--spacing-xs);
+  padding-top: var(--spacing-xs); border-top: 1px solid var(--mono-border1);
+}
+.tienda-item-actions .btn { flex: 1; }
+
+.tienda-orden-badge {
+  position: absolute; top: var(--spacing-xs); right: var(--spacing-xs);
+  background: var(--mono-surface1);
+  border: 1px solid var(--mono-border2);
+  color: var(--mono-solid1);
+  font: 300 var(--f-xs) var(--f-mono);
+  padding: 2px var(--spacing-3xs);
+  border-radius: var(--br-small);
+}
+
+/* ── Tienda list view ── */
+.tienda-list-row {
+  display: grid; grid-template-columns: 56px 1fr auto auto auto auto;
+  gap: var(--spacing-xs); align-items: center;
+  padding: var(--spacing-xs);
+  border-bottom: 1px solid var(--mono-border1);
+  transition: background .2s;
+}
+.tienda-list-row:hover { background: var(--mono-component1); }
+.tienda-list-row:last-child { border-bottom: none; }
+.tienda-list-thumb {
+  width: 56px; height: 42px;
+  background: var(--mono-component2);
+  border-radius: var(--br);
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--accent-solid1);
+}
+.tienda-list-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.tienda-list-thumb svg { width: 60%; height: 60%; }
+.tienda-list-info .name { font: italic var(--f-base) var(--f-deco); }
+.tienda-list-info .meta { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
+
+/* ── Tienda filter tabs ── */
+.tienda-cat-tabs { display: flex; flex-wrap: wrap; gap: var(--spacing-2xs); margin-bottom: var(--spacing-s); }
+
+/* ── SVG textarea preview ── */
+.svg-preview-wrap {
+  width: 100%; aspect-ratio: 4/3;
+  background: var(--mono-component2);
+  border: 1px solid var(--mono-border1);
+  border-radius: var(--br);
+  overflow: hidden; display: flex; align-items: center; justify-content: center;
+  margin-top: var(--spacing-2xs);
+  color: var(--accent-solid1);
+}
+.svg-preview-wrap svg { max-width: 60%; max-height: 60%; }
+
+@media(max-width:700px) {
+  .tienda-grid { grid-template-columns: 1fr 1fr; }
+  .tienda-list-row { grid-template-columns: 56px 1fr auto auto; }
+  .tienda-list-row .tienda-list-price, .tienda-list-row .tienda-list-orden { display: none; }
+}
+
+
+</style>
+</head>
+<body>
+
+<!-- ─────────── LOGIN ─────────── -->
+<div id="loginWrap">
+  <div class="login-card">
+    <div class="login-logo">Spectra</div>
+    <div class="login-sub">Panel de administración</div>
+    <div class="field">
+      <label>Contraseña</label>
+      <input type="password" id="adminPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()">
+    </div>
+    <button class="btn" onclick="adminLogin()">
+      <i class="bi bi-shield-lock"></i> Entrar
+    </button>
+  </div>
+</div>
+
+<!-- ─────────── ADMIN UI ─────────── -->
+<div id="adminUI" style="display:none;">
+
+  <nav class="admin-nav">
+    <div class="nav-brand">Spectra <small>Admin</small></div>
+    <button class="nav-tab active" data-page="usuarios" onclick="goTo('usuarios')">
+      <i class="bi bi-people"></i> Usuarios
+    </button>
+    <button class="nav-tab" data-page="habilidades" onclick="goTo('habilidades')">
+      <i class="bi bi-stars"></i> Habilidades
+    </button>
+    <button class="nav-tab" data-page="pnjs" onclick="goTo('pnjs')">
+      <i class="bi bi-person-vcard"></i> PNJs
+    </button>
+    <button class="nav-tab" data-page="tienda" onclick="goTo('tienda')">
+      <i class="bi bi-shop"></i> Tienda
+    </button>
+    <button class="nav-tab" data-page="visibilidad" onclick="goTo('visibilidad')">
+      <i class="bi bi-eye"></i> Visibilidad
+    </button>
+  </nav>
+
+  <!-- ══ TAB: USUARIOS ══ -->
+  <div class="page active" id="page-usuarios">
+    <div class="page-header">
+      <div class="page-title">Gestión de <em>usuarios</em></div>
+      <div class="page-subtitle">Asigna parlamentos · Edita habilidades · Aprueba solicitudes</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title" id="usersCountLabel">Usuarios</span>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Usuario</th><th>Personaje</th><th>Parlamento</th>
+              <th>Registro</th><th>Estado</th><th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: HABILIDADES ══ -->
+  <div class="page" id="page-habilidades">
+    <div class="page-header">
+      <div class="page-title">Definir <em>habilidades</em></div>
+      <div class="page-subtitle">Por parlamento · Los usuarios ven sus niveles en el perfil</div>
+    </div>
+
+    <div class="parl-tabs" id="parlTabs"></div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Habilidades · <span id="skillsParlLabel" style="color:var(--accent-text1)">—</span></span>
+        <div class="card-actions">
+          <button class="btn btn-ghost btn-sm" onclick="openAddSkill()">
+            <i class="bi bi-plus-lg"></i> Añadir
+          </button>
+        </div>
+      </div>
+      <div id="skillsDefList">
+        <div class="empty"><i class="bi bi-stars"></i>Sin habilidades definidas</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: PNJs ══ -->
+  <div class="page" id="page-pnjs">
+    <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:var(--spacing-xs);">
+      <div>
+        <div class="page-title">Personajes <em>no jugables</em></div>
+        <div class="page-subtitle">Crea · Edita · Ordena · Elimina</div>
+      </div>
+      <div style="display:flex;gap:var(--spacing-xs);align-items:center;flex-wrap:wrap;">
+        <div class="view-toggle">
+          <button class="view-btn active" id="viewGrid" onclick="setPnjView('grid')" title="Vista cuadrícula"><i class="bi bi-grid-3x3-gap"></i></button>
+          <button class="view-btn" id="viewList" onclick="setPnjView('list')" title="Vista lista"><i class="bi bi-list-ul"></i></button>
+        </div>
+        <button class="btn" onclick="openAddPnj()">
+          <i class="bi bi-person-plus"></i> Nuevo PNJ
+        </button>
+      </div>
+    </div>
+
+    <!-- PNJ filter pills -->
+    <div class="parl-tabs" id="pnjFilterTabs">
+      <button class="parl-tab active" data-g="all">Todos</button>
+      <button class="parl-tab" data-p="primigenios" data-g="primigenios">Primigenios</button>
+      <button class="parl-tab" data-p="arquitectos" data-g="arquitectos">Arquitectos</button>
+      <button class="parl-tab" data-p="sabios" data-g="sabios">Sabios</button>
+      <button class="parl-tab" data-p="caoticos" data-g="caoticos">Caóticos</button>
+      <button class="parl-tab" data-p="exterminadores" data-g="exterminadores">Exterminadores</button>
+      <button class="parl-tab" data-p="staff" data-g="staff">Staff</button>
+    </div>
+
+    <!-- Grid view -->
+    <div class="pnj-thumb-grid" id="pnjGrid"></div>
+    <!-- List view -->
+    <div class="pnj-list card" id="pnjList" style="display:none;"></div>
+
+  </div>
+
+  <!-- ══ TAB: TIENDA ══ -->
+  <div class="page" id="page-tienda">
+    <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:var(--spacing-xs);">
+      <div>
+        <div class="page-title">Items de <em>tienda</em></div>
+        <div class="page-subtitle">Crea · Edita · Ordena · Elimina · Filtra por categoría</div>
+      </div>
+      <div style="display:flex;gap:var(--spacing-xs);align-items:center;flex-wrap:wrap;">
+        <div class="view-toggle">
+          <button class="view-btn active" id="tiendaViewGrid" onclick="setTiendaView('grid')" title="Vista cuadrícula"><i class="bi bi-grid-3x3-gap"></i></button>
+          <button class="view-btn" id="tiendaViewList" onclick="setTiendaView('list')" title="Vista lista"><i class="bi bi-list-ul"></i></button>
+        </div>
+        <button class="btn" onclick="openAddItem()">
+          <i class="bi bi-plus-lg"></i> Nuevo item
+        </button>
+      </div>
+    </div>
+
+    <!-- Category filter pills (rendered dynamically) -->
+    <div class="tienda-cat-tabs" id="tiendaCatTabs">
+      <button class="parl-tab active" data-cat="all">Todos</button>
+    </div>
+
+    <!-- Grid view -->
+    <div class="tienda-grid" id="tiendaGrid"></div>
+    <!-- List view -->
+    <div class="card" id="tiendaList" style="display:none; padding:0;"></div>
+  </div>
+
+  <!-- ══ TAB: VISIBILIDAD ══ -->
+  <div class="page" id="page-visibilidad">
+    <div class="page-header">
+      <div class="page-title">Visibilidad de <em>campos</em></div>
+      <div class="page-subtitle">Decide qué aparece públicamente en memberlist y perfiles</div>
+    </div>
+    <div class="card" id="visibilityCard">
+      <div class="card-header"><span class="card-title">Campos públicos</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODAL: EDITAR USUARIO ═══════════════ -->
+<div class="modal-overlay" id="editUserModal">
+  <div class="modal">
+    <div class="modal-title">Editar <em id="editUserNameTitle">—</em></div>
+
+    <div class="form-list">
+      <div class="field">
+        <label>Parlamento</label>
+        <select id="editParlamento" onchange="onParlamentoChange()">
+          <option value="">Sin asignar</option>
+          <option value="primigenios">Primigenios</option>
+          <option value="arquitectos">Arquitectos</option>
+          <option value="sabios">Sabios</option>
+          <option value="caoticos">Caóticos</option>
+          <option value="staff">Staff</option>
+        </select>
+      </div>
+
+      <div style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);text-transform:uppercase;letter-spacing:.1em;margin-top:var(--spacing-xs);">
+        Niveles de habilidad
+      </div>
+      <div id="editSkillsRows"><div class="empty" style="padding:var(--spacing-s) 0;"><i class="bi bi-stars"></i>Asigna un parlamento</div></div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeEditUser()">Cancelar</button>
+      <button class="btn" onclick="saveUserEdits()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODAL: NUEVA HABILIDAD ═══════════════ -->
+<div class="modal-overlay" id="addSkillModal">
+  <div class="modal">
+    <div class="modal-title">Nueva <em>habilidad</em></div>
+    <div class="form-list">
+      <div class="grid-2">
+        <div class="field">
+          <label>Icono (emoji)</label>
+          <input type="text" id="newSkillIcon" placeholder="⚔️" maxlength="4">
+        </div>
+        <div class="field">
+          <label>Clave interna</label>
+          <input type="text" id="newSkillKey" placeholder="magia_ofensiva">
+          <small>sin espacios</small>
+        </div>
+      </div>
+      <div class="field">
+        <label>Nombre visible</label>
+        <input type="text" id="newSkillName" placeholder="Magia Ofensiva">
+      </div>
+      <div class="field">
+        <label>Descripción corta</label>
+        <input type="text" id="newSkillDesc" placeholder="Dominio del ataque mágico">
+      </div>
+      <div class="field">
+        <label>Nivel máximo</label>
+        <input type="number" id="newSkillMax" value="5" min="1" max="20">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeAddSkill()">Cancelar</button>
+      <button class="btn" onclick="saveNewSkill()">Añadir</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODAL: NUEVO / EDITAR PNJ ═══════════════ -->
+<div class="modal-overlay" id="pnjModal">
+  <div class="modal" style="max-width:640px;">
+    <div class="modal-title" id="pnjModalTitle">Nuevo <em>PNJ</em></div>
+    <input type="hidden" id="pnjEditId">
+
+    <div class="form-list">
+      <div class="grid-2">
+        <div class="field">
+          <label>Nombre del personaje</label>
+          <input type="text" id="pnjNombre" placeholder="Ej: Mara Voss">
+        </div>
+        <div class="field">
+          <label>Edad</label>
+          <input type="text" id="pnjEdad" placeholder="Ej: 34 años">
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Grupo / Parlamento</label>
+          <select id="pnjGrupo">
+            <option value="">Sin grupo</option>
+            <option value="primigenios">Primigenios</option>
+            <option value="arquitectos">Arquitectos</option>
+            <option value="sabios">Sabios</option>
+            <option value="caoticos">Caóticos</option>
+            <option value="exterminadores">Exterminadores</option>
+            <option value="staff">Staff</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Ocupación / Rol</label>
+          <input type="text" id="pnjOcupacion" placeholder="Ej: Guardiana del Umbral">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>URL de imagen</label>
+        <input type="url" id="pnjImagen" placeholder="https://..." oninput="previewPnjImg(this.value)">
+        <small>Imagen cuadrada o vertical recomendada</small>
+        <div class="img-preview-wrap" id="pnjImgPreview">
+          <span class="placeholder"><i class="bi bi-image"></i></span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Historia / descripción</label>
+        <textarea id="pnjHistoria" placeholder="Escribe aquí la historia del personaje..." rows="5"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Orden de aparición</label>
+        <input type="number" id="pnjOrden" value="0" min="0">
+        <small>Los personajes se ordenan de menor a mayor</small>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closePnjModal()">Cancelar</button>
+      <button class="btn" onclick="savePnj()">
+        <i class="bi bi-check-lg"></i> Guardar PNJ
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODAL: NUEVO / EDITAR ITEM TIENDA ═══════════════ -->
+<div class="modal-overlay" id="itemModal">
+  <div class="modal" style="max-width:680px;">
+    <div class="modal-title" id="itemModalTitle">Nuevo <em>item</em></div>
+    <input type="hidden" id="itemEditId">
+
+    <div class="form-list">
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Nombre del item</label>
+          <input type="text" id="itemNombre" placeholder="Ej: Pegar Hostias">
+        </div>
+        <div class="field">
+          <label>ID interno</label>
+          <input type="text" id="itemId" placeholder="ej: pegar_hostias">
+          <small>Sin espacios · único · se usa en el output del foro</small>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Categoría</label>
+          <input type="text" id="itemCategoria" placeholder="Ej: Habilidades" list="categoriasSuggestions">
+          <datalist id="categoriasSuggestions"></datalist>
+        </div>
+        <div class="field">
+          <label>Tipo</label>
+          <input type="text" id="itemTipo" placeholder="Ej: Habilidad">
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Precio</label>
+          <input type="number" id="itemPrecio" placeholder="50" min="0" step="1">
+        </div>
+        <div class="field">
+          <label>Orden de aparición</label>
+          <input type="number" id="itemOrden" value="0" min="0">
+          <small>Menor número = aparece antes</small>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Descripción</label>
+        <input type="text" id="itemDescripcion" placeholder="Permite pegar hostias como panes">
+      </div>
+
+      <div class="field">
+        <label>Bonus</label>
+        <input type="text" id="itemBonus" placeholder="Ej: +2 ataque">
+      </div>
+
+      <div class="field">
+        <label>Tags <small style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">separados por comas</small></label>
+        <input type="text" id="itemTags" placeholder="mente, magia, habilidad">
+      </div>
+
+      <div class="field">
+        <label>Imagen</label>
+        <div style="display:flex;gap:var(--spacing-xs);margin-bottom:var(--spacing-2xs);">
+          <button type="button" class="btn btn-ghost btn-sm" id="imgTypeUrl" onclick="setImgType('url')">URL de imagen</button>
+          <button type="button" class="btn btn-sm" id="imgTypeSvg" onclick="setImgType('svg')">SVG inline</button>
+        </div>
+        <div id="imgUrlWrap" style="display:none;">
+          <input type="url" id="itemImagenUrl" placeholder="https://..." oninput="previewItemImg()">
+        </div>
+        <div id="imgSvgWrap">
+          <textarea id="itemImagenSvg" rows="5" placeholder='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">&#10;  ...&#10;</svg>' oninput="previewItemImg()"></textarea>
+          <small>Pega aquí el SVG completo incluyendo la etiqueta &lt;svg&gt;</small>
+        </div>
+        <div class="svg-preview-wrap" id="itemImgPreview">
+          <i class="bi bi-image" style="font-size:2rem;color:var(--mono-border2);"></i>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeItemModal()">Cancelar</button>
+      <button class="btn" onclick="saveItem()">
+        <i class="bi bi-check-lg"></i> Guardar item
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"><i class="bi bi-check-circle"></i><span id="toastMsg"></span></div>
+
+
+<!-- ═══════════════ FIREBASE + LOGIC ═══════════════ -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getFirestore, collection, getDocs, query, orderBy }
-  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import {
+  getFirestore, doc, getDoc, setDoc, getDocs,
+  collection, updateDoc, addDoc, deleteDoc, query, orderBy
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA_DTdVWhe54PRrPlFFmIkdbMuotiSssZU",
@@ -20,43 +1133,736 @@ const firebaseConfig = {
   appId: "1:321843589344:web:714ca78124d8aef4d66085"
 };
 
+const ADMIN_PASSWORD = 'Spectra4*';
+const PARLAMENTOS = ['primigenios','arquitectos','sabios','caoticos','staff'];
+const GRUPOS_COLOR = {
+  primigenios: '#A53E67', arquitectos: '#0C459C',
+  sabios: '#00674E', caoticos: '#5A4160',
+  exterminadores: '#A53E4A', staff: '#b5a081'
+};
+
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 
-// El nombre del array que lee tu tienda (definido en SHOP_CONFIG.itemsKey)
-const ITEMS_KEY = 'TIENDA_HABILIDADES';
+// ── STATE ──
+let allUsers = {};
+let skillsConfig = {};
+let visConfig = {};
+let allPNJs = [];
+let allItems = [];
+let tiendaFilter = 'all';
+let tiendaView = 'grid';
+let imgType = 'svg';
+let pnjFilter = 'all';
+let pnjView = 'grid';
+let currentParlamento = PARLAMENTOS[0];
+let editingUser = null;
 
-(async () => {
-  try {
-    const q    = query(collection(db, 'tienda_items'), orderBy('orden', 'asc'));
-    const snap = await getDocs(q);
+const fieldsDef = [
+  { key: 'charName',      label: 'Nombre del personaje' },
+  { key: 'charAge',       label: 'Edad del personaje' },
+  { key: 'charOcupacion', label: 'Ocupación' },
+  { key: 'charDesc',      label: 'Descripción' },
+  { key: 'fichaUrl',      label: 'Enlace a ficha' },
+  { key: 'baulUrl',       label: 'Enlace a baúl' },
+  { key: 'skills',        label: 'Habilidades / niveles' },
+];
 
-    // Convierte cada documento Firestore al formato exacto que espera /19559.js
-    window[ITEMS_KEY] = snap.docs.map(d => {
-      const data = d.data();
-      return {
-        id:          data.itemId      || d.id,
-        nombre:      data.nombre      || '',
-        categoria:   data.categoria   || '',
-        tipo:        data.tipo        || '',
-        precio:      data.precio      ?? 0,
-        descripcion: data.descripcion || '',
-        bonus:       data.bonus       || '',
-        tags:        data.tags        || [],
-        // imagen: prioriza URL; si no, usa el SVG inline guardado en admin
-        imagen:      data.imagen_url  || data.imagen_svg || ''
-      };
-    });
-
-  } catch (e) {
-    console.warn('[Spectra Tienda] Firebase falló, tienda vacía:', e);
-    window[ITEMS_KEY] = [];
+// ── LOGIN ──
+window.adminLogin = () => {
+  if (document.getElementById('adminPass').value !== ADMIN_PASSWORD) {
+    toast('Contraseña incorrecta', 'err'); return;
   }
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('adminUI').style.display = 'block';
+  loadAll();
+};
 
-  // ── Carga /19559.js AHORA que el array ya existe ──
-  const s    = document.createElement('script');
-  s.src      = '/19559.js';
-  s.onerror  = () => console.error('[Spectra Tienda] No se pudo cargar /19559.js');
-  document.body.appendChild(s);
-})();
+async function loadAll() {
+  // Users
+  const uSnap = await getDocs(collection(db,'users'));
+  allUsers = {};
+  uSnap.forEach(d => { allUsers[d.id] = d.data(); });
+
+  // Skills config
+  const sc = await getDoc(doc(db,'config','skills'));
+  skillsConfig = sc.exists() ? sc.data() : {};
+
+  // Field visibility
+  const vc = await getDoc(doc(db,'config','fieldVisibility'));
+  visConfig = vc.exists() ? vc.data() : {};
+  fieldsDef.forEach(f => { if (visConfig[f.key] === undefined) visConfig[f.key] = true; });
+
+  // PNJs
+  await loadPNJs();
+
+  // Tienda items
+  await loadItems();
+
+  renderUsers();
+  renderParlTabs();
+  renderSkillsDef();
+  renderVisibility();
+}
+
+// ══════════════════════════════
+//  USUARIOS
+// ══════════════════════════════
+function renderUsers() {
+  const users = Object.values(allUsers);
+  document.getElementById('usersCountLabel').textContent = `${users.length} usuario${users.length !== 1 ? 's' : ''}`;
+
+  document.getElementById('usersTableBody').innerHTML = users.map(u => {
+    const pending = hasPendingSkills(u);
+    const parlColor = GRUPOS_COLOR[u.parlamento] || 'var(--mono-text1)';
+    return `
+      <tr>
+        <td style="font:300 var(--f-xs) var(--f-mono);">${u.username || '—'}</td>
+        <td>${u.charName || '—'}</td>
+        <td>
+          <span style="display:inline-flex;align-items:center;gap:.4em;font:300 var(--f-xs) var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:${parlColor};">
+            <span style="width:6px;height:6px;border-radius:50%;background:${parlColor};flex-shrink:0;"></span>
+            ${u.parlamento || '—'}
+          </span>
+        </td>
+        <td style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">
+          ${u.createdAt ? new Date(u.createdAt).toLocaleDateString('es') : '—'}
+        </td>
+        <td>${pending ? '<span class="badge badge-pending"><i class="bi bi-hourglass-split"></i>Pendiente</span>' : '<span class="badge badge-success"><i class="bi bi-check"></i>OK</span>'}</td>
+        <td>
+          <button class="btn btn-ghost btn-sm" onclick="openEditUser('${u.username}')">
+            <i class="bi bi-pencil"></i> Editar
+          </button>
+        </td>
+      </tr>`;
+  }).join('') || `<tr><td colspan="6"><div class="empty"><i class="bi bi-people"></i>Sin usuarios registrados</div></td></tr>`;
+}
+
+function hasPendingSkills(u) {
+  if (!u.skills) return false;
+  return Object.values(u.skills).some(s => s.pending);
+}
+
+// ── EDIT USER MODAL ──
+window.openEditUser = (username) => {
+  editingUser = username;
+  const u = allUsers[username];
+  document.getElementById('editUserNameTitle').textContent = username;
+  document.getElementById('editParlamento').value = u.parlamento || '';
+  renderEditSkills(u.parlamento || '', u.skills || {});
+  document.getElementById('editUserModal').classList.add('show');
+};
+
+window.onParlamentoChange = () => {
+  const u = allUsers[editingUser];
+  const parl = document.getElementById('editParlamento').value;
+  renderEditSkills(parl, u.skills || {});
+};
+
+function renderEditSkills(parl, userSkills) {
+  const skills = skillsConfig[parl] || [];
+  document.getElementById('editSkillsRows').innerHTML = skills.length
+    ? skills.map(sk => {
+        const us = userSkills[sk.key] || { level: 0 };
+        const pct = Math.round((us.level / (sk.maxLevel || 5)) * 100);
+        return `
+          <div class="skill-level-row">
+            <span class="skill-level-icon">${sk.icon}</span>
+            <span class="skill-level-name">${sk.name}</span>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-fill" style="width:${pct}%"></div>
+            </div>
+            <input class="skill-level-input" type="number" min="0" max="${sk.maxLevel||5}"
+                   value="${us.level}" id="skillinput_${sk.key}">
+            <span class="skill-level-max">/ ${sk.maxLevel||5}</span>
+            ${us.pending ? '<span class="badge badge-pending"><i class="bi bi-hourglass-split"></i>Solicitud</span>' : ''}
+          </div>`;
+      }).join('')
+    : '<div class="empty" style="padding:var(--spacing-s) 0;"><i class="bi bi-stars"></i>Sin habilidades en este parlamento</div>';
+}
+
+window.saveUserEdits = async () => {
+  const u = allUsers[editingUser];
+  const newParl = document.getElementById('editParlamento').value;
+  const skills = skillsConfig[newParl] || [];
+  const newSkills = { ...(u.skills || {}) };
+
+  skills.forEach(sk => {
+    const inp = document.getElementById(`skillinput_${sk.key}`);
+    if (inp) {
+      const level = Math.min(parseInt(inp.value) || 0, sk.maxLevel || 5);
+      newSkills[sk.key] = { level, maxLevel: sk.maxLevel || 5, pending: false };
+    }
+  });
+
+  await updateDoc(doc(db,'users', editingUser), { parlamento: newParl, skills: newSkills });
+  allUsers[editingUser] = { ...u, parlamento: newParl, skills: newSkills };
+  renderUsers();
+  closeEditUser();
+  toast(`Perfil de ${editingUser} actualizado`, 'ok');
+};
+
+window.closeEditUser = () => {
+  document.getElementById('editUserModal').classList.remove('show');
+  editingUser = null;
+};
+
+// ══════════════════════════════
+//  HABILIDADES
+// ══════════════════════════════
+function renderParlTabs() {
+  document.getElementById('parlTabs').innerHTML = PARLAMENTOS.map(p => `
+    <button class="parl-tab ${p === currentParlamento ? 'active' : ''}" data-p="${p}" onclick="selectParlamento('${p}')">${p.toUpperCase()}</button>
+  `).join('');
+}
+
+window.selectParlamento = (p) => {
+  currentParlamento = p;
+  renderParlTabs();
+  renderSkillsDef();
+};
+
+function renderSkillsDef() {
+  document.getElementById('skillsParlLabel').textContent = currentParlamento.toUpperCase();
+  const skills = skillsConfig[currentParlamento] || [];
+  document.getElementById('skillsDefList').innerHTML = skills.length
+    ? skills.map((sk, i) => `
+        <div class="skill-def-item">
+          <span class="skill-icon">${sk.icon}</span>
+          <div class="skill-info">
+            <div class="name">${sk.name}</div>
+            <div class="desc">${sk.description || ''}</div>
+          </div>
+          <span class="skill-max">Nv. máx. ${sk.maxLevel || 5}</span>
+          <button class="btn btn-danger btn-sm" onclick="deleteSkill(${i})">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>`)
+      .join('')
+    : '<div class="empty"><i class="bi bi-stars"></i>Sin habilidades definidas</div>';
+}
+
+window.openAddSkill  = () => document.getElementById('addSkillModal').classList.add('show');
+window.closeAddSkill = () => document.getElementById('addSkillModal').classList.remove('show');
+
+window.saveNewSkill = async () => {
+  const icon = document.getElementById('newSkillIcon').value.trim();
+  const key  = document.getElementById('newSkillKey').value.trim().replace(/\s+/g,'_');
+  const name = document.getElementById('newSkillName').value.trim();
+  const desc = document.getElementById('newSkillDesc').value.trim();
+  const max  = parseInt(document.getElementById('newSkillMax').value) || 5;
+  if (!key || !name) { toast('Clave y nombre son obligatorios', 'err'); return; }
+
+  if (!skillsConfig[currentParlamento]) skillsConfig[currentParlamento] = [];
+  skillsConfig[currentParlamento].push({ key, icon: icon || '⭐', name, description: desc, maxLevel: max });
+  await setDoc(doc(db,'config','skills'), skillsConfig);
+  renderSkillsDef();
+  closeAddSkill();
+  toast(`Habilidad "${name}" añadida`, 'ok');
+};
+
+window.deleteSkill = async (idx) => {
+  if (!confirm('¿Eliminar esta habilidad?')) return;
+  skillsConfig[currentParlamento].splice(idx, 1);
+  await setDoc(doc(db,'config','skills'), skillsConfig);
+  renderSkillsDef();
+  toast('Habilidad eliminada');
+};
+
+// ══════════════════════════════
+//  PNJs
+// ══════════════════════════════
+async function loadPNJs() {
+  try {
+    const q = query(collection(db,'pnjs'), orderBy('orden','asc'));
+    const snap = await getDocs(q);
+    allPNJs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch {
+    const snap = await getDocs(collection(db,'pnjs'));
+    allPNJs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    allPNJs.sort((a,b) => (a.orden||0) - (b.orden||0));
+  }
+  renderPNJs();
+}
+
+function renderPNJs() {
+  const filtered = pnjFilter === 'all' ? allPNJs : allPNJs.filter(p => p.grupo === pnjFilter);
+
+  if (pnjView === 'grid') {
+    document.getElementById('pnjGrid').style.display = '';
+    document.getElementById('pnjList').style.display = 'none';
+    document.getElementById('pnjGrid').innerHTML = filtered.length
+      ? filtered.map(p => pnjThumbHTML(p)).join('')
+      : `<div class="empty" style="grid-column:1/-1"><i class="bi bi-person-slash"></i>Sin PNJs en este grupo</div>`;
+  } else {
+    document.getElementById('pnjGrid').style.display = 'none';
+    const list = document.getElementById('pnjList');
+    list.style.display = 'flex';
+    list.innerHTML = filtered.length
+      ? filtered.map(p => pnjListRowHTML(p)).join('')
+      : `<div class="empty"><i class="bi bi-person-slash"></i>Sin PNJs en este grupo</div>`;
+  }
+}
+
+function pnjThumbHTML(p) {
+  const color = GRUPOS_COLOR[p.grupo] || '#b5a081';
+  return `
+    <div class="pnj-thumb" style="--grupo-color:${color}">
+      <span class="drag-handle" title="Reordenar"><i class="bi bi-grip-vertical"></i></span>
+      <div class="pnj-thumb-img">
+        ${p.imagen
+          ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy">`
+          : `<div class="no-img"><i class="bi bi-person"></i></div>`}
+      </div>
+      <div class="pnj-thumb-body">
+        <div class="pnj-thumb-name">${p.nombre || 'Sin nombre'}</div>
+        <div class="pnj-thumb-meta">
+          <span class="pnj-grupo-dot" style="background:${color}"></span>
+          ${p.grupo || '—'}
+          ${p.ocupacion ? ` · ${p.ocupacion}` : ''}
+        </div>
+        <div class="pnj-thumb-actions">
+          <button class="btn btn-ghost btn-sm" onclick="openEditPnj('${p.id}')">
+            <i class="bi bi-pencil"></i> Editar
+          </button>
+          <button class="btn btn-danger btn-sm" onclick="deletePnj('${p.id}','${(p.nombre||'').replace(/'/g,'')}')">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function pnjListRowHTML(p) {
+  const color = GRUPOS_COLOR[p.grupo] || '#b5a081';
+  return `
+    <div class="pnj-list-row">
+      ${p.imagen
+        ? `<img class="pnj-list-img" src="${p.imagen}" alt="" loading="lazy">`
+        : `<div class="pnj-list-img placeholder"><i class="bi bi-person"></i></div>`}
+      <div class="pnj-list-info">
+        <div class="name">${p.nombre || 'Sin nombre'}</div>
+        <div class="meta">
+          <span class="pnj-grupo-dot" style="background:${color}"></span>
+          ${p.grupo || '—'}
+          ${p.edad ? ` · ${p.edad}` : ''}
+          ${p.ocupacion ? ` · ${p.ocupacion}` : ''}
+        </div>
+      </div>
+      <span style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">#${p.orden ?? '—'}</span>
+      <button class="btn btn-ghost btn-sm" onclick="openEditPnj('${p.id}')">
+        <i class="bi bi-pencil"></i> Editar
+      </button>
+      <button class="btn btn-danger btn-sm" onclick="deletePnj('${p.id}','${(p.nombre||'').replace(/'/g,'')}')">
+        <i class="bi bi-trash"></i>
+      </button>
+    </div>`;
+}
+
+// ── PNJ FILTER ──
+document.getElementById('pnjFilterTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.parl-tab');
+  if (!btn) return;
+  pnjFilter = btn.dataset.g;
+  document.querySelectorAll('#pnjFilterTabs .parl-tab').forEach(b => b.classList.toggle('active', b === btn));
+  renderPNJs();
+});
+
+// ── PNJ VIEW TOGGLE ──
+window.setPnjView = (v) => {
+  pnjView = v;
+  document.getElementById('viewGrid').classList.toggle('active', v === 'grid');
+  document.getElementById('viewList').classList.toggle('active', v === 'list');
+  renderPNJs();
+};
+
+// ── PNJ MODAL: OPEN/CLOSE ──
+window.openAddPnj = () => {
+  document.getElementById('pnjModalTitle').innerHTML = 'Nuevo <em>PNJ</em>';
+  document.getElementById('pnjEditId').value = '';
+  ['pnjNombre','pnjEdad','pnjOcupacion','pnjImagen','pnjHistoria'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('pnjGrupo').value = '';
+  document.getElementById('pnjOrden').value = allPNJs.length;
+  document.getElementById('pnjImgPreview').innerHTML = '<span class="placeholder"><i class="bi bi-image"></i></span>';
+  document.getElementById('pnjModal').classList.add('show');
+};
+
+window.openEditPnj = (id) => {
+  const p = allPNJs.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('pnjModalTitle').innerHTML = 'Editar <em>PNJ</em>';
+  document.getElementById('pnjEditId').value = id;
+  document.getElementById('pnjNombre').value   = p.nombre    || '';
+  document.getElementById('pnjEdad').value      = p.edad      || '';
+  document.getElementById('pnjGrupo').value     = p.grupo     || '';
+  document.getElementById('pnjOcupacion').value = p.ocupacion || '';
+  document.getElementById('pnjImagen').value    = p.imagen    || '';
+  document.getElementById('pnjHistoria').value  = p.historia  || '';
+  document.getElementById('pnjOrden').value     = p.orden     ?? 0;
+  previewPnjImg(p.imagen || '');
+  document.getElementById('pnjModal').classList.add('show');
+};
+
+window.closePnjModal = () => document.getElementById('pnjModal').classList.remove('show');
+
+window.previewPnjImg = (url) => {
+  const wrap = document.getElementById('pnjImgPreview');
+  if (url && url.startsWith('http')) {
+    wrap.innerHTML = `<img src="${url}" alt="" onerror="this.parentElement.innerHTML='<span class=\\'placeholder\\'><i class=\\'bi bi-broken-image\\'></i></span>'">`;
+  } else {
+    wrap.innerHTML = '<span class="placeholder"><i class="bi bi-image"></i></span>';
+  }
+};
+
+window.savePnj = async () => {
+  const nombre    = document.getElementById('pnjNombre').value.trim();
+  const edad      = document.getElementById('pnjEdad').value.trim();
+  const grupo     = document.getElementById('pnjGrupo').value;
+  const ocupacion = document.getElementById('pnjOcupacion').value.trim();
+  const imagen    = document.getElementById('pnjImagen').value.trim();
+  const historia  = document.getElementById('pnjHistoria').value.trim();
+  const orden     = parseInt(document.getElementById('pnjOrden').value) || 0;
+  const editId    = document.getElementById('pnjEditId').value;
+
+  if (!nombre) { toast('El nombre es obligatorio', 'err'); return; }
+
+  const data = {
+    nombre, edad, grupo, ocupacion, imagen, historia, orden,
+    updatedAt: Date.now()
+  };
+
+  try {
+    if (editId) {
+      await updateDoc(doc(db,'pnjs', editId), data);
+      const idx = allPNJs.findIndex(x => x.id === editId);
+      if (idx >= 0) allPNJs[idx] = { ...allPNJs[idx], ...data };
+      toast(`"${nombre}" actualizado`, 'ok');
+    } else {
+      data.createdAt = Date.now();
+      const ref = await addDoc(collection(db,'pnjs'), data);
+      allPNJs.push({ id: ref.id, ...data });
+      toast(`"${nombre}" creado`, 'ok');
+    }
+    allPNJs.sort((a,b) => (a.orden||0) - (b.orden||0));
+    renderPNJs();
+    closePnjModal();
+  } catch(err) {
+    toast('Error al guardar: ' + err.message, 'err');
+  }
+};
+
+window.deletePnj = async (id, nombre) => {
+  if (!confirm(`¿Eliminar a "${nombre}"? Esta acción no se puede deshacer.`)) return;
+  try {
+    await deleteDoc(doc(db,'pnjs', id));
+    allPNJs = allPNJs.filter(p => p.id !== id);
+    renderPNJs();
+    toast(`"${nombre}" eliminado`);
+  } catch(err) {
+    toast('Error al eliminar: ' + err.message, 'err');
+  }
+};
+
+// ══════════════════════════════
+//  TIENDA ITEMS
+// ══════════════════════════════
+async function loadItems() {
+  try {
+    const q = query(collection(db,'tienda_items'), orderBy('orden','asc'));
+    const snap = await getDocs(q);
+    allItems = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch {
+    const snap = await getDocs(collection(db,'tienda_items'));
+    allItems = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    allItems.sort((a,b) => (a.orden||0) - (b.orden||0));
+  }
+  renderCatTabs();
+  renderItems();
+}
+
+function getCats() {
+  const cats = [...new Set(allItems.map(i => i.categoria).filter(Boolean))];
+  return cats;
+}
+
+function renderCatTabs() {
+  const cats = getCats();
+  const cont = document.getElementById('tiendaCatTabs');
+  cont.innerHTML = `<button class="parl-tab ${tiendaFilter==='all'?'active':''}" data-cat="all">Todos (${allItems.length})</button>`
+    + cats.map(c => {
+        const count = allItems.filter(i => i.categoria === c).length;
+        return `<button class="parl-tab ${tiendaFilter===c?'active':''}" data-cat="${c}">${c} (${count})</button>`;
+      }).join('');
+
+  // Repopulate datalist for modal
+  const dl = document.getElementById('categoriasSuggestions');
+  if (dl) dl.innerHTML = cats.map(c => `<option value="${c}">`).join('');
+
+  cont.onclick = e => {
+    const btn = e.target.closest('.parl-tab');
+    if (!btn) return;
+    tiendaFilter = btn.dataset.cat;
+    cont.querySelectorAll('.parl-tab').forEach(b => b.classList.toggle('active', b === btn));
+    renderItems();
+  };
+}
+
+function itemMediaHTML(item, size = 'full') {
+  const small = size === 'small';
+  if (item.imagen_url) {
+    return small
+      ? `<img src="${item.imagen_url}" alt="" loading="lazy">`
+      : `<img src="${item.imagen_url}" alt="${item.nombre}" loading="lazy">`;
+  }
+  if (item.imagen_svg) {
+    return item.imagen_svg;
+  }
+  return small
+    ? `<i class="bi bi-bag" style="font-size:1.2rem;"></i>`
+    : `<i class="bi bi-bag no-media" style="font-size:2.5rem;color:var(--mono-border2);"></i>`;
+}
+
+function renderItems() {
+  const filtered = tiendaFilter === 'all' ? allItems : allItems.filter(i => i.categoria === tiendaFilter);
+
+  if (tiendaView === 'grid') {
+    document.getElementById('tiendaGrid').style.display = '';
+    document.getElementById('tiendaList').style.display = 'none';
+    document.getElementById('tiendaGrid').innerHTML = filtered.length
+      ? filtered.map(item => `
+          <div class="tienda-item-card">
+            <div class="tienda-item-media">
+              ${itemMediaHTML(item)}
+              ${item.categoria ? `<span class="tienda-item-cat">${item.categoria}</span>` : ''}
+              <span class="tienda-orden-badge">#${item.orden ?? '—'}</span>
+            </div>
+            <div class="tienda-item-body">
+              <div class="tienda-item-name">${item.nombre || 'Sin nombre'}</div>
+              ${item.descripcion ? `<div class="tienda-item-desc">${item.descripcion}</div>` : ''}
+              ${item.bonus ? `<div class="tienda-item-bonus">${item.bonus}</div>` : ''}
+              <div class="tienda-item-price">${item.precio ?? '—'} <small>${window.SHOP_CONFIG_KEY || 'PUNTOS'}</small></div>
+              ${item.tags?.length ? `<div class="tienda-item-tags">${item.tags.map(t=>`<span class="tienda-tag">${t}</span>`).join('')}</div>` : ''}
+              <div class="tienda-item-actions">
+                <button class="btn btn-ghost btn-sm" onclick="openEditItem('${item.id}')"><i class="bi bi-pencil"></i> Editar</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteItem('${item.id}','${(item.nombre||'').replace(/'/g,'')}')"><i class="bi bi-trash"></i></button>
+              </div>
+            </div>
+          </div>`)
+        .join('')
+      : `<div class="empty" style="grid-column:1/-1"><i class="bi bi-bag-x"></i>Sin items en esta categoría</div>`;
+  } else {
+    document.getElementById('tiendaGrid').style.display = 'none';
+    const list = document.getElementById('tiendaList');
+    list.style.display = 'block';
+    list.innerHTML = filtered.length
+      ? filtered.map(item => `
+          <div class="tienda-list-row">
+            <div class="tienda-list-thumb">${itemMediaHTML(item, 'small')}</div>
+            <div class="tienda-list-info">
+              <div class="name">${item.nombre || 'Sin nombre'}</div>
+              <div class="meta">${item.categoria||'—'}${item.tipo ? ` · ${item.tipo}` : ''}${item.tags?.length ? ` · ${item.tags.join(', ')}` : ''}</div>
+            </div>
+            <span class="tienda-list-price" style="font:300 var(--f-xs) var(--f-mono);color:var(--accent-text1);white-space:nowrap;">${item.precio ?? '—'} pts</span>
+            <span class="tienda-list-orden" style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">#${item.orden??'—'}</span>
+            <button class="btn btn-ghost btn-sm" onclick="openEditItem('${item.id}')"><i class="bi bi-pencil"></i> Editar</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteItem('${item.id}','${(item.nombre||'').replace(/'/g,'')}')"><i class="bi bi-trash"></i></button>
+          </div>`)
+        .join('')
+      : `<div class="empty"><i class="bi bi-bag-x"></i>Sin items en esta categoría</div>`;
+  }
+}
+
+window.setTiendaView = (v) => {
+  tiendaView = v;
+  document.getElementById('tiendaViewGrid').classList.toggle('active', v === 'grid');
+  document.getElementById('tiendaViewList').classList.toggle('active', v === 'list');
+  renderItems();
+};
+
+// ── IMG TYPE TOGGLE ──
+window.setImgType = (type) => {
+  imgType = type;
+  document.getElementById('imgTypeUrl').classList.toggle('btn', type === 'url');
+  document.getElementById('imgTypeUrl').classList.toggle('btn-ghost', type !== 'url');
+  document.getElementById('imgTypeSvg').classList.toggle('btn', type === 'svg');
+  document.getElementById('imgTypeSvg').classList.toggle('btn-ghost', type !== 'svg');
+  document.getElementById('imgUrlWrap').style.display = type === 'url' ? '' : 'none';
+  document.getElementById('imgSvgWrap').style.display = type === 'svg' ? '' : 'none';
+  previewItemImg();
+};
+
+window.previewItemImg = () => {
+  const wrap = document.getElementById('itemImgPreview');
+  if (imgType === 'url') {
+    const url = document.getElementById('itemImagenUrl').value.trim();
+    wrap.innerHTML = url
+      ? `<img src="${url}" style="max-width:60%;max-height:100%;object-fit:contain;" onerror="this.outerHTML='<i class=\\'bi bi-broken-image\\'></i>'">`
+      : `<i class="bi bi-image" style="font-size:2rem;color:var(--mono-border2);"></i>`;
+  } else {
+    const svg = document.getElementById('itemImagenSvg').value.trim();
+    wrap.innerHTML = svg.startsWith('<svg') || svg.startsWith('<SVG')
+      ? svg
+      : `<i class="bi bi-image" style="font-size:2rem;color:var(--mono-border2);"></i>`;
+  }
+};
+
+// ── ITEM MODAL ──
+window.openAddItem = () => {
+  document.getElementById('itemModalTitle').innerHTML = 'Nuevo <em>item</em>';
+  document.getElementById('itemEditId').value = '';
+  ['itemNombre','itemId','itemCategoria','itemTipo','itemDescripcion','itemBonus','itemTags','itemImagenUrl','itemImagenSvg'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  document.getElementById('itemPrecio').value = '';
+  document.getElementById('itemOrden').value = allItems.length;
+  document.getElementById('itemImgPreview').innerHTML = '<i class="bi bi-image" style="font-size:2rem;color:var(--mono-border2);"></i>';
+  setImgType('svg');
+  document.getElementById('itemModal').classList.add('show');
+};
+
+window.openEditItem = (id) => {
+  const item = allItems.find(x => x.id === id);
+  if (!item) return;
+  document.getElementById('itemModalTitle').innerHTML = 'Editar <em>item</em>';
+  document.getElementById('itemEditId').value = id;
+  document.getElementById('itemNombre').value      = item.nombre      || '';
+  document.getElementById('itemId').value          = item.itemId      || '';
+  document.getElementById('itemCategoria').value   = item.categoria   || '';
+  document.getElementById('itemTipo').value        = item.tipo        || '';
+  document.getElementById('itemPrecio').value      = item.precio      ?? '';
+  document.getElementById('itemOrden').value       = item.orden       ?? 0;
+  document.getElementById('itemDescripcion').value = item.descripcion || '';
+  document.getElementById('itemBonus').value       = item.bonus       || '';
+  document.getElementById('itemTags').value        = (item.tags || []).join(', ');
+
+  if (item.imagen_url) {
+    setImgType('url');
+    document.getElementById('itemImagenUrl').value = item.imagen_url;
+  } else {
+    setImgType('svg');
+    document.getElementById('itemImagenSvg').value = item.imagen_svg || '';
+  }
+  previewItemImg();
+  document.getElementById('itemModal').classList.add('show');
+};
+
+window.closeItemModal = () => document.getElementById('itemModal').classList.remove('show');
+
+window.saveItem = async () => {
+  const nombre      = document.getElementById('itemNombre').value.trim();
+  const itemIdVal   = document.getElementById('itemId').value.trim().replace(/\s+/g,'_');
+  const categoria   = document.getElementById('itemCategoria').value.trim();
+  const tipo        = document.getElementById('itemTipo').value.trim();
+  const precio      = parseFloat(document.getElementById('itemPrecio').value) || 0;
+  const orden       = parseInt(document.getElementById('itemOrden').value) || 0;
+  const descripcion = document.getElementById('itemDescripcion').value.trim();
+  const bonus       = document.getElementById('itemBonus').value.trim();
+  const tagsRaw     = document.getElementById('itemTags').value.trim();
+  const tags        = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+  const imagen_url  = imgType === 'url' ? document.getElementById('itemImagenUrl').value.trim() : '';
+  const imagen_svg  = imgType === 'svg' ? document.getElementById('itemImagenSvg').value.trim() : '';
+  const editId      = document.getElementById('itemEditId').value;
+
+  if (!nombre) { toast('El nombre es obligatorio', 'err'); return; }
+  if (!itemIdVal) { toast('El ID interno es obligatorio', 'err'); return; }
+
+  const data = {
+    nombre, itemId: itemIdVal, categoria, tipo, precio,
+    descripcion, bonus, tags, imagen_url, imagen_svg,
+    orden, updatedAt: Date.now()
+  };
+
+  try {
+    if (editId) {
+      await updateDoc(doc(db,'tienda_items', editId), data);
+      const idx = allItems.findIndex(x => x.id === editId);
+      if (idx >= 0) allItems[idx] = { ...allItems[idx], ...data };
+      toast(`"${nombre}" actualizado`, 'ok');
+    } else {
+      // Check duplicate itemId
+      if (allItems.some(x => x.itemId === itemIdVal)) {
+        toast(`El ID "${itemIdVal}" ya existe`, 'err'); return;
+      }
+      data.createdAt = Date.now();
+      const ref = await addDoc(collection(db,'tienda_items'), data);
+      allItems.push({ id: ref.id, ...data });
+      toast(`"${nombre}" creado`, 'ok');
+    }
+    allItems.sort((a,b) => (a.orden||0) - (b.orden||0));
+    renderCatTabs();
+    renderItems();
+    closeItemModal();
+  } catch(err) {
+    toast('Error al guardar: ' + err.message, 'err');
+  }
+};
+
+window.deleteItem = async (id, nombre) => {
+  if (!confirm(`¿Eliminar "${nombre}"? Esta acción no se puede deshacer.`)) return;
+  try {
+    await deleteDoc(doc(db,'tienda_items', id));
+    allItems = allItems.filter(i => i.id !== id);
+    renderCatTabs();
+    renderItems();
+    toast(`"${nombre}" eliminado`);
+  } catch(err) {
+    toast('Error al eliminar: ' + err.message, 'err');
+  }
+};
+
+// ══════════════════════════════
+//  VISIBILIDAD
+// ══════════════════════════════
+function renderVisibility() {
+  const card = document.getElementById('visibilityCard');
+  card.innerHTML = `
+    <div class="card-header"><span class="card-title">Campos públicos en memberlist y perfiles</span></div>
+    ${fieldsDef.map(f => `
+      <div class="vis-row">
+        <div class="vis-label">
+          <div class="name">${f.label}</div>
+          <div class="key">${f.key}</div>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" ${visConfig[f.key] ? 'checked' : ''} onchange="toggleVis('${f.key}',this.checked)">
+          <div class="toggle-track">
+            <div class="toggle-thumb"></div>
+          </div>
+        </label>
+      </div>`).join('')}`;
+}
+
+window.toggleVis = async (key, val) => {
+  visConfig[key] = val;
+  await setDoc(doc(db,'config','fieldVisibility'), visConfig);
+  renderVisibility();
+  toast(`"${key}" → ${val ? 'público' : 'privado'}`);
+};
+
+// ══════════════════════════════
+//  NAV
+// ══════════════════════════════
+window.goTo = (page) => {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(`page-${page}`).classList.add('active');
+  document.querySelector(`[data-page="${page}"]`).classList.add('active');
+};
+
+// ══════════════════════════════
+//  TOAST
+// ══════════════════════════════
+let toastTimer;
+window.toast = (msg, type = '') => {
+  const t = document.getElementById('toast');
+  const m = document.getElementById('toastMsg');
+  const icon = t.querySelector('i');
+  m.textContent = msg;
+  t.className = type ? `show ${type}` : 'show';
+  icon.className = type === 'err' ? 'bi bi-exclamation-circle' : type === 'ok' ? 'bi bi-check-circle' : 'bi bi-info-circle';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.className = '', 2600);
+};
 </script>
+</body>
+</html>
