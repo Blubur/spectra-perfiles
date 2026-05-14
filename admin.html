@@ -11,8 +11,7 @@
 
 :root {
   color-scheme: dark light;
-interpolate-size: allow-keywords;
-  
+
   --mono-surface1: light-dark(#fdfdfc, #111110);
   --mono-surface2: light-dark(#f9f9f8, #191918);
   --mono-component1: light-dark(#f1f0ef, #222221);
@@ -107,6 +106,7 @@ interpolate-size: allow-keywords;
   --input-br: var(--br);
 }
 
+/* ─────────────────────────── BASE ─────────────────────────── */
 
 html { view-transition-name: foro; }
 
@@ -114,19 +114,12 @@ body {
   font-family: var(--f-sans);
   font-size: var(--f-base);
   background: var(--mono-surface1);
-  color: var(--mono-text1);
+  color: var(--mono-text2);
   min-height: 100vh;
   overflow-x: clip;
-  color-scheme: dark;
-
-  
-  &:has(#theme-switch:checked), &.light-mode {
-    color-scheme: light;
-    transition: all .5s allow-discrete;
-  }
-  
 }
 
+/* ─────────────────────────── NAV ─────────────────────────── */
 
 .admin-nav {
   height: var(--nav-size);
@@ -175,6 +168,7 @@ body {
 .nav-tab:hover { color: var(--accent-text1); }
 .nav-tab.active { color: var(--accent-text1); border-bottom-color: var(--accent-solid1); }
 
+/* ─────────────────────────── BUTTONS ─────────────────────────── */
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-2xs);
@@ -242,6 +236,7 @@ body {
 .field textarea { resize: vertical; min-height: 100px; }
 .field small { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
 
+/* ─────────────────────────── LAYOUT ─────────────────────────── */
 
 .page { display: none; padding: var(--spacing-l); max-width: 1100px; margin: 0 auto; animation: fadeUp .35s ease both; }
 .page.active { display: block; }
@@ -261,6 +256,7 @@ body {
   letter-spacing: .12em;
 }
 
+/* ─────────────────────────── CARDS ─────────────────────────── */
 
 .card {
   background: var(--mono-surface2);
@@ -282,14 +278,14 @@ body {
 }
 .card-actions { display: flex; gap: var(--spacing-2xs); }
 
-/* ───────────────────────────GRID─────────────────────────── */
+/* ─────────────────────────── GRID UTILS ─────────────────────────── */
 
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-s); }
 .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--spacing-s); }
 .flex-col { display: flex; flex-direction: column; gap: var(--spacing-xs); }
 .flex-row { display: flex; gap: var(--spacing-xs); align-items: center; }
 
-/* ────────────────────────────────────────────── */
+/* ─────────────────────────── TABLE ─────────────────────────── */
 
 .data-table { width: 100%; border-collapse: collapse; }
 .data-table th {
@@ -350,6 +346,7 @@ body {
 .parl-tab[data-p="caoticos"]    { --grupo-color: #5A4160; }
 .parl-tab[data-p="staff"]       { --grupo-color: var(--accent-solid1); }
 
+/* ─────────────────────────── SKILL ROWS ─────────────────────────── */
 
 .skill-def-item {
   display: grid; grid-template-columns: 2rem 1fr auto auto;
@@ -464,7 +461,7 @@ body {
 .drag-handle:active { cursor: grabbing; }
 .pnj-thumb.dragging { opacity: .5; }
 
-
+/* List view for PNJs */
 .pnj-list { display: none; flex-direction: column; gap: 0; margin-top: var(--spacing-s); }
 .pnj-list-row {
   display: grid; grid-template-columns: auto 1fr auto auto auto;
@@ -480,7 +477,7 @@ body {
 .pnj-list-info .name { font: italic var(--f-base) var(--f-deco); }
 .pnj-list-info .meta { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
 
-/* ─────────────────────────── MODAL ─────────────────────────── */
+/* ─────────────────────────── MODAL / DRAWER ─────────────────────────── */
 
 .modal-overlay {
   position: fixed; inset: 0;
@@ -583,6 +580,8 @@ body {
 }
 .view-btn.active, .view-btn:hover { background: var(--mono-component2); color: var(--accent-text1); }
 
+/* ─────────────────────────── IMAGE PREVIEW ─────────────────────────── */
+
 .img-preview-wrap {
   width: 100%; aspect-ratio: 16/9;
   background: var(--mono-component2);
@@ -593,6 +592,30 @@ body {
 }
 .img-preview-wrap img { width: 100%; height: 100%; object-fit: cover; }
 .img-preview-wrap .placeholder { color: var(--mono-border2); font-size: 2rem; }
+
+/* ─────────────────────────── REGISTRO ─────────────────────────── */
+
+.modal-section-title {
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--mono-text1);
+  margin-top: var(--spacing-s);
+  padding-top: var(--spacing-s);
+  border-top: 1px solid var(--mono-border1);
+}
+
+.estado-pill {
+  display: inline-flex; align-items: center; gap: .3em;
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .06em;
+  padding: 2px var(--spacing-2xs);
+  border-radius: var(--br-pill);
+  border: 1px solid;
+  white-space: nowrap;
+}
+.estado-activo   { background: var(--success-surface); border-color: var(--success-border); color: var(--success-text); }
+.estado-inactivo { background: var(--mono-component2); border-color: var(--mono-border2);   color: var(--mono-text1); }
+.estado-reserva  { background: var(--warning-surface); border-color: var(--warning-border); color: var(--warning-text); }
 
 /* ─────────────────────────── TIENDA ITEMS ─────────────────────────── */
 
@@ -679,8 +702,8 @@ body {
   border-radius: var(--br-small);
 }
 
-/*---lista---*/
-  .tienda-list-row {
+/* ── Tienda list view ── */
+.tienda-list-row {
   display: grid; grid-template-columns: 56px 1fr auto auto auto auto;
   gap: var(--spacing-xs); align-items: center;
   padding: var(--spacing-xs);
@@ -703,9 +726,10 @@ body {
 .tienda-list-info .name { font: italic var(--f-base) var(--f-deco); }
 .tienda-list-info .meta { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
 
+/* ── Tienda filter tabs ── */
 .tienda-cat-tabs { display: flex; flex-wrap: wrap; gap: var(--spacing-2xs); margin-bottom: var(--spacing-s); }
 
-/*──SVG preview──*/
+/* ── SVG textarea preview ── */
 .svg-preview-wrap {
   width: 100%; aspect-ratio: 4/3;
   background: var(--mono-component2);
@@ -722,44 +746,13 @@ body {
   .tienda-list-row { grid-template-columns: 56px 1fr auto auto; }
   .tienda-list-row .tienda-list-price, .tienda-list-row .tienda-list-orden { display: none; }
 }
-.theme-switch-input {
-  display: none;
-}
 
-.theme-switch-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  cursor: pointer;
-  color: var(--mono-text1);
-  border-radius: var(--br);
-  transition: var(--transition-ease);
-  flex-shrink: 0;
-}
-
-.theme-switch-label::before {
-  font-family: 'bootstrap-icons';
-  content: "\F496"; /* bi-sun */
-  font-size: 1rem;
-}
-
-.theme-switch-input:checked ~ .admin-nav .theme-switch-label::before,
-.theme-switch-label:has(~ .theme-switch-input:checked)::before {
-  content: "\F4A6"; /* bi-moon-stars */
-}
-
-.theme-switch-label:hover {
-  color: var(--accent-text1);
-  background: var(--mono-component1);
-}
 
 </style>
 </head>
 <body>
 
-<!-- ───────────LOGIN─────────── -->
+<!-- ─────────── LOGIN ─────────── -->
 <div id="loginWrap">
   <div class="login-card">
     <div class="login-logo">Spectra</div>
@@ -774,12 +767,10 @@ body {
   </div>
 </div>
 
-<!-- ───────────ADMIN UI─────────── -->
+<!-- ─────────── ADMIN UI ─────────── -->
 <div id="adminUI" style="display:none;">
 
   <nav class="admin-nav">
-<input type="checkbox" id="theme-switch" class="theme-switch-input">
-<label for="theme-switch" class="theme-switch-label" tooltip="Cambiar modo"></label>
     <div class="nav-brand">Spectra <small>Admin</small></div>
     <button class="nav-tab active" data-page="usuarios" onclick="goTo('usuarios')">
       <i class="bi bi-people"></i> Usuarios
@@ -798,7 +789,7 @@ body {
     </button>
   </nav>
 
-  <!--TAB USUARIOS -->
+  <!-- ══ TAB: USUARIOS ══ -->
   <div class="page active" id="page-usuarios">
     <div class="page-header">
       <div class="page-title">Gestión de <em>usuarios</em></div>
@@ -813,8 +804,7 @@ body {
         <table class="data-table">
           <thead>
             <tr>
-              <th>Usuario</th><th>Personaje</th><th>Parlamento</th>
-              <th>Registro</th><th>Estado</th><th>Acción</th>
+              <th>Usuario</th><th>Personaje</th><th>Parlamento</th><th>FC 1</th><th>FC 2</th><th>Estado</th><th>Acción</th>
             </tr>
           </thead>
           <tbody id="usersTableBody"></tbody>
@@ -823,7 +813,7 @@ body {
     </div>
   </div>
 
-  <!--TAB HABILIDADES-->
+  <!-- ══ TAB: HABILIDADES ══ -->
   <div class="page" id="page-habilidades">
     <div class="page-header">
       <div class="page-title">Definir <em>habilidades</em></div>
@@ -847,7 +837,7 @@ body {
     </div>
   </div>
 
-  <!--TAB PNJ-->
+  <!-- ══ TAB: PNJs ══ -->
   <div class="page" id="page-pnjs">
     <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:var(--spacing-xs);">
       <div>
@@ -865,7 +855,7 @@ body {
       </div>
     </div>
 
-    <!-- PNJ filter-->
+    <!-- PNJ filter pills -->
     <div class="parl-tabs" id="pnjFilterTabs">
       <button class="parl-tab active" data-g="all">Todos</button>
       <button class="parl-tab" data-p="primigenios" data-g="primigenios">Primigenios</button>
@@ -876,13 +866,14 @@ body {
       <button class="parl-tab" data-p="staff" data-g="staff">Staff</button>
     </div>
 
-  
+    <!-- Grid view -->
     <div class="pnj-thumb-grid" id="pnjGrid"></div>
+    <!-- List view -->
     <div class="pnj-list card" id="pnjList" style="display:none;"></div>
 
   </div>
 
-  <!--TAB TIENDA-->
+  <!-- ══ TAB: TIENDA ══ -->
   <div class="page" id="page-tienda">
     <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:var(--spacing-xs);">
       <div>
@@ -900,15 +891,18 @@ body {
       </div>
     </div>
 
+    <!-- Category filter pills (rendered dynamically) -->
     <div class="tienda-cat-tabs" id="tiendaCatTabs">
       <button class="parl-tab active" data-cat="all">Todos</button>
     </div>
 
+    <!-- Grid view -->
     <div class="tienda-grid" id="tiendaGrid"></div>
+    <!-- List view -->
     <div class="card" id="tiendaList" style="display:none; padding:0;"></div>
   </div>
 
-  <!--TAB VISIBILIDAD-->
+  <!-- ══ TAB: VISIBILIDAD ══ -->
   <div class="page" id="page-visibilidad">
     <div class="page-header">
       <div class="page-title">Visibilidad de <em>campos</em></div>
@@ -920,12 +914,51 @@ body {
   </div>
 </div>
 
-<!--  MODAL EDITAR USUARIO -->
+<!-- ═══════════════ MODAL: EDITAR USUARIO ═══════════════ -->
 <div class="modal-overlay" id="editUserModal">
   <div class="modal">
     <div class="modal-title">Editar <em id="editUserNameTitle">—</em></div>
 
     <div class="form-list">
+
+      <div class="modal-section-title"><i class="bi bi-person-badge"></i> Registro</div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Nº usuario Foroactivo</label>
+          <input type="number" id="editNumUsuario" placeholder="Ej: 42" min="1">
+        </div>
+        <div class="field">
+          <label>Estado</label>
+          <select id="editEstado">
+            <option value="">Sin asignar</option>
+            <option value="activo">Personaje activo</option>
+            <option value="inactivo">Personaje inactivo</option>
+            <option value="reserva">Reserva</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Faceclaim 1</label>
+          <input type="text" id="editFaceclaim1" placeholder="Nombre del FC">
+        </div>
+        <div class="field">
+          <label>Faceclaim 2</label>
+          <input type="text" id="editFaceclaim2" placeholder="Nombre del FC">
+        </div>
+      </div>
+
+      <div id="editReservaWrap" style="display:none;">
+        <div class="field">
+          <label>Fecha fin de reserva</label>
+          <input type="date" id="editFechaReserva">
+        </div>
+      </div>
+
+      <div class="modal-section-title"><i class="bi bi-people"></i> Parlamento y habilidades</div>
+
       <div class="field">
         <label>Parlamento</label>
         <select id="editParlamento" onchange="onParlamentoChange()">
@@ -938,10 +971,8 @@ body {
         </select>
       </div>
 
-      <div style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);text-transform:uppercase;letter-spacing:.1em;margin-top:var(--spacing-xs);">
-        Niveles de habilidad
-      </div>
       <div id="editSkillsRows"><div class="empty" style="padding:var(--spacing-s) 0;"><i class="bi bi-stars"></i>Asigna un parlamento</div></div>
+
     </div>
 
     <div class="modal-actions">
@@ -951,7 +982,7 @@ body {
   </div>
 </div>
 
-<!--MODAL NUEVA HABILIDAD-->
+<!-- ═══════════════ MODAL: NUEVA HABILIDAD ═══════════════ -->
 <div class="modal-overlay" id="addSkillModal">
   <div class="modal">
     <div class="modal-title">Nueva <em>habilidad</em></div>
@@ -987,7 +1018,7 @@ body {
   </div>
 </div>
 
-<!--MODAL NUEVO Y EDITAR PNJ-->
+<!-- ═══════════════ MODAL: NUEVO / EDITAR PNJ ═══════════════ -->
 <div class="modal-overlay" id="pnjModal">
   <div class="modal" style="max-width:640px;">
     <div class="modal-title" id="pnjModalTitle">Nuevo <em>PNJ</em></div>
@@ -1054,7 +1085,7 @@ body {
   </div>
 </div>
 
-<!--MODAL NUEVO Y EDITAR ITEM TIENDA-->
+<!-- ═══════════════ MODAL: NUEVO / EDITAR ITEM TIENDA ═══════════════ -->
 <div class="modal-overlay" id="itemModal">
   <div class="modal" style="max-width:680px;">
     <div class="modal-title" id="itemModalTitle">Nuevo <em>item</em></div>
@@ -1109,13 +1140,12 @@ body {
       </div>
 
       <div class="field">
-        <label>Tags <small style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-danger);">separados por comas</small></label>
+        <label>Tags <small style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">separados por comas</small></label>
         <input type="text" id="itemTags" placeholder="mente, magia, habilidad">
       </div>
 
       <div class="field">
         <label>Imagen</label>
-        <small style="color: var(--danger)">Solo formato svg</small>
         <div style="display:flex;gap:var(--spacing-xs);margin-bottom:var(--spacing-2xs);">
           <button type="button" class="btn btn-ghost btn-sm" id="imgTypeUrl" onclick="setImgType('url')">URL de imagen</button>
           <button type="button" class="btn btn-sm" id="imgTypeSvg" onclick="setImgType('svg')">SVG inline</button>
@@ -1146,7 +1176,7 @@ body {
 <div id="toast"><i class="bi bi-check-circle"></i><span id="toastMsg"></span></div>
 
 
-<!-- FIREBASE-->
+<!-- ═══════════════ FIREBASE + LOGIC ═══════════════ -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import {
@@ -1238,6 +1268,17 @@ async function loadAll() {
 // ══════════════════════════════
 //  USUARIOS
 // ══════════════════════════════
+function estadoPill(estado) {
+  if (!estado) return '<span class="estado-pill estado-inactivo">—</span>';
+  const map = {
+    activo:   ['estado-activo',   'bi-check-circle', 'Activo'],
+    inactivo: ['estado-inactivo', 'bi-x-circle',     'Inactivo'],
+    reserva:  ['estado-reserva',  'bi-hourglass',    'Reserva'],
+  };
+  const [cls, icon, label] = map[estado] || ['estado-inactivo','bi-dash','—'];
+  return `<span class="estado-pill ${cls}"><i class="bi ${icon}"></i>${label}</span>`;
+}
+
 function renderUsers() {
   const users = Object.values(allUsers);
   document.getElementById('usersCountLabel').textContent = `${users.length} usuario${users.length !== 1 ? 's' : ''}`;
@@ -1255,17 +1296,16 @@ function renderUsers() {
             ${u.parlamento || '—'}
           </span>
         </td>
-        <td style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">
-          ${u.createdAt ? new Date(u.createdAt).toLocaleDateString('es') : '—'}
-        </td>
-        <td>${pending ? '<span class="badge badge-pending"><i class="bi bi-hourglass-split"></i>Pendiente</span>' : '<span class="badge badge-success"><i class="bi bi-check"></i>OK</span>'}</td>
+        <td style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">${u.registro?.faceclaim1 || '—'}</td>
+        <td style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">${u.registro?.faceclaim2 || '—'}</td>
+        <td>${estadoPill(u.registro?.estado)}</td>
         <td>
           <button class="btn btn-ghost btn-sm" onclick="openEditUser('${u.username}')">
             <i class="bi bi-pencil"></i> Editar
           </button>
         </td>
       </tr>`;
-  }).join('') || `<tr><td colspan="6"><div class="empty"><i class="bi bi-people"></i>Sin usuarios registrados</div></td></tr>`;
+  }).join('') || `<tr><td colspan="7"><div class="empty"><i class="bi bi-people"></i>Sin usuarios registrados</div></td></tr>`;
 }
 
 function hasPendingSkills(u) {
@@ -1277,7 +1317,18 @@ function hasPendingSkills(u) {
 window.openEditUser = (username) => {
   editingUser = username;
   const u = allUsers[username];
+  const reg = u.registro || {};
   document.getElementById('editUserNameTitle').textContent = username;
+  document.getElementById('editNumUsuario').value   = reg.numUsuario   || '';
+  document.getElementById('editEstado').value       = reg.estado       || '';
+  document.getElementById('editFaceclaim1').value   = reg.faceclaim1   || '';
+  document.getElementById('editFaceclaim2').value   = reg.faceclaim2   || '';
+  document.getElementById('editFechaReserva').value = reg.fechaReserva || '';
+  document.getElementById('editReservaWrap').style.display = reg.estado === 'reserva' ? '' : 'none';
+  document.getElementById('editEstado').onchange = () => {
+    document.getElementById('editReservaWrap').style.display =
+      document.getElementById('editEstado').value === 'reserva' ? '' : 'none';
+  };
   document.getElementById('editParlamento').value = u.parlamento || '';
   renderEditSkills(u.parlamento || '', u.skills || {});
   document.getElementById('editUserModal').classList.add('show');
@@ -1325,8 +1376,18 @@ window.saveUserEdits = async () => {
     }
   });
 
-  await updateDoc(doc(db,'users', editingUser), { parlamento: newParl, skills: newSkills });
-  allUsers[editingUser] = { ...u, parlamento: newParl, skills: newSkills };
+  const newRegistro = {
+    numUsuario:   parseInt(document.getElementById('editNumUsuario').value) || null,
+    estado:       document.getElementById('editEstado').value,
+    faceclaim1:   document.getElementById('editFaceclaim1').value.trim(),
+    faceclaim2:   document.getElementById('editFaceclaim2').value.trim(),
+    fechaReserva: document.getElementById('editEstado').value === 'reserva'
+                    ? document.getElementById('editFechaReserva').value
+                    : ''
+  };
+
+  await updateDoc(doc(db,'users', editingUser), { parlamento: newParl, skills: newSkills, registro: newRegistro });
+  allUsers[editingUser] = { ...u, parlamento: newParl, skills: newSkills, registro: newRegistro };
   renderUsers();
   closeEditUser();
   toast(`Perfil de ${editingUser} actualizado`, 'ok');
