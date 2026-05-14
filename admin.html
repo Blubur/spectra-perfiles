@@ -154,7 +154,7 @@ body {
   flex-shrink: 0;
 }
 .nav-brand small {
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   text-transform: uppercase;
   letter-spacing: .1em;
   color: var(--mono-text1);
@@ -164,7 +164,7 @@ body {
 .nav-tab {
   display: flex; align-items: center; gap: var(--spacing-2xs);
   padding: 0 var(--spacing-s);
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   letter-spacing: .1em; text-transform: uppercase;
   color: var(--mono-text1);
   background: none; border: none;
@@ -190,7 +190,7 @@ body {
   text-decoration: none;
 }
 .btn:hover { background: var(--button-surface-hover); box-shadow: var(--shadow-lg); }
-.btn-sm { padding: var(--spacing-3xs) var(--spacing-xs); font-size: var(--f-xs); }
+.btn-sm { padding: var(--spacing-3xs) var(--spacing-xs); font-size: var(--f-s); }
 .btn-ghost {
   --button-surface: transparent;
   --button-surface-hover: var(--mono-component1);
@@ -240,7 +240,7 @@ body {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-solid1), transparent 80%);
 }
 .field textarea { resize: vertical; min-height: 100px; }
-.field small { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
+.field small { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); }
 
 /* ─── LAYOUT ─── */
 .page { display: none; padding: var(--spacing-l); max-width: 1100px; margin: 0 auto; animation: fadeUp .35s ease both; }
@@ -255,7 +255,7 @@ body {
 }
 .page-title em { font-style: italic; color: var(--accent-text1); font-weight: 300; }
 .page-subtitle {
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   color: var(--mono-text1);
   text-transform: uppercase;
   letter-spacing: .12em;
@@ -276,7 +276,7 @@ body {
   margin-bottom: var(--spacing-s);
 }
 .card-title {
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   text-transform: uppercase; letter-spacing: .14em;
   color: var(--mono-text1);
 }
@@ -291,7 +291,7 @@ body {
 /* ─── TABLE ─── */
 .data-table { width: 100%; border-collapse: collapse; }
 .data-table th {
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   text-transform: uppercase; letter-spacing: .1em;
   color: var(--mono-text1);
   padding: var(--spacing-2xs) var(--spacing-xs);
@@ -312,7 +312,7 @@ body {
 /* ─── BADGES ─── */
 .badge {
   display: inline-flex; align-items: center; gap: .3em;
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   text-transform: uppercase; letter-spacing: .06em;
   padding: 2px var(--spacing-2xs);
   border-radius: var(--br-pill);
@@ -328,7 +328,7 @@ body {
 .parl-tabs { display: flex; flex-wrap: wrap; gap: var(--spacing-2xs); margin-bottom: var(--spacing-s); }
 .parl-tab {
   padding: var(--spacing-3xs) var(--spacing-xs);
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   text-transform: uppercase; letter-spacing: .1em;
   background: var(--mono-component1);
   border: 1px solid var(--mono-border2);
@@ -353,7 +353,7 @@ body {
 }
 .vis-row:last-child { border-bottom: none; }
 .vis-label .name { font: 300 var(--f-base) var(--f-sans); }
-.vis-label .key { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); margin-top: 2px; }
+.vis-label .key { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); margin-top: 2px; }
 
 .toggle-wrap { position: relative; width: 36px; height: 20px; cursor: pointer; flex-shrink: 0; }
 .toggle-wrap input { opacity: 0; width: 0; height: 0; position: absolute; }
@@ -396,7 +396,7 @@ body {
 }
 .pnj-thumb-body { padding: var(--spacing-xs); }
 .pnj-thumb-name { font: italic var(--f-base) var(--f-deco); margin-bottom: var(--spacing-3xs); }
-.pnj-thumb-meta { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
+.pnj-thumb-meta { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); }
 .pnj-thumb-actions {
   display: flex; gap: var(--spacing-2xs); margin-top: var(--spacing-xs);
   padding-top: var(--spacing-xs); border-top: 1px solid var(--mono-border1);
@@ -428,7 +428,7 @@ body {
 .pnj-list-img { width: 48px; height: 48px; object-fit: cover; border-radius: var(--br); background: var(--mono-component2); flex-shrink: 0; }
 .pnj-list-img.placeholder { display: flex; align-items: center; justify-content: center; color: var(--mono-border2); }
 .pnj-list-info .name { font: italic var(--f-base) var(--f-deco); }
-.pnj-list-info .meta { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
+.pnj-list-info .meta { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); }
 
 /* ─── MODAL ─── */
 .modal-overlay {
@@ -480,7 +480,7 @@ body {
   margin-bottom: var(--spacing-2xs);
 }
 .login-sub {
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   color: var(--mono-text1);
   text-transform: uppercase;
   letter-spacing: .14em;
@@ -494,7 +494,7 @@ body {
   position: fixed; bottom: var(--spacing); right: var(--spacing);
   background: var(--mono-component3); color: var(--mono-text2);
   border: 1px solid var(--mono-border2);
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   padding: var(--spacing-xs) var(--spacing-s);
   border-radius: var(--br-l);
   letter-spacing: .06em;
@@ -541,7 +541,7 @@ body {
 
 /* ─── ESTADO PILLS ─── */
 .modal-section-title {
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   text-transform: uppercase; letter-spacing: .1em;
   color: var(--mono-text1);
   margin-top: var(--spacing-s);
@@ -551,7 +551,7 @@ body {
 
 .estado-pill {
   display: inline-flex; align-items: center; gap: .3em;
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   text-transform: uppercase; letter-spacing: .06em;
   padding: 2px var(--spacing-2xs);
   border-radius: var(--br-pill);
@@ -595,7 +595,7 @@ body {
 
 .tienda-item-cat {
   position: absolute; top: var(--spacing-xs); left: var(--spacing-xs);
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   text-transform: uppercase; letter-spacing: .08em;
   background: var(--mono-surface1);
   border: 1px solid var(--mono-border2);
@@ -606,13 +606,13 @@ body {
 
 .tienda-item-body { padding: var(--spacing-xs); flex: 1; display: flex; flex-direction: column; gap: var(--spacing-3xs); }
 .tienda-item-name { font: italic var(--f-base) var(--f-deco); }
-.tienda-item-desc { font: 300 var(--f-xs) var(--f-sans); color: var(--mono-text1); flex: 1; }
-.tienda-item-bonus { font: 300 var(--f-xs) var(--f-mono); color: var(--accent-text1); }
+.tienda-item-desc { font: 300 var(--f-s) var(--f-sans); color: var(--mono-text1); flex: 1; }
+.tienda-item-bonus { font: 300 var(--f-s) var(--f-mono); color: var(--accent-text1); }
 .tienda-item-price { font: 500 var(--f-l) var(--f-deco); color: var(--accent-text1); display: flex; align-items: baseline; gap: .3em; }
-.tienda-item-price small { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
+.tienda-item-price small { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); }
 .tienda-item-tags { display: flex; flex-wrap: wrap; gap: var(--spacing-3xs); margin-top: var(--spacing-3xs); }
 .tienda-tag {
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   text-transform: uppercase; letter-spacing: .06em;
   background: var(--mono-component2);
   border: 1px solid var(--mono-border1);
@@ -632,7 +632,7 @@ body {
   background: var(--mono-surface1);
   border: 1px solid var(--mono-border2);
   color: var(--mono-solid1);
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   padding: 2px var(--spacing-3xs);
   border-radius: var(--br-small);
 }
@@ -658,7 +658,7 @@ body {
 .tienda-list-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .tienda-list-thumb svg { width: 60%; height: 60%; }
 .tienda-list-info .name { font: italic var(--f-base) var(--f-deco); }
-.tienda-list-info .meta { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
+.tienda-list-info .meta { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); }
 
 .tienda-cat-tabs { display: flex; flex-wrap: wrap; gap: var(--spacing-2xs); margin-bottom: var(--spacing-s); }
 
@@ -706,14 +706,14 @@ body {
 }
 .user-card-avatar img { width: 100%; height: 100%; object-fit: cover; }
 .user-card-username {
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-base) var(--f-mono);
   color: var(--accent-text1);
   text-decoration: none;
 }
 .user-card-username:hover { text-decoration: underline; }
 .user-card-body { padding: var(--spacing-xs); flex: 1; display: flex; flex-direction: column; gap: var(--spacing-3xs); }
 .user-card-charname { font: italic var(--f-base) var(--f-deco); }
-.user-card-meta { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
+.user-card-meta { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); }
 .user-card-actions {
   display: flex; gap: var(--spacing-2xs); margin-top: var(--spacing-xs);
   padding-top: var(--spacing-xs); border-top: 1px solid var(--mono-border1);
@@ -723,7 +723,7 @@ body {
 
 /* Table view user link */
 .user-link {
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   color: var(--accent-text1);
   text-decoration: none;
   display: inline-flex; align-items: center; gap: .3em;
@@ -734,7 +734,7 @@ body {
 /* Reserva date inline */
 .reserva-date {
   display: block;
-  font: 300 var(--f-xs) var(--f-mono);
+  font: 300 var(--f-s) var(--f-mono);
   color: var(--warning-text);
   margin-top: 2px;
 }
@@ -1170,7 +1170,7 @@ body {
       </div>
 
       <div class="field">
-        <label>Tags <small style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">separados por comas</small></label>
+        <label>Tags <small style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">separados por comas</small></label>
         <input type="text" id="itemTags" placeholder="mente, magia, habilidad">
       </div>
 
@@ -1324,7 +1324,7 @@ function renderUsers() {
       const reg = u.registro || {};
       const profileLink = reg.perfilUrl
         ? `<a class="user-link" href="${reg.perfilUrl}" target="_blank">${u.username || u._id}<i class="bi bi-box-arrow-up-right"></i></a>`
-        : `<span style="font:300 var(--f-xs) var(--f-mono);">${u.username || u._id || '—'}</span>`;
+        : `<span style="font:300 var(--f-s) var(--f-mono);">${u.username || u._id || '—'}</span>`;
       const reservaDate = reg.estado === 'reserva' && reg.fechaReserva
         ? `<span class="reserva-date"><i class="bi bi-calendar-x"></i> hasta ${reg.fechaReserva}</span>`
         : '';
@@ -1333,15 +1333,15 @@ function renderUsers() {
           <td>${profileLink}</td>
           <td>${u.charName || '—'}</td>
           <td>
-            <span style="display:inline-flex;align-items:center;gap:.4em;font:300 var(--f-xs) var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:${parlColor(u)};">
+            <span style="display:inline-flex;align-items:center;gap:.4em;font:300 var(--f-s) var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:${parlColor(u)};">
               <span style="width:6px;height:6px;border-radius:50%;background:${parlColor(u)};flex-shrink:0;"></span>
               ${u.parlamento || '—'}
             </span>
           </td>
-          <td style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">${reg.faceclaim1 || '—'}</td>
-          <td style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">${reg.faceclaim2 || '—'}</td>
+          <td style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">${reg.faceclaim1 || '—'}</td>
+          <td style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">${reg.faceclaim2 || '—'}</td>
           <td>${estadoPill(reg.estado)}</td>
-          <td style="font:300 var(--f-xs) var(--f-mono);color:var(--warning-text);">${reg.estado === 'reserva' && reg.fechaReserva ? reg.fechaReserva : '—'}</td>
+          <td style="font:300 var(--f-s) var(--f-mono);color:var(--warning-text);">${reg.estado === 'reserva' && reg.fechaReserva ? reg.fechaReserva : '—'}</td>
           <td>
             <button class="btn btn-ghost btn-sm" onclick="openEditUser('${u._id}')">
               <i class="bi bi-pencil"></i> Editar
@@ -1370,7 +1370,7 @@ function userCardHTML(u) {
         </div>
         <div style="flex:1;min-width:0;">
           ${profileLink}
-          <div style="font:300 var(--f-xs) var(--f-mono);color:${color};text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">${u.parlamento || '—'}</div>
+          <div style="font:300 var(--f-s) var(--f-mono);color:${color};text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">${u.parlamento || '—'}</div>
         </div>
         ${estadoPill(reg.estado)}
       </div>
@@ -1589,7 +1589,7 @@ function pnjListRowHTML(p) {
           ${p.ocupacion ? ` · ${p.ocupacion}` : ''}
         </div>
       </div>
-      <span style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">#${p.orden ?? '—'}</span>
+      <span style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">#${p.orden ?? '—'}</span>
       <button class="btn btn-ghost btn-sm" onclick="openEditPnj('${p.id}')">
         <i class="bi bi-pencil"></i> Editar
       </button>
@@ -1789,8 +1789,8 @@ function renderItems() {
               <div class="name">${item.nombre || 'Sin nombre'}</div>
               <div class="meta">${item.categoria||'—'}${item.tipo ? ` · ${item.tipo}` : ''}${item.tags?.length ? ` · ${item.tags.join(', ')}` : ''}</div>
             </div>
-            <span class="tienda-list-price" style="font:300 var(--f-xs) var(--f-mono);color:var(--accent-text1);white-space:nowrap;">${item.precio ?? '—'} pts</span>
-            <span class="tienda-list-orden" style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">#${item.orden??'—'}</span>
+            <span class="tienda-list-price" style="font:300 var(--f-s) var(--f-mono);color:var(--accent-text1);white-space:nowrap;">${item.precio ?? '—'} pts</span>
+            <span class="tienda-list-orden" style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">#${item.orden??'—'}</span>
             <button class="btn btn-ghost btn-sm" onclick="openEditItem('${item.id}')"><i class="bi bi-pencil"></i> Editar</button>
             <button class="btn btn-danger btn-sm" onclick="deleteItem('${item.id}','${(item.nombre||'').replace(/'/g,'')}')"><i class="bi bi-trash"></i></button>
           </div>`).join('')
