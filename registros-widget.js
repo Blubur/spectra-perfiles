@@ -187,8 +187,9 @@
         padding-bottom: .4rem; margin-bottom: .2rem;
       }
       #spectra-registros .sr-th {
-        font: 300 .6rem var(--f-mono, 'DM Mono', monospace);
+        font: 300 var(--f-base) var(--f-mono, 'DM Mono', monospace);
         text-transform: uppercase; letter-spacing: .12em;
+        font-weigth: bold;
         color: var(--mono-text1, #b5b3ad);
         padding: .35rem .5rem;
         cursor: pointer; user-select: none; white-space: nowrap;
@@ -223,7 +224,7 @@
       #spectra-registros .sr-char-link:hover { opacity: 1; text-decoration: underline; }
       #spectra-registros .sr-char-link::after { content: "↗"; font-size: .55rem; }
       #spectra-registros .sr-parl {
-        font: 300 .6rem var(--f-mono, 'DM Mono', monospace);
+        font: 300 var(--f-s) var(--f-mono, 'DM Mono', monospace);
         text-transform: uppercase; letter-spacing: .06em;
         display: inline-flex; align-items: center; gap: .4em;
       }
