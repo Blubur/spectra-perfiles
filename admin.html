@@ -11,7 +11,8 @@
 
 :root {
   color-scheme: dark light;
-
+interpolate-size: allow-keywords;
+  
   --mono-surface1: light-dark(#fdfdfc, #111110);
   --mono-surface2: light-dark(#f9f9f8, #191918);
   --mono-component1: light-dark(#f1f0ef, #222221);
@@ -116,6 +117,14 @@ body {
   color: var(--mono-text1);
   min-height: 100vh;
   overflow-x: clip;
+  color-scheme: dark;
+
+  
+  &:has(#theme-switch:checked), &.light-mode {
+    color-scheme: light;
+    transition: all .5s allow-discrete;
+  }
+  
 }
 
 
