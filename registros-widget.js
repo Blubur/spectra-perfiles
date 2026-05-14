@@ -38,7 +38,7 @@
   var root;
 
   /* ══════════════════════════════════════════════════════════════
-     UTILIDADES
+      UTILIDADES
   ══════════════════════════════════════════════════════════════ */
 
   function esc(v) {
@@ -96,7 +96,7 @@
   }
 
   /* ══════════════════════════════════════════════════════════════
-     ESTILOS
+      ESTILOS
   ══════════════════════════════════════════════════════════════ */
 
   function injectStyles() {
@@ -104,6 +104,11 @@
     var style = document.createElement("style");
     style.id = "spectra-registros-style";
     style.textContent = `
+      #spectra-registros .s-post-wide {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+      }
       #spectra-registros .sr-header {
         padding: clamp(3rem, 6vw, 4.5rem) 2rem 3rem;
         text-align: center;
@@ -286,29 +291,31 @@
   }
 
   /* ══════════════════════════════════════════════════════════════
-     RENDER SHELL — todo dentro de root, igual que pnjs-widget
+      RENDER SHELL
   ══════════════════════════════════════════════════════════════ */
 
   function renderShell() {
     root.innerHTML =
-      '<section class="sr-header">' +
-        '<h1>Registro</h1>' +
-        '<p>Personajes jugables · Parlamentos de Spectra</p>' +
-      '</section>' +
-      '<div class="sr-toolbar">' +
-        '<input class="sr-search" type="search" placeholder="Buscar personaje, FC, jugador…" autocomplete="off">' +
-        '<div class="sr-pills">' +
-          mkPill("all",      "Todos",     "") +
-          mkPill("activo",   "Activos",   "#00674E") +
-          mkPill("inactivo", "Inactivos", "#6f6d66") +
-          mkPill("reserva",  "Reservas",  "#A53E4A") +
+      '<div class="s-post-wide">' +
+        '<section class="sr-header">' +
+          '<h1>Registro</h1>' +
+          '<p>Personajes jugables · Parlamentos de Spectra</p>' +
+        '</section>' +
+        '<div class="sr-toolbar">' +
+          '<input class="sr-search" type="search" placeholder="Buscar personaje, FC, jugador…" autocomplete="off">' +
+          '<div class="sr-pills">' +
+            mkPill("all",      "Todos",     "") +
+            mkPill("activo",   "Activos",   "#00674E") +
+            mkPill("inactivo", "Inactivos", "#6f6d66") +
+            mkPill("reserva",  "Reservas",  "#A53E4A") +
+          '</div>' +
+          '<span class="sr-count" data-role="count"></span>' +
         '</div>' +
-        '<span class="sr-count" data-role="count"></span>' +
-      '</div>' +
-      '<div class="sr-table-wrap">' +
-        '<div class="sr-head" data-role="head"></div>' +
-        '<div class="sr-body" data-role="body">' +
-          '<div class="sr-loader"><div class="sr-dots"><span></span><span></span><span></span></div></div>' +
+        '<div class="sr-table-wrap">' +
+          '<div class="sr-head" data-role="head"></div>' +
+          '<div class="sr-body" data-role="body">' +
+            '<div class="sr-loader"><div class="sr-dots"><span></span><span></span><span></span></div></div>' +
+          '</div>' +
         '</div>' +
       '</div>';
 
@@ -371,7 +378,7 @@
   }
 
   /* ══════════════════════════════════════════════════════════════
-     RENDER BODY
+      RENDER BODY
   ══════════════════════════════════════════════════════════════ */
 
   function renderBody() {
@@ -446,7 +453,7 @@
   }
 
   /* ══════════════════════════════════════════════════════════════
-     FIREBASE
+      FIREBASE
   ══════════════════════════════════════════════════════════════ */
 
   function fetchData(db) {
@@ -457,13 +464,13 @@
         var reg = u.registro || {};
         if (!reg.estado) return;
         allRows.push({
-          username:     u.username      || d.id,
-          numUsuario:   reg.numUsuario   || null,
-          charName:     u.charName      || u.username || d.id,
-          parlamento:   u.parlamento    || "",
-          faceclaim1:   reg.faceclaim1   || "",
-          faceclaim2:   reg.faceclaim2   || "",
-          estado:       reg.estado       || "",
+          username:      u.username      || d.id,
+          numUsuario:    reg.numUsuario   || null,
+          charName:      u.charName      || u.username || d.id,
+          parlamento:    u.parlamento    || "",
+          faceclaim1:    reg.faceclaim1   || "",
+          faceclaim2:    reg.faceclaim2   || "",
+          estado:        reg.estado       || "",
           fechaReserva: reg.fechaReserva || ""
         });
       });
@@ -474,7 +481,7 @@
   }
 
   /* ══════════════════════════════════════════════════════════════
-     INICIO — exactamente igual que pnjs-widget
+      INICIO
   ══════════════════════════════════════════════════════════════ */
 
   function start() {
