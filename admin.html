@@ -1109,13 +1109,13 @@ body {
       </div>
 
       <div class="field">
-        <label>Tags <small style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-text1);">separados por comas</small></label>
+        <label>Tags <small style="font:300 var(--f-xs) var(--f-mono);color:var(--mono-danger);">separados por comas</small></label>
         <input type="text" id="itemTags" placeholder="mente, magia, habilidad">
       </div>
 
       <div class="field">
         <label>Imagen</label>
-        <small>Solo formato svg</small>
+        <small style="color: var(--danger)">Solo formato svg</small>
         <div style="display:flex;gap:var(--spacing-xs);margin-bottom:var(--spacing-2xs);">
           <button type="button" class="btn btn-ghost btn-sm" id="imgTypeUrl" onclick="setImgType('url')">URL de imagen</button>
           <button type="button" class="btn btn-sm" id="imgTypeSvg" onclick="setImgType('svg')">SVG inline</button>
