@@ -4,12 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Panel de Administración — Spectra</title>
+<!-- Anti-flash: carga el tema antes que el CSS -->
+<script>
+(function () {
+  const saved = localStorage.getItem("theme");
+  const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const theme = saved || (systemDark ? "dark" : "light");
+  document.documentElement.style.colorScheme = theme;
+})();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
 :root {
+  color-scheme: light;
   interpolate-size: allow-keywords;
 
   --mono-surface1: light-dark(#fdfdfc, #111110);
@@ -118,13 +129,7 @@ body {
   color: var(--mono-text2);
   min-height: 100vh;
   overflow-x: clip;
-  color-scheme: dark;
-  transition: all 0.3s ease;
-
-  &:has(#theme-switch:checked), &.light-mode {
-    color-scheme: light;
-    transition: all .5s allow-discrete;
-  }
+  transition: background .3s ease, color .3s ease;
 }
 
 /* ─── NAV ─── */
@@ -174,6 +179,34 @@ body {
 .nav-tab i { font-size: .8rem; opacity: .6; }
 .nav-tab:hover { color: var(--accent-text1); }
 .nav-tab.active { color: var(--accent-text1); border-bottom-color: var(--accent-solid1); }
+
+.nav-spacer { flex: 1; }
+
+.theme-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; align-self: center; flex-shrink: 0;
+  background: none; border: 1px solid var(--mono-border1);
+  border-radius: var(--br-pill); cursor: pointer;
+  color: var(--mono-text1); font-size: .95rem;
+  transition: var(--transition-ease);
+  margin-left: var(--spacing-xs);
+}
+.theme-btn:hover { border-color: var(--accent-border2); color: var(--accent-text1); }
+
+.nav-link-index {
+  display: flex; align-items: center; gap: var(--spacing-2xs);
+  padding: 0 var(--spacing-s);
+  font: 300 var(--f-s) var(--f-mono);
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--mono-text1);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap; flex-shrink: 0;
+  transition: var(--transition-ease);
+  align-self: stretch;
+}
+.nav-link-index i { font-size: .8rem; opacity: .6; }
+.nav-link-index:hover { color: var(--accent-text1); }
 
 /* ─── BUTTONS ─── */
 .btn {
@@ -778,11 +811,6 @@ body {
 <div id="adminUI" style="display:none;">
 
   <nav class="admin-nav">
-  <button id="themeToggle" class="theme-btn">
-  <i class="bi"></i>
-</button>
-
-    
     <div class="nav-brand">Spectra <small>Admin</small></div>
     <button class="nav-tab active" data-page="usuarios" onclick="goTo('usuarios')">
       <i class="bi bi-people"></i> Usuarios
@@ -795,6 +823,13 @@ body {
     </button>
     <button class="nav-tab" data-page="visibilidad" onclick="goTo('visibilidad')">
       <i class="bi bi-eye"></i> Visibilidad
+    </button>
+    <div class="nav-spacer"></div>
+    <a href="index.html" class="nav-link-index">
+      <i class="bi bi-house"></i> Index
+    </a>
+    <button id="themeToggle" class="theme-btn" title="Cambiar tema">
+      <i class="bi"></i>
     </button>
   </nav>
 
@@ -1010,24 +1045,6 @@ body {
         </select>
       </div>
 
-      <div class="modal-section-title"><i class="bi bi-link-45deg"></i> Enlaces</div>
-
-      <div class="grid-2">
-        <div class="field">
-          <label>Enlace a ficha</label>
-          <input type="url" id="uFichaUrl" placeholder="https://...">
-        </div>
-        <div class="field">
-          <label>Enlace a baúl</label>
-          <input type="url" id="uBaulUrl" placeholder="https://...">
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Descripción del personaje</label>
-        <textarea id="uCharDesc" rows="3" placeholder="Breve descripción del personaje..."></textarea>
-      </div>
-
       <div class="field">
         <label>Orden de aparición</label>
         <input type="number" id="uOrden" value="0" min="0">
@@ -1089,11 +1106,6 @@ body {
         <div class="img-preview-wrap" id="pnjImgPreview">
           <span class="placeholder"><i class="bi bi-image"></i></span>
         </div>
-      </div>
-
-      <div class="field">
-        <label>Historia / descripción</label>
-        <textarea id="pnjHistoria" placeholder="Escribe aquí la historia del personaje..." rows="5"></textarea>
       </div>
 
       <div class="field">
@@ -1383,7 +1395,6 @@ function userCardHTML(u) {
         <div class="user-card-charname">${u.charName || '—'}</div>
         ${reg.faceclaim1 ? `<div class="user-card-meta">FC: ${reg.faceclaim1}${reg.faceclaim2 ? ` · ${reg.faceclaim2}` : ''}</div>` : ''}
         ${reservaBadge}
-        ${u.charDesc ? `<div class="user-card-meta" style="margin-top:var(--spacing-3xs);">${u.charDesc.substring(0,80)}${u.charDesc.length > 80 ? '…' : ''}</div>` : ''}
       </div>
       <div class="user-card-actions">
         <button class="btn btn-ghost btn-sm" onclick="openEditUser('${u._id}')">
@@ -1427,7 +1438,7 @@ window.openAddUser = () => {
   document.getElementById('userModalTitle').innerHTML = 'Nuevo <em>usuario</em>';
   document.getElementById('userEditId').value = '';
   ['uUsername','uNumUsuario','uPerfilUrl','uCharName','uFaceclaim1','uFaceclaim2',
-   'uFechaReserva','uFichaUrl','uBaulUrl','uCharDesc'].forEach(id => {
+   'uFechaReserva'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
   });
   document.getElementById('uEstado').value = '';
@@ -1452,9 +1463,6 @@ window.openEditUser = (userId) => {
   document.getElementById('uFaceclaim2').value   = reg.faceclaim2  || '';
   document.getElementById('uFechaReserva').value = reg.fechaReserva|| '';
   document.getElementById('uParlamento').value   = u.parlamento    || '';
-  document.getElementById('uFichaUrl').value     = u.fichaUrl      || '';
-  document.getElementById('uBaulUrl').value      = u.baulUrl       || '';
-  document.getElementById('uCharDesc').value     = u.charDesc      || '';
   document.getElementById('uOrden').value        = u.orden         ?? 0;
   document.getElementById('uReservaWrap').style.display = reg.estado === 'reserva' ? '' : 'none';
   document.getElementById('userModal').classList.add('show');
@@ -1478,16 +1486,13 @@ window.saveUser = async () => {
   const faceclaim2  = document.getElementById('uFaceclaim2').value.trim();
   const fechaReserva= estado === 'reserva' ? document.getElementById('uFechaReserva').value : '';
   const parlamento  = document.getElementById('uParlamento').value;
-  const fichaUrl    = document.getElementById('uFichaUrl').value.trim();
-  const baulUrl     = document.getElementById('uBaulUrl').value.trim();
-  const charDesc    = document.getElementById('uCharDesc').value.trim();
   const orden       = parseInt(document.getElementById('uOrden').value) || 0;
   const editId      = document.getElementById('userEditId').value;
 
   if (!username) { toast('El username es obligatorio', 'err'); return; }
 
   const data = {
-    username, charName, parlamento, fichaUrl, baulUrl, charDesc, orden,
+    username, charName, parlamento, orden,
     registro: { numUsuario, perfilUrl, estado, faceclaim1, faceclaim2, fechaReserva },
     updatedAt: Date.now()
   };
