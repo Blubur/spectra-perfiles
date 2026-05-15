@@ -33,7 +33,7 @@
   var allRows   = [];
   var filtroE   = "all";
   var filtroTxt = "";
-  var sortCol   = "charName";
+  var sortCol   = "username";   /* ← cambiado: ordenar por username en lugar de charName */
   var sortDir   = "asc";
   var root;
 
@@ -174,6 +174,12 @@
         border-color: var(--pill-bg, var(--accent-solid1, #b5a081));
         color: #fff;
       }
+      /* PNJ pill active: fondo azul suave */
+      #spectra-registros .sr-pill[data-f="pnj"].active {
+        background: #1e4a7a;
+        border-color: #1e4a7a;
+        color: #7ec8f7;
+      }
       #spectra-registros .sr-count {
         font: 300 .6rem var(--f-mono, 'DM Mono', monospace);
         color: var(--mono-text1, #b5b3ad);
@@ -182,6 +188,7 @@
       #spectra-registros .sr-table-wrap { padding: 1.5rem 2rem; }
       #spectra-registros .sr-head {
         display: grid;
+        /* ← CAMBIADO: sin columna de personaje, sólo usuario + parlamento + fc1 + fc2 + estado */
         grid-template-columns: 1.3fr 1fr 1fr 1fr .9fr;
         border-bottom: 2px solid var(--mono-border2, #494844);
         padding-bottom: .4rem; margin-bottom: .2rem;
@@ -189,7 +196,6 @@
       #spectra-registros .sr-th {
         font: 300 var(--f-base) var(--f-mono, 'DM Mono', monospace);
         text-transform: uppercase; letter-spacing: .12em;
-        font-weigth: bold;
         color: var(--mono-text1, #b5b3ad);
         padding: .35rem .5rem;
         cursor: pointer; user-select: none; white-space: nowrap;
@@ -210,19 +216,22 @@
       #spectra-registros .sr-row:last-child { border-bottom: none; }
       #spectra-registros .sr-row:hover { background: var(--mono-component1, #222221); border-radius: 3px; }
       #spectra-registros .sr-td { padding: 0 .5rem; }
-      #spectra-registros .sr-char { display: flex; flex-direction: column; gap: 2px; }
-      #spectra-registros .sr-char-name {
-        font: italic 1rem var(--f-deco, 'DM Serif Display', serif);
-        color: var(--mono-text2, #eeeeec); line-height: 1.2;
-      }
-      #spectra-registros .sr-char-link {
-        font: 300 .6rem var(--f-mono, 'DM Mono', monospace);
+
+      /* ── Usuario: sólo el username con enlace ── */
+      #spectra-registros .sr-user-link {
+        font: 300 .8rem var(--f-mono, 'DM Mono', monospace);
         color: var(--accent-text1, #cbb696);
-        text-decoration: none; opacity: .7; transition: opacity .2s;
-        display: inline-flex; align-items: center; gap: .25em;
+        text-decoration: none;
+        display: inline-flex; align-items: center; gap: .3em;
+        transition: opacity .2s;
       }
-      #spectra-registros .sr-char-link:hover { opacity: 1; text-decoration: underline; }
-      #spectra-registros .sr-char-link::after { content: "↗"; font-size: .55rem; }
+      #spectra-registros .sr-user-link:hover { opacity: .8; text-decoration: underline; }
+      #spectra-registros .sr-user-link::after { content: "↗"; font-size: .55rem; }
+      #spectra-registros .sr-user-plain {
+        font: 300 .8rem var(--f-mono, 'DM Mono', monospace);
+        color: var(--mono-text1, #b5b3ad);
+      }
+
       #spectra-registros .sr-parl {
         font: 300 var(--f-s) var(--f-mono, 'DM Mono', monospace);
         text-transform: uppercase; letter-spacing: .06em;
@@ -248,6 +257,8 @@
       #spectra-registros .sr-badge-activo   { background: var(--success-surface, #0f2e22); border-color: var(--success-border, #1b5745); color: var(--success-text, #adf0d4); }
       #spectra-registros .sr-badge-inactivo { background: var(--mono-component1, #222221); border-color: var(--mono-border2, #494844);   color: var(--mono-text1, #b5b3ad); }
       #spectra-registros .sr-badge-reserva  { background: var(--warning-surface, #331e0b); border-color: var(--warning-border, #66350c); color: var(--warning-text, #ffa057); }
+      /* ← NUEVO: badge PNJ */
+      #spectra-registros .sr-badge-pnj      { background: #0d2440; border-color: #1e4a7a; color: #7ec8f7; }
       #spectra-registros .sr-reserva-chip {
         font: 300 .58rem var(--f-mono, 'DM Mono', monospace);
         color: var(--warning-text, #ffa057);
@@ -303,12 +314,13 @@
           '<p>Registros de Play by y grupo</p>' +
         '</section>' +
         '<div class="sr-toolbar">' +
-          '<input class="sr-search" type="search" placeholder="Buscar personaje, FC, jugador…" autocomplete="off">' +
+          '<input class="sr-search" type="search" placeholder="Buscar usuario, FC, parlamento…" autocomplete="off">' +
           '<div class="sr-pills">' +
             mkPill("all",      "Todos",     "") +
             mkPill("activo",   "Activos",   "#00674E") +
             mkPill("inactivo", "Inactivos", "#6f6d66") +
             mkPill("reserva",  "Reservas",  "#A53E4A") +
+            mkPill("pnj",      "PNJ",       "#1e4a7a") +
           '</div>' +
           '<span class="sr-count" data-role="count"></span>' +
         '</div>' +
@@ -348,8 +360,9 @@
     return '<span class="sr-pill' + (f === filtroE ? " active" : "") + '" data-f="' + f + '"' + style + '>' + label + '</span>';
   }
 
+  /* ← CAMBIADO: primera columna es "Usuario" en lugar de "Personaje" */
   var COLS = [
-    { col: "charName",   label: "Personaje" },
+    { col: "username",   label: "Usuario" },
     { col: "parlamento", label: "Parlamento" },
     { col: "faceclaim1", label: "Faceclaim 1" },
     { col: "faceclaim2", label: "Faceclaim 2" },
@@ -389,7 +402,8 @@
     var filtered = allRows.filter(function (r) {
       if (filtroE !== "all" && r.estado !== filtroE) return false;
       if (filtroTxt) {
-        var hay = (r.charName + r.username + r.parlamento + r.faceclaim1 + r.faceclaim2).toLowerCase();
+        /* ← búsqueda por username, parlamento y faceclaims (sin charName) */
+        var hay = (r.username + r.parlamento + r.faceclaim1 + r.faceclaim2).toLowerCase();
         if (hay.indexOf(filtroTxt) === -1) return false;
       }
       return true;
@@ -412,21 +426,21 @@
     body.innerHTML = filtered.map(function (r) {
       var color = PARL_COLOR[r.parlamento] || "#b5b3ad";
 
-      var charCell =
-        '<div class="sr-char">' +
-          (r.numUsuario
-            ? '<a class="sr-char-link" href="/u' + esc(r.numUsuario) + '">' + esc(r.username) + '</a>'
-            : '') +
-        '</div>';
+      /* ← CAMBIADO: sólo username con enlace al perfil, sin charName */
+      var userCell = r.numUsuario
+        ? '<a class="sr-user-link" href="/u' + esc(r.numUsuario) + '">' + esc(r.username) + '</a>'
+        : '<span class="sr-user-plain">' + esc(r.username) + '</span>';
 
       var parlCell = '<span class="sr-parl" style="--parl-c:' + color + '">' + esc(r.parlamento || "—") + '</span>';
       var fc1Cell  = '<span class="sr-fc' + (r.faceclaim1 ? '' : ' empty') + '">' + esc(r.faceclaim1 || "—") + '</span>';
       var fc2Cell  = '<span class="sr-fc' + (r.faceclaim2 ? '' : ' empty') + '">' + esc(r.faceclaim2 || "—") + '</span>';
 
+      /* ← AÑADIDO: caso pnj en badgeMap */
       var badgeMap = {
         activo:   ["sr-badge-activo",   "✓ Activo"],
         inactivo: ["sr-badge-inactivo", "— Inactivo"],
-        reserva:  ["sr-badge-reserva",  "◷ Reserva"]
+        reserva:  ["sr-badge-reserva",  "◷ Reserva"],
+        pnj:      ["sr-badge-pnj",      "⬡ PNJ"]
       };
       var ep = badgeMap[r.estado] || ["sr-badge-inactivo", "—"];
       var estadoCell =
@@ -438,10 +452,10 @@
         '</div>';
 
       return '<div class="sr-row">' +
-        '<div class="sr-td">' + charCell + '</div>' +
-        '<div class="sr-td">' + parlCell + '</div>' +
-        '<div class="sr-td">' + fc1Cell  + '</div>' +
-        '<div class="sr-td">' + fc2Cell  + '</div>' +
+        '<div class="sr-td">' + userCell   + '</div>' +
+        '<div class="sr-td">' + parlCell   + '</div>' +
+        '<div class="sr-td">' + fc1Cell    + '</div>' +
+        '<div class="sr-td">' + fc2Cell    + '</div>' +
         '<div class="sr-td">' + estadoCell + '</div>' +
       '</div>';
     }).join("");
@@ -462,15 +476,15 @@
       snap.forEach(function (d) {
         var u   = d.data();
         var reg = u.registro || {};
+        /* ← INCLUIDO pnj: mostrar también usuarios con estado pnj */
         if (!reg.estado) return;
         allRows.push({
-          username:      u.username      || d.id,
-          numUsuario:    reg.numUsuario   || null,
-          charName:      u.charName      || u.username || d.id,
-          parlamento:    u.parlamento    || "",
-          faceclaim1:    reg.faceclaim1   || "",
-          faceclaim2:    reg.faceclaim2   || "",
-          estado:        reg.estado       || "",
+          username:     u.username      || d.id,
+          numUsuario:   reg.numUsuario   || null,
+          parlamento:   u.parlamento    || "",
+          faceclaim1:   reg.faceclaim1   || "",
+          faceclaim2:   reg.faceclaim2   || "",
+          estado:       reg.estado       || "",
           fechaReserva: reg.fechaReserva || ""
         });
       });
