@@ -300,7 +300,7 @@
       '<div class="s-post-wide">' +
         '<section class="sr-header">' +
           '<h1>Registro</h1>' +
-          '<p>Personajes jugables · Parlamentos de Spectra</p>' +
+          '<p>Registros de Play by y grupo</p>' +
         '</section>' +
         '<div class="sr-toolbar">' +
           '<input class="sr-search" type="search" placeholder="Buscar personaje, FC, jugador…" autocomplete="off">' +
@@ -414,7 +414,6 @@
 
       var charCell =
         '<div class="sr-char">' +
-          '<span class="sr-char-name">' + esc(r.charName) + '</span>' +
           (r.numUsuario
             ? '<a class="sr-char-link" href="/u' + esc(r.numUsuario) + '">' + esc(r.username) + '</a>'
             : '') +
