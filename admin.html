@@ -968,6 +968,7 @@ body {
             <option value="">Sin asignar</option>
             <option value="activo">Personaje activo</option>
             <option value="inactivo">Personaje inactivo</option>
+            <option value="pnj">PNJ</option>
             <option value="reserva">Reserva</option>
           </select>
         </div>
@@ -1288,6 +1289,7 @@ function estadoPill(estado) {
     activo:   ['estado-activo',   'bi-check-circle', 'Activo'],
     inactivo: ['estado-inactivo', 'bi-x-circle',     'Inactivo'],
     reserva:  ['estado-reserva',  'bi-hourglass',    'Reserva'],
+    PNJ:  ['estado-pnj',  'bi bi-bank',    'PNJ'],
   };
   const [cls, icon, label] = map[estado] || ['estado-inactivo','bi-dash','—'];
   return `<span class="estado-pill ${cls}"><i class="bi ${icon}"></i>${label}</span>`;
