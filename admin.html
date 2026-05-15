@@ -119,7 +119,7 @@ body {
   min-height: 100vh;
   overflow-x: clip;
   color-scheme: dark;
-  transition: all .5s allow-discrete;
+  transition: all 0.3s ease;
 
   &:has(#theme-switch:checked), &.light-mode {
     color-scheme: light;
@@ -778,10 +778,11 @@ body {
 <div id="adminUI" style="display:none;">
 
   <nav class="admin-nav">
-    <label class="theme-toggle">
-      <input type="checkbox" id="theme-switch" />
-      <span class="icon"></span>
-    </label>
+  <button id="themeToggle" class="theme-btn">
+  <i class="bi"></i>
+</button>
+
+    
     <div class="nav-brand">Spectra <small>Admin</small></div>
     <button class="nav-tab active" data-page="usuarios" onclick="goTo('usuarios')">
       <i class="bi bi-people"></i> Usuarios
@@ -2001,5 +2002,47 @@ window.toast = (msg, type = '') => {
   toastTimer = setTimeout(() => t.className = '', 2600);
 };
 </script>
+
+
+<script>
+$(function () {
+  const STORAGE_KEY = "theme";
+
+  function setTheme(theme) {
+    document.documentElement.style.colorScheme = theme;
+    localStorage.setItem(STORAGE_KEY, theme);
+    updateIcon(theme);
+  }
+
+  function updateIcon(theme) {
+    const icon = $("#themeToggle i");
+
+    if (theme === "dark") {
+      icon.removeClass("bi-moon").addClass("bi-sun");
+    } else {
+      icon.removeClass("bi-sun").addClass("bi-moon");
+    }
+  }
+
+  function detectSystemTheme() {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
+
+  // Inicializar
+  let theme = localStorage.getItem(STORAGE_KEY) || detectSystemTheme();
+  setTheme(theme);
+
+  // Toggle
+  $("#themeToggle").on("click", function () {
+    let currentTheme = localStorage.getItem(STORAGE_KEY) || "light";
+    let newTheme = currentTheme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+  });
+});
+</script>
+
+  
 </body>
 </html>
