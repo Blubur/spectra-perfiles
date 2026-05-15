@@ -11,9 +11,6 @@
 
 :root {
   interpolate-size: allow-keywords;
-  --mono-surface1: light-dark(white, black);
-
-  
 
   --mono-surface1: light-dark(#fdfdfc, #111110);
   --mono-surface2: light-dark(#f9f9f8, #191918);
@@ -50,6 +47,11 @@
   --warning-text: light-dark(#cc4e00, #ffa057);
   --warning-surface: light-dark(#ffefd6, #331e0b);
   --warning-border: light-dark(#ffc182, #66350c);
+
+  /* PNJ estado color (azul suave) */
+  --pnj-text: light-dark(#1a4a7a, #7ec8f7);
+  --pnj-surface: light-dark(#e8f2fd, #0d2440);
+  --pnj-border: light-dark(#93c5f0, #1e4a7a);
 
   --staff: var(--accent-solid1);
   --primigenios: #A53E67;
@@ -116,16 +118,13 @@ body {
   color: var(--mono-text2);
   min-height: 100vh;
   overflow-x: clip;
-
   color-scheme: dark;
   transition: all .5s allow-discrete;
-  background: var(--mono-surface1);
-  
+
   &:has(#theme-switch:checked), &.light-mode {
     color-scheme: light;
     transition: all .5s allow-discrete;
   }
-  
 }
 
 /* ─── NAV ─── */
@@ -561,6 +560,8 @@ body {
 .estado-activo   { background: var(--success-surface); border-color: var(--success-border); color: var(--success-text); }
 .estado-inactivo { background: var(--mono-component2); border-color: var(--mono-border2);   color: var(--mono-text1); }
 .estado-reserva  { background: var(--warning-surface); border-color: var(--warning-border); color: var(--warning-text); }
+/* ← NUEVO */
+.estado-pnj      { background: var(--pnj-surface);    border-color: var(--pnj-border);     color: var(--pnj-text); }
 
 /* ─── TIENDA ─── */
 .tienda-grid {
@@ -673,7 +674,7 @@ body {
 }
 .svg-preview-wrap svg { max-width: 60%; max-height: 60%; }
 
-/* ─── USER GRID (same style as PNJ/tienda) ─── */
+/* ─── USER GRID ─── */
 .user-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -707,7 +708,7 @@ body {
 .user-card-meta { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); }
 .user-card-actions {
   display: flex; gap: var(--spacing-2xs); margin-top: var(--spacing-xs);
-  padding-top: var(--spacing-xs); border-top: 1px solid var(--mono-border1);
+  border-top: 1px solid var(--mono-border1);
   padding: var(--spacing-xs);
 }
 .user-card-actions .btn { flex: 1; }
@@ -731,35 +732,29 @@ body {
   margin-top: 2px;
 }
 
+/* Filtro estado en usuarios */
+.estado-filter-tab[data-e="pnj"] { --grupo-color: var(--pnj-text, #7ec8f7); }
+.parl-tab[data-e="pnj"].active { background: var(--pnj-surface); border-color: var(--pnj-border); color: var(--pnj-text); }
 
-
-  .theme-toggle {
+.theme-toggle {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
 }
-
-.theme-toggle input {
-  display: none;
-}
-
+.theme-toggle input { display: none; }
 .theme-toggle .icon::before {
   font-family: "bootstrap-icons";
-  content: "\f1d8"; 
+  content: "\f1d8";
 }
 
-  
 @media(max-width:700px) {
   .tienda-grid { grid-template-columns: 1fr 1fr; }
   .tienda-list-row { grid-template-columns: 56px 1fr auto auto; }
   .tienda-list-row .tienda-list-price, .tienda-list-row .tienda-list-orden { display: none; }
   .user-grid { grid-template-columns: 1fr 1fr; }
 }
-
-
-  
 </style>
 </head>
 <body>
@@ -783,12 +778,10 @@ body {
 <div id="adminUI" style="display:none;">
 
   <nav class="admin-nav">
-
-<label class="theme-toggle">
-  <input type="checkbox" id="theme-switch" />
-  <span class="icon"></span>
-</label>
-    
+    <label class="theme-toggle">
+      <input type="checkbox" id="theme-switch" />
+      <span class="icon"></span>
+    </label>
     <div class="nav-brand">Spectra <small>Admin</small></div>
     <button class="nav-tab active" data-page="usuarios" onclick="goTo('usuarios')">
       <i class="bi bi-people"></i> Usuarios
@@ -830,6 +823,15 @@ body {
       <button class="parl-tab" data-p="sabios" data-g="sabios">Sabios</button>
       <button class="parl-tab" data-p="caoticos" data-g="caoticos">Caóticos</button>
       <button class="parl-tab" data-g="staff">Staff</button>
+    </div>
+
+    <!-- Estado filter pills (secundario) -->
+    <div class="parl-tabs" id="userEstadoFilterTabs" style="margin-top:calc(var(--spacing-s) * -1 + var(--spacing-2xs)); margin-bottom:var(--spacing-s);">
+      <button class="parl-tab active" data-e="all" style="font-size:.65rem;">★ Todos los estados</button>
+      <button class="parl-tab" data-e="activo"   style="--grupo-color:#00674E;font-size:.65rem;">Activos</button>
+      <button class="parl-tab" data-e="inactivo" style="--grupo-color:#6f6d66;font-size:.65rem;">Inactivos</button>
+      <button class="parl-tab" data-e="reserva"  style="--grupo-color:#A53E4A;font-size:.65rem;">Reservas</button>
+      <button class="parl-tab estado-filter-tab" data-e="pnj" style="font-size:.65rem;">PNJ (staff)</button>
     </div>
 
     <!-- Grid view -->
@@ -964,11 +966,12 @@ body {
         </div>
         <div class="field">
           <label>Estado</label>
+          <!-- ← AÑADIDO pnj -->
           <select id="uEstado" onchange="onUserEstadoChange()">
             <option value="">Sin asignar</option>
             <option value="activo">Personaje activo</option>
             <option value="inactivo">Personaje inactivo</option>
-            <option value="pnj">PNJ</option>
+            <option value="pnj">PNJ (staff)</option>
             <option value="reserva">Reserva</option>
           </select>
         </div>
@@ -1236,7 +1239,8 @@ let tiendaView = 'grid';
 let imgType = 'svg';
 let pnjFilter = 'all';
 let pnjView = 'grid';
-let userFilter = 'all';
+let userFilter = 'all';      // parlamento filter
+let userEstadoFilter = 'all'; // ← NUEVO: estado filter
 let userView = 'grid';
 
 const fieldsDef = [
@@ -1283,13 +1287,18 @@ async function loadAll() {
 // ══════════════════════════════
 //  USUARIOS
 // ══════════════════════════════
+
+/**
+ * Genera el HTML de la pill de estado.
+ * ← AÑADIDO: caso 'pnj'
+ */
 function estadoPill(estado) {
   if (!estado) return '<span class="estado-pill estado-inactivo">—</span>';
   const map = {
     activo:   ['estado-activo',   'bi-check-circle', 'Activo'],
     inactivo: ['estado-inactivo', 'bi-x-circle',     'Inactivo'],
     reserva:  ['estado-reserva',  'bi-hourglass',    'Reserva'],
-    PNJ:  ['estado-pnj',  'bi bi-bank',    'PNJ'],
+    pnj:      ['estado-pnj',      'bi-bank',         'PNJ'],
   };
   const [cls, icon, label] = map[estado] || ['estado-inactivo','bi-dash','—'];
   return `<span class="estado-pill ${cls}"><i class="bi ${icon}"></i>${label}</span>`;
@@ -1297,7 +1306,12 @@ function estadoPill(estado) {
 
 function getUserList() {
   let users = Object.entries(allUsers).map(([id, data]) => ({ _id: id, ...data }));
+  // Filtro por parlamento
   if (userFilter !== 'all') users = users.filter(u => u.parlamento === userFilter);
+  // Filtro por estado ← NUEVO
+  if (userEstadoFilter !== 'all') {
+    users = users.filter(u => (u.registro?.estado || '') === userEstadoFilter);
+  }
   return users;
 }
 
@@ -1349,7 +1363,6 @@ function renderUsers() {
 function userCardHTML(u) {
   const reg = u.registro || {};
   const color = GRUPOS_COLOR[u.parlamento] || 'var(--accent-solid1)';
-  const initial = (u.username || u._id || '?')[0].toUpperCase();
   const profileLink = reg.perfilUrl
     ? `<a class="user-card-username" href="${reg.perfilUrl}" target="_blank">${u.username || u._id}<i class="bi bi-box-arrow-up-right" style="font-size:.65rem;"></i></a>`
     : `<span class="user-card-username">${u.username || u._id || '—'}</span>`;
@@ -1359,7 +1372,6 @@ function userCardHTML(u) {
   return `
     <div class="user-card">
       <div class="user-card-header">
-     
         <div style="flex:1;min-width:0;">
           ${profileLink}
           <div style="font:300 var(--f-s) var(--f-mono);color:${color};text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">${u.parlamento || '—'}</div>
@@ -1383,12 +1395,21 @@ function userCardHTML(u) {
     </div>`;
 }
 
-// ── USER FILTER ──
+// ── USER PARLAMENTO FILTER ──
 document.getElementById('userFilterTabs').addEventListener('click', e => {
   const btn = e.target.closest('.parl-tab');
   if (!btn) return;
   userFilter = btn.dataset.g;
   document.querySelectorAll('#userFilterTabs .parl-tab').forEach(b => b.classList.toggle('active', b === btn));
+  renderUsers();
+});
+
+// ── USER ESTADO FILTER ← NUEVO ──
+document.getElementById('userEstadoFilterTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.parl-tab');
+  if (!btn) return;
+  userEstadoFilter = btn.dataset.e;
+  document.querySelectorAll('#userEstadoFilterTabs .parl-tab').forEach(b => b.classList.toggle('active', b === btn));
   renderUsers();
 });
 
@@ -1439,6 +1460,7 @@ window.openEditUser = (userId) => {
 };
 
 window.onUserEstadoChange = () => {
+  // Mostrar campo fecha solo para reserva
   document.getElementById('uReservaWrap').style.display =
     document.getElementById('uEstado').value === 'reserva' ? '' : 'none';
 };
