@@ -3,185 +3,669 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Configuración de perfil</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<title>Spectra — Panel de Administración</title>
+
+<!-- Anti-flash theme -->
+<script>
+(function () {
+  const saved = localStorage.getItem("theme");
+  const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const theme = saved || (systemDark ? "dark" : "light");
+  document.documentElement.style.colorScheme = theme;
+})();
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 :root {
-    --bg: #f5f3ef;
-    --surface: #fff;
-    --surface2: #f0ede8;
-    --border: #ddd9d2;
-    --text: #1a1814;
-    --muted: #333;
-    --accent: #dd2e4e;
-    --accent-l: #29a395;
-    --gold: #b8962e;
-    --gold-l: #a6934e;
-    --danger: #8b3a3a;
-    --success: #3a6b4a;
+  color-scheme: light;
+  interpolate-size: allow-keywords;
+
+  --mono-surface1:   light-dark(#fdfdfc, #111110);
+  --mono-surface2:   light-dark(#f9f9f8, #191918);
+  --mono-component1: light-dark(#f1f0ef, #222221);
+  --mono-component2: light-dark(#e9e8e6, #2a2a28);
+  --mono-component3: light-dark(#e2e1de, #31312e);
+  --mono-border1:    light-dark(#dad9d6, #3b3a37);
+  --mono-border2:    light-dark(#cfceca, #494844);
+  --mono-border3:    light-dark(#bcbbb5, #62605b);
+  --mono-solid1:     light-dark(#8d8d86, #6f6d66);
+  --mono-solid2:     light-dark(#82827c, #7c7b74);
+  --mono-text1:      light-dark(#63635e, #b5b3ad);
+  --mono-text2:      light-dark(#21201c, #eeeeec);
+
+  --accent-surface1:  light-dark(#fbfaf9, #13110f);
+  --accent-component1:light-dark(#f0ece6, #25221d);
+  --accent-component2:light-dark(#e9e3da, #2e2a22);
+  --accent-border1:   light-dark(#dacebd, #453c2f);
+  --accent-border2:   light-dark(#cfbfa8, #574a38);
+  --accent-border3:   light-dark(#bea98a, #726148);
+  --accent-solid1:    light-dark(#b5a081, #b5a081);
+  --accent-solid2:    light-dark(#a99576, #a99576);
+  --accent-text1:     light-dark(#6f6048, #cbb696);
+  --accent-text2:     light-dark(#343029, #f2e6d4);
+
+  --danger-surface: light-dark(#feebe7, #391714);
+  --danger-border:  light-dark(#fdbdaf, #6e2920);
+  --danger-text:    light-dark(#d13415, #ff977d);
+  --success-text:   light-dark(#1d3b31, #adf0d4);
+  --success-surface:light-dark(#e6f7ed, #0f2e22);
+  --success-border: light-dark(#acdec8, #1b5745);
+  --warning-text:   light-dark(#cc4e00, #ffa057);
+  --warning-surface:light-dark(#ffefd6, #331e0b);
+  --warning-border: light-dark(#ffc182, #66350c);
+
+  --primigenios:    #A53E67;
+  --arquitectos:    #0C459C;
+  --sabios:         #00674E;
+  --caoticos:       #5A4160;
+  --exterminadores: #A53E4A;
+  --staff:          #b5a081;
+
+  --shadow-sm: 0 1px 2px light-dark(rgba(0,0,0,.04), rgba(0,0,0,.18));
+  --shadow-md: 0 2px 6px light-dark(rgba(0,0,0,.06), rgba(0,0,0,.22));
+  --shadow-lg: 0 6px 18px light-dark(rgba(0,0,0,.10), rgba(0,0,0,.32));
+  --shadow-xl: 0 12px 36px light-dark(rgba(0,0,0,.08), rgba(0,0,0,.30));
+
+  --transition-ease: all .4s ease-in-out;
+
+  --f-xs:  clamp(0.5628rem, 0.6716rem + -0.1404vw, 0.64rem);
+  --f-s:   clamp(0.7502rem, 0.8204rem + -0.0906vw, 0.8rem);
+  --f-base:clamp(1rem, 1rem + 0vw, 1rem);
+  --f-l:   clamp(1.25rem, 1.216rem + 0.1509vw, 1.333rem);
+  --f-xl:  clamp(1.5625rem, 1.4748rem + 0.3898vw, 1.7769rem);
+  --f-2xl: clamp(1.9531rem, 1.7832rem + 0.7554vw, 2.3686rem);
+  --f-3xl: clamp(2.4414rem, 2.1485rem + 1.3017vw, 3.1573rem);
+  --f-5xl: clamp(3.8147rem, 3.0802rem + 3.2646vw, 5.6102rem);
+
+  --f-deco: 'DM Serif Display', serif;
+  --f-mono: 'DM Mono', monospace;
+  --f-sans: 'DM Sans', sans-serif;
+
+  --br:      5px;
+  --br-l:    1rem;
+  --br-pill: 999px;
+
+  --spacing-3xs: clamp(0.25rem,  0.3381rem + -0.1136vw, 0.3125rem);
+  --spacing-2xs: clamp(0.5rem,   0.5881rem + -0.1136vw, 0.5625rem);
+  --spacing-xs:  clamp(0.75rem,  0.9261rem + -0.2273vw, 0.875rem);
+  --spacing-s:   clamp(1rem,     1.1761rem + -0.2273vw, 1.125rem);
+  --spacing:     clamp(1.5rem,   1.7642rem + -0.3409vw, 1.6875rem);
+  --spacing-l:   clamp(2rem,     2.3523rem + -0.4545vw, 2.25rem);
+  --spacing-xl:  clamp(3rem,     3.5284rem + -0.6818vw, 3.375rem);
+  --spacing-2xl: clamp(4rem,     4.7045rem + -0.9091vw, 4.5rem);
+
+  --nav-size: 50px;
 }
-body { font-family: 'Cormorant Garamond', serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 2rem 1rem; font-size: 16px;}
 
-.wrap { max-width: 680px; margin: 0 auto; }
-
-header { text-align: center; margin-bottom: 2.5rem; }
-header h1 { font-size: 2rem; font-weight: 300; letter-spacing: .04em; }
-header h1 em { font-style: italic; color: var(--accent); }
-header p { font-family: 'DM Mono', monospace; font-size: .8rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-top: .4rem; }
-
-.card { background: var(--surface); border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1.5rem; animation: fadeUp .4s ease both; }
-.card:nth-child(1){animation-delay:.05s} .card:nth-child(2){animation-delay:.1s}
-.card:nth-child(3){animation-delay:.15s} .card:nth-child(4){animation-delay:.2s}
-.card:nth-child(5){animation-delay:.25s}
-
-.card-title { font-family: 'DM Mono', monospace; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding-bottom: .8rem; border-bottom: 1px solid var(--border); margin-bottom: 1.2rem; }
-
-.field { margin-bottom: 1.1rem; }
-.field label { display: block; font-family: 'DM Mono', monospace; font-size: .7rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .3rem; }
-.field input, .field textarea, .field select {
-  width: 100%; background: var(--surface2); border: 1px solid var(--border);
-  padding: .55rem .8rem; font-family: 'Cormorant Garamond', serif; font-size: 1rem;
-  color: var(--text); outline: none; transition: border-color .2s;
+body {
+  font-family: var(--f-sans);
+  font-size: var(--f-base);
+  background: var(--mono-surface1);
+  color: var(--mono-text2);
+  min-height: 100vh;
+  overflow-x: clip;
+  transition: background .3s ease, color .3s ease;
 }
-.field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); }
-.field textarea { min-height: 70px; resize: vertical; }
-.field .hint { font-family: 'DM Mono', monospace; font-size: .7rem; color: var(--muted); margin-top: .3rem; }
 
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+/* ─── NAV ─── */
+.admin-nav {
+  height: var(--nav-size);
+  background: color-mix(in srgb, var(--mono-surface1), transparent 40%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--mono-border1);
+  display: flex; align-items: center;
+  padding: 0 var(--spacing-l);
+  position: sticky; top: 0; z-index: 50;
+  gap: var(--spacing-xs);
+}
+.nav-brand {
+  font: italic var(--f-l) var(--f-deco);
+  color: var(--accent-text1);
+  padding-right: var(--spacing-s);
+  border-right: 1px solid var(--mono-border1);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.nav-brand small {
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--mono-text1);
+  margin-left: var(--spacing-xs);
+}
+.nav-spacer { flex: 1; }
+.theme-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; flex-shrink: 0;
+  background: none; border: 1px solid var(--mono-border1);
+  border-radius: var(--br-pill); cursor: pointer;
+  color: var(--mono-text1); font-size: .95rem;
+  transition: var(--transition-ease);
+}
+.theme-btn:hover { border-color: var(--accent-border2); color: var(--accent-text1); }
 
-.btn { display: inline-block; padding: .6rem 1.4rem; font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; border: none; transition: all .2s; }
-.btn-primary { background: var(--accent); color: #fff; }
-.btn-primary:hover { background: #5c4d3a; }
-.btn-full { width: 100%; text-align: center; display: block; }
-.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn-admin {
+  display: inline-flex; align-items: center; gap: var(--spacing-2xs);
+  padding: var(--spacing-2xs) var(--spacing-s);
+  font: 500 var(--f-s) var(--f-deco);
+  text-transform: uppercase; letter-spacing: .06em;
+  background: var(--accent-solid1); color: #FBFBFA;
+  border: 1px solid var(--accent-border3);
+  border-radius: var(--br);
+  cursor: pointer; text-decoration: none;
+  transition: var(--transition-ease);
+  white-space: nowrap; flex-shrink: 0;
+}
+.btn-admin:hover { background: var(--accent-solid2); box-shadow: var(--shadow-lg); }
 
-/* skills */
-.skill-item { border: 1px solid var(--border); padding: 1rem; margin-bottom: .75rem; background: var(--surface2); }
-.skill-header { display: flex; align-items: center; gap: .75rem; margin-bottom: .5rem; }
-.skill-icon { font-size: 1.3rem; }
-.skill-name { font-size: 1rem; font-weight: 600; flex: 1; }
-.skill-level-badge { font-family: 'DM Mono', monospace; font-size: .7rem; color: var(--accent); background: var(--gold-l); border: 1px solid var(--gold); padding: .15rem .5rem; }
-.skill-bar-wrap { height: 3px; background: var(--border); }
-.skill-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-l), var(--accent)); transition: width .6s ease; }
-.skill-req { font-family: 'DM Mono', monospace; font-size: .58rem; color: var(--muted); margin-top: .4rem; }
-.skill-pending { font-family: 'DM Mono', monospace; font-size: .6rem; color: var(--gold); margin-top: .3rem; }
+/* ─── PAGE ─── */
+.page {
+  padding: var(--spacing-l);
+  max-width: 1100px;
+  margin: 0 auto;
+}
 
-/* login state */
-#loginSection { max-width: 400px; margin: 0 auto; }
-#profileSection { display: none; }
+/* ─── HERO ─── */
+.hero {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  flex-wrap: wrap; gap: var(--spacing-s);
+  margin-bottom: var(--spacing-l);
+  padding-bottom: var(--spacing-l);
+  border-bottom: 1px solid var(--mono-border1);
+}
+.hero-title {
+  font: 200 var(--f-5xl) var(--f-sans);
+  line-height: .95;
+  letter-spacing: -.02em;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--accent-text1);
+  font-weight: 300;
+  font-family: var(--f-deco);
+}
+.hero-meta {
+  font: 300 var(--f-s) var(--f-mono);
+  color: var(--mono-text1);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  margin-top: var(--spacing-2xs);
+}
+.hero-right {
+  display: flex; flex-direction: column; align-items: flex-end; gap: var(--spacing-xs);
+  flex-shrink: 0;
+}
 
-/* toast */
-#toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--text); color: var(--bg); font-family: 'DM Mono', monospace; font-size: .7rem; padding: .6rem 1.2rem; letter-spacing: .06em; opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 100; }
-#toast.show { opacity: 1; }
-#toast.err { background: var(--danger); }
+/* ─── SECTION TITLE ─── */
+.section-title {
+  font: 300 var(--f-s) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .18em;
+  color: var(--mono-text1);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--mono-border1);
+  margin-bottom: var(--spacing-s);
+  display: flex; align-items: center; gap: var(--spacing-xs);
+}
+.section-title i { opacity: .45; font-size: .8rem; }
 
-.notice { font-family: 'DM Mono', monospace; font-size: .7rem; color: var(--muted); background: var(--surface2); border: 1px solid var(--border); padding: .75rem 1rem; margin-bottom: 1.5rem; line-height: 1.7; }
-.notice strong { color: var(--accent); }
+/* ─── STAT CARDS ─── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-s);
+  margin-bottom: var(--spacing-l);
+}
+.stat-card {
+  background: var(--mono-surface2);
+  border: 1px solid var(--mono-border1);
+  border-radius: var(--br);
+  padding: var(--spacing-s);
+  display: flex; flex-direction: column; gap: 4px;
+  position: relative; overflow: hidden;
+  transition: var(--transition-ease);
+}
+.stat-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--stat-color, var(--accent-solid1));
+  opacity: .7;
+}
+.stat-card:hover { box-shadow: var(--shadow-lg); border-color: var(--mono-border2); }
+.stat-label {
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .13em;
+  color: var(--mono-text1);
+}
+.stat-value {
+  font: 200 var(--f-3xl) var(--f-sans);
+  line-height: 1;
+  color: var(--mono-text2);
+}
+.stat-value.loading { color: var(--mono-border2); }
+.stat-sub {
+  font: 300 var(--f-xs) var(--f-mono);
+  color: var(--mono-text1);
+  margin-top: 2px;
+}
 
-@keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-@media(max-width:500px){ .two-col{grid-template-columns:1fr;} }
+/* ─── GRID LAYOUT ─── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-s); align-items: start; margin-bottom: var(--spacing-l); }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--spacing-s); margin-bottom: var(--spacing-l); }
+
+/* ─── CARD ─── */
+.card {
+  background: var(--mono-surface2);
+  border: 1px solid var(--mono-border1);
+  border-radius: var(--br);
+  padding: var(--spacing-s);
+}
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--mono-border1);
+  margin-bottom: var(--spacing-s);
+}
+.card-title {
+  font: 300 var(--f-s) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .14em;
+  color: var(--mono-text1);
+}
+
+/* ─── PARLAMENTO BARS ─── */
+.parl-row {
+  display: flex; align-items: center; gap: var(--spacing-xs);
+  padding: var(--spacing-3xs) 0;
+  font: 300 var(--f-s) var(--f-mono);
+}
+.parl-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.parl-label { width: 100px; text-transform: uppercase; letter-spacing: .07em; color: var(--mono-text1); font-size: var(--f-xs); }
+.parl-track { flex: 1; height: 3px; background: var(--mono-component2); border-radius: var(--br-pill); overflow: hidden; }
+.parl-fill { height: 100%; border-radius: var(--br-pill); transition: width 1s cubic-bezier(.4,0,.2,1); }
+.parl-count { min-width: 2ch; text-align: right; color: var(--mono-text2); font-size: var(--f-xs); }
+
+/* ─── USER LIST ─── */
+.user-row {
+  display: flex; align-items: center; gap: var(--spacing-xs);
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--mono-border1);
+  font: 300 var(--f-s) var(--f-sans);
+  transition: background .15s;
+}
+.user-row:last-child { border-bottom: none; }
+.user-row-name { font: italic var(--f-base) var(--f-deco); flex: 1; }
+.user-row-username { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); }
+.user-row-parl {
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .07em;
+  display: flex; align-items: center; gap: .3em;
+}
+
+/* ─── ESTADO PILLS ─── */
+.pill {
+  display: inline-flex; align-items: center; gap: .3em;
+  font: 300 var(--f-xs) var(--f-mono);
+  text-transform: uppercase; letter-spacing: .06em;
+  padding: 1px var(--spacing-2xs);
+  border-radius: var(--br-pill);
+  border: 1px solid;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.pill-activo   { background: var(--success-surface); border-color: var(--success-border); color: var(--success-text); }
+.pill-inactivo { background: var(--mono-component2); border-color: var(--mono-border2);   color: var(--mono-text1); }
+.pill-reserva  { background: var(--warning-surface); border-color: var(--warning-border); color: var(--warning-text); }
+.pill-pnj      { background: light-dark(#e8f2fd, #0d2440); border-color: light-dark(#93c5f0, #1e4a7a); color: light-dark(#1a4a7a, #7ec8f7); }
+
+/* ─── PNJ CHIPS ─── */
+.pnj-chips { display: flex; flex-wrap: wrap; gap: var(--spacing-2xs); }
+.pnj-chip {
+  display: flex; align-items: center; gap: var(--spacing-2xs);
+  background: var(--mono-component1);
+  border: 1px solid var(--mono-border1);
+  border-radius: var(--br);
+  padding: var(--spacing-3xs) var(--spacing-xs);
+  transition: var(--transition-ease);
+}
+.pnj-chip:hover { border-color: var(--accent-border2); }
+.pnj-chip-img {
+  width: 32px; height: 32px; border-radius: var(--br);
+  object-fit: cover; background: var(--mono-component2); flex-shrink: 0;
+}
+.pnj-chip-img.placeholder { display: flex; align-items: center; justify-content: center; color: var(--mono-border2); font-size: .8rem; }
+.pnj-chip-name { font: italic var(--f-s) var(--f-deco); }
+.pnj-chip-grupo { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); text-transform: uppercase; letter-spacing: .07em; }
+
+/* ─── TIENDA MINI ITEMS ─── */
+.tienda-mini-row {
+  display: flex; align-items: center; gap: var(--spacing-xs);
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--mono-border1);
+}
+.tienda-mini-row:last-child { border-bottom: none; }
+.tienda-mini-thumb {
+  width: 40px; height: 32px; flex-shrink: 0;
+  background: var(--mono-component2); border-radius: var(--br);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; color: var(--accent-solid1);
+}
+.tienda-mini-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.tienda-mini-thumb svg { width: 60%; height: 60%; }
+.tienda-mini-name { font: italic var(--f-s) var(--f-deco); flex: 1; }
+.tienda-mini-cat { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); text-transform: uppercase; letter-spacing: .07em; }
+.tienda-mini-price { font: 300 var(--f-s) var(--f-mono); color: var(--accent-text1); white-space: nowrap; }
+
+/* ─── GUIDE ─── */
+.guide {
+  background: var(--mono-surface2);
+  border: 1px solid var(--mono-border1);
+  border-radius: var(--br);
+  overflow: hidden;
+  margin-bottom: var(--spacing-l);
+}
+.guide-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--spacing-s);
+  cursor: pointer;
+  border: none; background: none; color: inherit;
+  width: 100%; text-align: left;
+}
+.guide-toggle:hover { background: var(--mono-component1); }
+.guide-toggle-left { display: flex; align-items: center; gap: var(--spacing-xs); }
+.guide-toggle-icon {
+  width: 32px; height: 32px;
+  background: var(--accent-component2); border: 1px solid var(--accent-border2);
+  border-radius: var(--br);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent-text1); font-size: .9rem; flex-shrink: 0;
+}
+.guide-toggle h3 { font: italic var(--f-base) var(--f-deco); }
+.guide-toggle small { display: block; font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); text-transform: uppercase; letter-spacing: .1em; margin-top: 1px; }
+.guide-chevron { color: var(--mono-text1); transition: transform .3s ease; }
+.guide-body { display: none; padding: 0 var(--spacing-s) var(--spacing-s); border-top: 1px solid var(--mono-border1); }
+.guide-body.open { display: block; }
+
+.guide-step {
+  display: flex; gap: var(--spacing-s); padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--mono-border1);
+}
+.guide-step:last-child { border-bottom: none; }
+.guide-num { font: var(--f-l) var(--f-deco); color: var(--accent-text1); opacity: .45; min-width: 1.5rem; flex-shrink: 0; line-height: 1.3; }
+.guide-step-title { font: 500 var(--f-base) var(--f-sans); margin-bottom: 2px; }
+.guide-step-desc { font: 300 var(--f-s) var(--f-sans); color: var(--mono-text1); line-height: 1.6; }
+.guide-step-desc code {
+  font: 300 var(--f-s) var(--f-mono);
+  background: var(--mono-component2); border: 1px solid var(--mono-border1);
+  border-radius: 3px; padding: 1px 5px; color: var(--accent-text1);
+}
+
+/* ─── IDEAS ─── */
+.ideas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-l);
+}
+.idea-card {
+  background: var(--mono-component1);
+  border: 1px dashed var(--mono-border2);
+  border-radius: var(--br);
+  padding: var(--spacing-xs) var(--spacing-s);
+  display: flex; flex-direction: column; gap: 3px;
+  opacity: .75;
+}
+.idea-label { font: 300 var(--f-xs) var(--f-mono); text-transform: uppercase; letter-spacing: .1em; color: var(--accent-text1); }
+.idea-title { font: italic var(--f-base) var(--f-deco); }
+.idea-desc { font: 300 var(--f-s) var(--f-sans); color: var(--mono-text1); line-height: 1.5; }
+
+/* ─── EMPTY ─── */
+.empty { text-align: center; padding: var(--spacing-xl); color: var(--mono-text1); font: 300 var(--f-s) var(--f-mono); text-transform: uppercase; letter-spacing: .1em; }
+.empty i { display: block; font-size: 2rem; opacity: .25; margin-bottom: var(--spacing-xs); }
+
+/* ─── SKELETON PULSE ─── */
+@keyframes pulse { 0%,100%{opacity:.4} 50%{opacity:.8} }
+.skel { background: var(--mono-component2); border-radius: 3px; animation: pulse 1.5s ease-in-out infinite; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .three-col  { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .two-col { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .three-col { grid-template-columns: 1fr; }
+  .page { padding: var(--spacing-s); }
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Configuración de <em>perfil</em></h1>
-    <p>Sistema de perfiles extendidos · Foro de Rol</p>
-  </header>
 
-  <!-- LOGIN -->
-  <div id="loginSection">
-    <div class="notice">
-      Introduce tu nombre de usuario exactamente como aparece en el foro.<br>
-      <strong>Esta página es externa al foro.</strong> Tus datos se guardan de forma segura en Firebase.
+<!-- NAV -->
+<nav class="admin-nav">
+  <div class="nav-brand">Spectra <small>Foro</small></div>
+  <div class="nav-spacer"></div>
+  <button id="themeToggle" class="theme-btn" title="Cambiar tema">
+    <i class="bi"></i>
+  </button>
+  <a href="admin.html" class="btn-admin">
+    <i class="bi bi-shield-lock"></i> Admin
+  </a>
+</nav>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="hero-title">Vista general<br><em>Spectra</em></div>
+      <div class="hero-meta" id="heroMeta">Cargando datos…</div>
     </div>
-    <div class="card">
-      <div class="card-title">◈ Identificación</div>
-      <div class="field">
-        <label>Tu nombre de usuario en el foro</label>
-        <input type="text" id="loginUsername" placeholder="nombre_exacto_del_foro">
-        <div class="hint">Tal como aparece en tu perfil de Foroactivo, distingue mayúsculas</div>
-      </div>
-      <div class="field">
-        <label>Contraseña de este sistema</label>
-        <input type="password" id="loginPassword" placeholder="Crea una la primera vez">
-        <div class="hint">Es independiente de la contraseña del foro</div>
-      </div>
-      <button class="btn btn-primary btn-full" onclick="handleLogin()">Entrar / Crear cuenta</button>
+    <div class="hero-right">
+      <a href="admin.html" class="btn-admin" style="font-size: var(--f-base); padding: var(--spacing-xs) var(--spacing);">
+        <i class="bi bi-shield-lock"></i> Ir al panel de administración
+      </a>
     </div>
   </div>
 
-  <!-- PROFILE FORM -->
-  <div id="profileSection">
-    <div class="notice">
-      Bienvenido/a, <strong id="welcomeName"></strong>. Rellena tu perfil y guarda los cambios.<br>
-      Los campos públicos aparecerán en la memberlist y en tu perfil del foro.
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card" style="--stat-color: var(--accent-solid1)">
+      <div class="stat-label">Usuarios registrados</div>
+      <div class="stat-value loading" id="statUsers">—</div>
+      <div class="stat-sub" id="statUsersSub">…</div>
     </div>
-
-    <!-- enlaces -->
-    <div class="card">
-      <div class="card-title">◈ Enlaces del personaje</div>
-      <div class="field">
-        <label>URL de tu ficha de personaje</label>
-        <input type="url" id="fichaUrl" placeholder="https://tuforo.foroactivo.com/t123-nombre-ficha">
-      </div>
-      <div class="field">
-        <label>URL de tu baúl / inventario</label>
-        <input type="url" id="baulUrl" placeholder="https://tuforo.foroactivo.com/t456-nombre-baul">
-      </div>
+    <div class="stat-card" style="--stat-color: #A53E67">
+      <div class="stat-label">PNJs creados</div>
+      <div class="stat-value loading" id="statPnjs">—</div>
+      <div class="stat-sub" id="statPnjsSub">…</div>
     </div>
-
-    <!-- info personaje -->
-    <div class="card">
-      <div class="card-title">◈ Información del personaje</div>
-      <div class="two-col">
-        <div class="field">
-          <label>Nombre del personaje</label>
-          <input type="text" id="charName" placeholder="Nombre">
-        </div>
-        <div class="field">
-          <label>Edad del personaje</label>
-          <input type="text" id="charAge" placeholder="Ej: 24 años / Inmortal">
-        </div>
-      </div>
-      <div class="field">
-        <label>Ocupación / Rol en la historia</label>
-        <input type="text" id="charOcupacion" placeholder="Ej: Guardián del Umbral, Comerciante…">
-      </div>
-      <div class="field">
-        <label>Descripción breve</label>
-        <textarea id="charDesc" placeholder="Una o dos frases que definan a tu personaje…"></textarea>
-      </div>
+    <div class="stat-card" style="--stat-color: #0C459C">
+      <div class="stat-label">Items en tienda</div>
+      <div class="stat-value loading" id="statItems">—</div>
+      <div class="stat-sub" id="statItemsSub">…</div>
     </div>
-
-    <!-- habilidades -->
-    <div class="card">
-      <div class="card-title">◈ Habilidades — <span id="skillsParlamLabel" style="color:var(--accent)">cargando…</span></div>
-      <div id="skillsList">
-        <div style="font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);padding:1rem 0;">
-          Cargando habilidades de tu parlamento…
-        </div>
-      </div>
-      <div class="notice" style="margin-top:1rem;margin-bottom:0;">
-        Los niveles de habilidad los asigna el <strong>administrador</strong>. Aquí puedes ver tu estado actual y solicitar subida de nivel dejando una nota.
-      </div>
+    <div class="stat-card" style="--stat-color: var(--warning-text)">
+      <div class="stat-label">En reserva</div>
+      <div class="stat-value loading" id="statReservas">—</div>
+      <div class="stat-sub" id="statReservasSub">…</div>
     </div>
-
-    <button class="btn btn-primary btn-full" onclick="saveProfile()" id="saveBtn">Guardar cambios</button>
   </div>
+
+  <!-- PARLAMENTOS + USUARIOS RECIENTES -->
+  <div class="two-col">
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Distribución por parlamento</span>
+      </div>
+      <div id="parlBars">
+        <div class="skel" style="height:12px;margin-bottom:10px;"></div>
+        <div class="skel" style="height:12px;margin-bottom:10px;width:80%;"></div>
+        <div class="skel" style="height:12px;margin-bottom:10px;width:65%;"></div>
+        <div class="skel" style="height:12px;width:50%;"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Personajes activos</span>
+        <a href="admin.html" style="font:300 var(--f-xs) var(--f-mono);color:var(--accent-text1);text-transform:uppercase;letter-spacing:.1em;text-decoration:none;">
+          Ver todos <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+      <div id="userList">
+        <div class="skel" style="height:40px;margin-bottom:8px;"></div>
+        <div class="skel" style="height:40px;margin-bottom:8px;width:90%;"></div>
+        <div class="skel" style="height:40px;width:80%;"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PNJs -->
+  <div class="section-title"><i class="bi bi-person-vcard"></i> Personajes no jugables</div>
+  <div id="pnjChips" style="margin-bottom: var(--spacing-l);">
+    <div style="display:flex;gap:var(--spacing-xs);flex-wrap:wrap;">
+      <div class="skel" style="height:54px;width:130px;border-radius:var(--br);"></div>
+      <div class="skel" style="height:54px;width:150px;border-radius:var(--br);"></div>
+      <div class="skel" style="height:54px;width:120px;border-radius:var(--br);"></div>
+    </div>
+  </div>
+
+  <!-- TIENDA + GUIDE -->
+  <div class="two-col">
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Últimos items de tienda</span>
+        <a href="admin.html" style="font:300 var(--f-xs) var(--f-mono);color:var(--accent-text1);text-transform:uppercase;letter-spacing:.1em;text-decoration:none;">
+          Ver todos <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+      <div id="tiendaMini">
+        <div class="skel" style="height:36px;margin-bottom:8px;"></div>
+        <div class="skel" style="height:36px;margin-bottom:8px;width:85%;"></div>
+        <div class="skel" style="height:36px;width:90%;"></div>
+      </div>
+    </div>
+
+    <!-- GUIDE -->
+    <div class="guide">
+      <button class="guide-toggle" id="guideToggle">
+        <div class="guide-toggle-left">
+          <div class="guide-toggle-icon"><i class="bi bi-book"></i></div>
+          <div>
+            <h3>Guía rápida del panel</h3>
+            <small>Cómo usar el administrador</small>
+          </div>
+        </div>
+        <i class="bi bi-chevron-right guide-chevron" id="guideChevron"></i>
+      </button>
+      <div class="guide-body" id="guideBody">
+        <div style="padding-top: var(--spacing-s);">
+          <div class="guide-step">
+            <div class="guide-num">1</div>
+            <div>
+              <div class="guide-step-title">Crear un usuario</div>
+              <div class="guide-step-desc">Ve a <code>Usuarios</code> → <code>Nuevo usuario</code>. El username de Foroactivo es el identificador único. Rellena parlamento y estado.</div>
+            </div>
+          </div>
+          <div class="guide-step">
+            <div class="guide-num">2</div>
+            <div>
+              <div class="guide-step-title">Estados del personaje</div>
+              <div class="guide-step-desc"><code>Activo</code>, <code>Inactivo</code>, <code>Reserva</code> (con fecha límite) o <code>PNJ</code> para personajes del staff. Los filtros de la pestaña permiten ver cada grupo.</div>
+            </div>
+          </div>
+          <div class="guide-step">
+            <div class="guide-num">3</div>
+            <div>
+              <div class="guide-step-title">Gestionar PNJs</div>
+              <div class="guide-step-desc">Desde <code>PNJs</code> crea personajes con imagen, historia y grupo. El campo <code>Orden</code> controla su posición en el foro.</div>
+            </div>
+          </div>
+          <div class="guide-step">
+            <div class="guide-num">4</div>
+            <div>
+              <div class="guide-step-title">Items de tienda</div>
+              <div class="guide-step-desc">Cada item necesita un <code>ID interno</code> único. Admite imagen como URL o SVG inline. Las categorías se generan solas.</div>
+            </div>
+          </div>
+          <div class="guide-step">
+            <div class="guide-num">5</div>
+            <div>
+              <div class="guide-step-title">Visibilidad de campos</div>
+              <div class="guide-step-desc">Activa o desactiva qué campos del perfil son públicos. Cambios en tiempo real a Firestore sin necesidad de publicar.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- IDEAS FUTURAS -->
+  <div class="section-title"><i class="bi bi-stars"></i> Módulos pendientes de implementar</div>
+  <div class="ideas-grid">
+    <div class="idea-card">
+      <div class="idea-label"><i class="bi bi-coin"></i> Economía</div>
+      <div class="idea-title">Gestión de puntos</div>
+      <div class="idea-desc">Añade o resta puntos a jugadores y muestra historial de transacciones y compras en tienda.</div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-label"><i class="bi bi-hourglass-split"></i> Reservas</div>
+      <div class="idea-title">Monitor de reservas</div>
+      <div class="idea-desc">Lista de personajes en reserva con días restantes y acceso rápido para activarlos o eliminar la reserva.</div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-label"><i class="bi bi-calendar-event"></i> Eventos</div>
+      <div class="idea-title">Calendario de rol</div>
+      <div class="idea-desc">Crea y gestiona eventos del foro con fecha, participantes y parlamento implicado. Visible desde este index.</div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-label"><i class="bi bi-clock-history"></i> Historial</div>
+      <div class="idea-title">Log de cambios</div>
+      <div class="idea-desc">Registro automático de cada creación, edición o borrado con quién lo hizo, cuándo y qué campo cambió.</div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-label"><i class="bi bi-bar-chart"></i> Estadísticas</div>
+      <div class="idea-title">Actividad del foro</div>
+      <div class="idea-desc">Gráficas de posts por mes, usuarios activos en los últimos 30 días y parlamentos con más movimiento.</div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-label"><i class="bi bi-palette"></i> Apariencia</div>
+      <div class="idea-title">Editor de variables CSS</div>
+      <div class="idea-desc">Interfaz para cambiar colores de parlamentos e imágenes de fondo sin tocar código directamente.</div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-label"><i class="bi bi-bell"></i> Comunicación</div>
+      <div class="idea-title">Tablón de avisos</div>
+      <div class="idea-desc">Publica avisos de mantenimiento, eventos activos o noticias del staff visibles en el foro.</div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-label"><i class="bi bi-file-earmark-text"></i> Templates</div>
+      <div class="idea-title">Gestor de plantillas</div>
+      <div class="idea-desc">Guarda y edita plantillas BBCode del foro (fichas, baúles, posts especiales) desde el panel.</div>
+    </div>
+  </div>
+
 </div>
 
-<div id="toast"></div>
-
-<!-- Firebase -->
+<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import {
+  getFirestore, getDocs, collection, query, orderBy
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-// ── CONFIGURACIÓN FIREBASE ──
-// Sustituye estos valores por los de tu proyecto Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyA_DTdVWhe54PRrPlFFmIkdbMuotiSssZU",
   authDomain: "spectra-85df4.firebaseapp.com",
@@ -191,139 +675,289 @@ const firebaseConfig = {
   appId: "1:321843589344:web:714ca78124d8aef4d66085"
 };
 
+const GRUPOS_COLOR = {
+  primigenios:    '#A53E67',
+  arquitectos:    '#0C459C',
+  sabios:         '#00674E',
+  caoticos:       '#5A4160',
+  exterminadores: '#A53E4A',
+  staff:          '#b5a081'
+};
+
+const GRUPOS_LABEL = {
+  primigenios: 'Primigenios',
+  arquitectos: 'Arquitectos',
+  sabios:      'Sabios',
+  caoticos:    'Caóticos',
+  exterminadores: 'Exterminadores',
+  staff:       'Staff'
+};
+
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 
-// ── ESTADO ──
-let currentUser = null;
-let parlamento  = null;
-let skillsDef   = [];
+async function loadAll() {
+  try {
+    // ── USERS ──
+    const uSnap = await getDocs(collection(db, 'users'));
+    const users = [];
+    uSnap.forEach(d => users.push({ _id: d.id, ...d.data() }));
 
-// ── LOGIN / REGISTRO ──
-window.handleLogin = async () => {
-  const username = document.getElementById('loginUsername').value.trim();
-  const password = document.getElementById('loginPassword').value.trim();
-  if (!username || !password) { toast('Rellena usuario y contraseña', true); return; }
-  if (password.length < 4) { toast('Contraseña mínimo 4 caracteres', true); return; }
+    // ── PNJs ──
+    let pnjs = [];
+    try {
+      const pSnap = await getDocs(query(collection(db, 'pnjs'), orderBy('orden', 'asc')));
+      pSnap.forEach(d => pnjs.push({ id: d.id, ...d.data() }));
+    } catch {
+      const pSnap = await getDocs(collection(db, 'pnjs'));
+      pSnap.forEach(d => pnjs.push({ id: d.id, ...d.data() }));
+      pnjs.sort((a, b) => (a.orden || 0) - (b.orden || 0));
+    }
 
-  const ref = doc(db, 'users', username);
-  const snap = await getDoc(ref);
+    // ── ITEMS ──
+    let items = [];
+    try {
+      const iSnap = await getDocs(query(collection(db, 'tienda_items'), orderBy('orden', 'asc')));
+      iSnap.forEach(d => items.push({ id: d.id, ...d.data() }));
+    } catch {
+      const iSnap = await getDocs(collection(db, 'tienda_items'));
+      iSnap.forEach(d => items.push({ id: d.id, ...d.data() }));
+      items.sort((a, b) => (a.orden || 0) - (b.orden || 0));
+    }
 
-  if (!snap.exists()) {
-    // Crear cuenta nueva
-    await setDoc(ref, {
-      username, password,
-      fichaUrl: '', baulUrl: '',
-      charName: '', charAge: '', charOcupacion: '', charDesc: '',
-      parlamento: '', skills: {},
-      createdAt: new Date().toISOString(),
-      isAdmin: false
-    });
-    toast('¡Cuenta creada! Bienvenido/a');
-  } else {
-    const data = snap.data();
-    if (data.password !== password) { toast('Contraseña incorrecta', true); return; }
+    renderStats(users, pnjs, items);
+    renderParlBars(users);
+    renderUserList(users);
+    renderPnjChips(pnjs);
+    renderTiendaMini(items);
+
+    // Hero meta
+    const now = new Date();
+    document.getElementById('heroMeta').textContent =
+      `Actualizado ${now.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}`;
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById('heroMeta').textContent = 'Error al cargar datos de Firebase';
   }
-
-  currentUser = username;
-  document.getElementById('loginSection').style.display = 'none';
-  document.getElementById('profileSection').style.display = 'block';
-  document.getElementById('welcomeName').textContent = username;
-  await loadProfile();
-};
-
-// ── CARGAR PERFIL ──
-async function loadProfile() {
-  const snap = await getDoc(doc(db, 'users', currentUser));
-  if (!snap.exists()) return;
-  const d = snap.data();
-
-  setVal('fichaUrl', d.fichaUrl);
-  setVal('baulUrl',  d.baulUrl);
-  setVal('charName', d.charName);
-  setVal('charAge',  d.charAge);
-  setVal('charOcupacion', d.charOcupacion);
-  setVal('charDesc', d.charDesc);
-
-  parlamento = d.parlamento || '';
-  await loadSkills(d.skills || {});
 }
 
-// ── CARGAR HABILIDADES ──
-async function loadSkills(userSkills) {
-  if (!parlamento) {
-    document.getElementById('skillsList').innerHTML = `
-      <div style="font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);">
-        El administrador aún no ha asignado tu parlamento. Contacta con el staff.
-      </div>`;
+// ── STATS ──
+function renderStats(users, pnjs, items) {
+  const activos   = users.filter(u => u.registro?.estado === 'activo').length;
+  const reservas  = users.filter(u => u.registro?.estado === 'reserva').length;
+  const inactivos = users.filter(u => u.registro?.estado === 'inactivo').length;
+
+  const cats = [...new Set(items.map(i => i.categoria).filter(Boolean))].length;
+  const grupos = [...new Set(pnjs.map(p => p.grupo).filter(Boolean))].length;
+
+  set('statUsers',     users.length,   `${activos} activos · ${inactivos} inactivos`);
+  set('statPnjs',      pnjs.length,    `${grupos} grupos representados`);
+  set('statItems',     items.length,   `${cats} categorías distintas`);
+  set('statReservas',  reservas,       reservas === 0 ? 'Ninguna en espera' : `${reservas} plaza${reservas > 1 ? 's' : ''} bloqueada${reservas > 1 ? 's' : ''}`);
+}
+
+function set(id, val, sub) {
+  const el = document.getElementById(id);
+  if (el) { el.textContent = val; el.classList.remove('loading'); }
+  const subEl = document.getElementById(id + 'Sub');
+  if (subEl) subEl.textContent = sub;
+}
+
+// ── PARL BARS ──
+function renderParlBars(users) {
+  const counts = {};
+  users.forEach(u => {
+    const p = u.parlamento || 'sin asignar';
+    counts[p] = (counts[p] || 0) + 1;
+  });
+
+  const order = ['primigenios', 'arquitectos', 'sabios', 'caoticos', 'exterminadores', 'staff'];
+  const total  = users.length || 1;
+
+  const html = order
+    .filter(g => counts[g])
+    .map(g => {
+      const n = counts[g] || 0;
+      const pct = Math.round((n / total) * 100);
+      const color = GRUPOS_COLOR[g] || '#b5a081';
+      return `
+        <div class="parl-row">
+          <div class="parl-dot" style="background:${color}"></div>
+          <div class="parl-label">${GRUPOS_LABEL[g] || g}</div>
+          <div class="parl-track">
+            <div class="parl-fill" style="width:${pct}%;background:${color};"></div>
+          </div>
+          <div class="parl-count">${n}</div>
+        </div>`;
+    }).join('');
+
+  const sinAsignar = counts['sin asignar'] || 0;
+  const extra = sinAsignar
+    ? `<div class="parl-row" style="opacity:.5">
+        <div class="parl-dot" style="background:var(--mono-border2)"></div>
+        <div class="parl-label">Sin asignar</div>
+        <div class="parl-track">
+          <div class="parl-fill" style="width:${Math.round((sinAsignar/total)*100)}%;background:var(--mono-border2);"></div>
+        </div>
+        <div class="parl-count">${sinAsignar}</div>
+      </div>` : '';
+
+  document.getElementById('parlBars').innerHTML = (html || '<div class="empty"><i class="bi bi-people"></i>Sin usuarios</div>') + extra;
+}
+
+// ── USER LIST (activos primero, máx 6) ──
+function renderUserList(users) {
+  const sorted = [...users]
+    .sort((a, b) => {
+      const ea = a.registro?.estado === 'activo' ? 0 : 1;
+      const eb = b.registro?.estado === 'activo' ? 0 : 1;
+      return ea - eb || (a.orden ?? 99) - (b.orden ?? 99);
+    })
+    .slice(0, 6);
+
+  if (!sorted.length) {
+    document.getElementById('userList').innerHTML = '<div class="empty"><i class="bi bi-people"></i>Sin usuarios</div>';
     return;
   }
 
-  document.getElementById('skillsParlamLabel').textContent = parlamento.toUpperCase();
+  document.getElementById('userList').innerHTML = sorted.map(u => {
+    const reg   = u.registro || {};
+    const color = GRUPOS_COLOR[u.parlamento] || 'var(--mono-border2)';
+    const pill  = estadoPill(reg.estado);
+    const link  = reg.perfilUrl
+      ? `<a href="${reg.perfilUrl}" target="_blank" style="text-decoration:none;color:inherit;">${u.charName || '—'}</a>`
+      : u.charName || '—';
 
-  // Leer definición de habilidades del parlamento
-  const configSnap = await getDoc(doc(db, 'config', 'skills'));
-  if (!configSnap.exists()) { document.getElementById('skillsList').innerHTML = '<div style="font-family:\'DM Mono\',monospace;font-size:.65rem;color:var(--muted);">No hay habilidades definidas aún.</div>'; return; }
-
-  const allSkills = configSnap.data();
-  skillsDef = allSkills[parlamento] || [];
-
-  if (!skillsDef.length) {
-    document.getElementById('skillsList').innerHTML = `<div style="font-family:'DM Mono',monospace;font-size:.65rem;color:var(--muted);">No hay habilidades definidas para ${parlamento}.</div>`;
-    return;
-  }
-
-  document.getElementById('skillsList').innerHTML = skillsDef.map(skill => {
-    const us = userSkills[skill.key] || { level: 0, maxLevel: skill.maxLevel, pending: false };
-    const pct = Math.round((us.level / (skill.maxLevel || 5)) * 100);
     return `
-      <div class="skill-item">
-        <div class="skill-header">
-          <span class="skill-icon">${skill.icon}</span>
-          <span class="skill-name">${skill.name}</span>
-          <span class="skill-level-badge">Nv. ${us.level} / ${skill.maxLevel || 5}</span>
+      <div class="user-row">
+        <div style="flex:1;min-width:0;">
+          <div class="user-row-name">${link}</div>
+          <div class="user-row-username">${u.username || u._id || '—'}</div>
         </div>
-        <div class="skill-bar-wrap">
-          <div class="skill-bar-fill" style="width:${pct}%"></div>
+        <div class="user-row-parl">
+          <span style="width:6px;height:6px;border-radius:50%;background:${color};display:inline-block;"></span>
+          <span style="font:300 var(--f-xs) var(--f-mono);text-transform:uppercase;letter-spacing:.07em;color:${color};">${u.parlamento || '—'}</span>
         </div>
-        <div class="skill-req">${skill.description || ''}</div>
-        ${us.pending ? '<div class="skill-pending">⏳ Solicitud de subida de nivel pendiente de aprobación</div>' : ''}
-      </div>
-    `;
+        ${pill}
+      </div>`;
   }).join('');
 }
 
-// ── GUARDAR PERFIL ──
-window.saveProfile = async () => {
-  if (!currentUser) return;
-  const btn = document.getElementById('saveBtn');
-  btn.disabled = true; btn.textContent = 'Guardando…';
+function estadoPill(estado) {
+  if (!estado) return '<span class="pill pill-inactivo">—</span>';
+  const map = {
+    activo:   ['pill-activo',   'bi-check-circle', 'Activo'],
+    inactivo: ['pill-inactivo', 'bi-x-circle',     'Inactivo'],
+    reserva:  ['pill-reserva',  'bi-hourglass',    'Reserva'],
+    pnj:      ['pill-pnj',      'bi-bank',         'PNJ'],
+  };
+  const [cls, icon, label] = map[estado] || ['pill-inactivo', 'bi-dash', '—'];
+  return `<span class="pill ${cls}"><i class="bi ${icon}"></i>${label}</span>`;
+}
 
-  await setDoc(doc(db, 'users', currentUser), {
-    fichaUrl:     getVal('fichaUrl'),
-    baulUrl:      getVal('baulUrl'),
-    charName:     getVal('charName'),
-    charAge:      getVal('charAge'),
-    charOcupacion:getVal('charOcupacion'),
-    charDesc:     getVal('charDesc'),
-    updatedAt:    new Date().toISOString()
-  }, { merge: true });
+// ── PNJ CHIPS ──
+function renderPnjChips(pnjs) {
+  if (!pnjs.length) {
+    document.getElementById('pnjChips').innerHTML = '<div class="empty"><i class="bi bi-person-slash"></i>Sin PNJs</div>';
+    return;
+  }
 
-  btn.disabled = false; btn.textContent = 'Guardar cambios';
-  toast('Perfil guardado correctamente ✓');
-};
+  const html = pnjs.map(p => {
+    const color = GRUPOS_COLOR[p.grupo] || '#b5a081';
+    const img = p.imagen
+      ? `<img class="pnj-chip-img" src="${p.imagen}" alt="" loading="lazy" onerror="this.outerHTML='<div class=\\'pnj-chip-img placeholder\\'><i class=\\'bi bi-person\\'></i></div>'">`
+      : `<div class="pnj-chip-img placeholder"><i class="bi bi-person"></i></div>`;
+    return `
+      <div class="pnj-chip">
+        ${img}
+        <div>
+          <div class="pnj-chip-name">${p.nombre || '—'}</div>
+          <div class="pnj-chip-grupo" style="color:${color};">${GRUPOS_LABEL[p.grupo] || p.grupo || '—'}</div>
+        </div>
+      </div>`;
+  }).join('');
 
-// ── HELPERS ──
-function setVal(id, val) { const e = document.getElementById(id); if(e) e.value = val || ''; }
-function getVal(id) { return (document.getElementById(id)?.value || '').trim(); }
+  document.getElementById('pnjChips').innerHTML = `<div class="pnj-chips">${html}</div>`;
+}
 
-let toastTimer;
-window.toast = (msg, err=false) => {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.className = err ? 'err show' : 'show';
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.className = '', 2400);
-};
+// ── TIENDA MINI (últimos 5 por orden) ──
+function renderTiendaMini(items) {
+  const shown = items.slice(0, 5);
+  if (!shown.length) {
+    document.getElementById('tiendaMini').innerHTML = '<div class="empty"><i class="bi bi-bag-x"></i>Sin items</div>';
+    return;
+  }
+
+  document.getElementById('tiendaMini').innerHTML = shown.map(item => {
+    let thumb;
+    if (item.imagen_url) {
+      thumb = `<img src="${item.imagen_url}" alt="" style="width:100%;height:100%;object-fit:cover;" loading="lazy">`;
+    } else if (item.imagen_svg) {
+      thumb = item.imagen_svg;
+    } else {
+      thumb = `<i class="bi bi-bag" style="font-size:1rem;"></i>`;
+    }
+    return `
+      <div class="tienda-mini-row">
+        <div class="tienda-mini-thumb">${thumb}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="tienda-mini-name">${item.nombre || '—'}</div>
+          <div class="tienda-mini-cat">${item.categoria || '—'}${item.tipo ? ` · ${item.tipo}` : ''}</div>
+        </div>
+        <div class="tienda-mini-price">${item.precio ?? '—'} pts</div>
+      </div>`;
+  }).join('');
+}
+
+loadAll();
 </script>
+
+<!-- THEME TOGGLE -->
+<script>
+$(function () {
+  const STORAGE_KEY = "theme";
+
+  function setTheme(theme) {
+    document.documentElement.style.colorScheme = theme;
+    localStorage.setItem(STORAGE_KEY, theme);
+    updateIcon(theme);
+  }
+
+  function updateIcon(theme) {
+    const icon = $("#themeToggle i");
+    if (theme === "dark") {
+      icon.removeClass("bi-moon").addClass("bi-sun");
+    } else {
+      icon.removeClass("bi-sun").addClass("bi-moon");
+    }
+  }
+
+  function detectSystemTheme() {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+
+  let theme = localStorage.getItem(STORAGE_KEY) || detectSystemTheme();
+  setTheme(theme);
+
+  $("#themeToggle").on("click", function () {
+    let current = localStorage.getItem(STORAGE_KEY) || "light";
+    setTheme(current === "light" ? "dark" : "light");
+  });
+});
+</script>
+
+<!-- GUIDE TOGGLE -->
+<script>
+$(function () {
+  $('#guideToggle').on('click', function () {
+    const body = $('#guideBody');
+    const isOpen = body.hasClass('open');
+    body.toggleClass('open', !isOpen);
+    $('#guideChevron').css('transform', isOpen ? '' : 'rotate(90deg)');
+  });
+});
+</script>
+
 </body>
 </html>
