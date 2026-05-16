@@ -439,13 +439,6 @@ body {
   background: var(--grupo-color, var(--accent-solid1));
   margin-right: .3em;
 }
-.drag-handle {
-  position: absolute; top: var(--spacing-2xs); right: var(--spacing-2xs);
-  color: var(--mono-text1); opacity: .4; cursor: grab; font-size: 1rem;
-  background: var(--mono-surface2); border: 1px solid var(--mono-border1);
-  border-radius: var(--br-small); padding: 2px 4px;
-}
-.drag-handle:active { cursor: grabbing; }
 
 .pnj-list { display: none; flex-direction: column; gap: 0; margin-top: var(--spacing-s); }
 .pnj-list-row {
@@ -619,7 +612,6 @@ body {
 .estado-activo   { background: var(--success-surface); border-color: var(--success-border); color: var(--success-text); }
 .estado-inactivo { background: var(--mono-component2); border-color: var(--mono-border2);   color: var(--mono-text1); }
 .estado-reserva  { background: var(--warning-surface); border-color: var(--warning-border); color: var(--warning-text); }
-/* ← NUEVO */
 .estado-pnj      { background: var(--pnj-surface);    border-color: var(--pnj-border);     color: var(--pnj-text); }
 
 /* ─── TIENDA ─── */
@@ -858,26 +850,6 @@ body {
 .faq-search:focus { border-color: var(--accent-border2); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-solid1), transparent 80%); }
 .faq-search::placeholder { color: var(--mono-text1); }
 
-.faq-output-wrap {
-  background: var(--mono-component1);
-  border: 1px solid var(--mono-border1);
-  border-radius: var(--br);
-  margin-top: var(--spacing-l);
-}
-.faq-output-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: var(--spacing-xs) var(--spacing-s);
-  border-bottom: 1px solid var(--mono-border1);
-}
-.faq-output-title { font: 300 var(--f-s) var(--f-mono); text-transform: uppercase; letter-spacing: .14em; color: var(--mono-text1); }
-.faq-output-code {
-  padding: var(--spacing-s);
-  font: 300 var(--f-s) var(--f-mono);
-  color: var(--mono-text2);
-  white-space: pre-wrap; word-break: break-all;
-  max-height: 300px; overflow-y: auto;
-}
-
 /* tags input */
 .tags-input-wrap {
   display: flex; flex-wrap: wrap; gap: var(--spacing-2xs);
@@ -1077,7 +1049,7 @@ body {
     <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:var(--spacing-xs);">
       <div>
         <div class="page-title">Preguntas <em>frecuentes</em></div>
-        <div class="page-subtitle">Crea · Edita · Filtra · Genera output para el Guidebook</div>
+        <div class="page-subtitle">Crea · Edita · Filtra</div>
       </div>
       <button class="btn" onclick="openAddFaq()">
         <i class="bi bi-plus-lg"></i> Nueva FAQ
@@ -1095,15 +1067,6 @@ body {
 
     <div class="faq-grid" id="faqGrid">
       <div class="empty"><i class="bi bi-question-circle"></i>Sin FAQs todavía</div>
-    </div>
-
-    <!-- Output para copiar al Guidebook -->
-    <div class="faq-output-wrap">
-      <div class="faq-output-header">
-        <span class="faq-output-title"><i class="bi bi-code-slash"></i> Output para el Guidebook</span>
-        <button class="btn btn-ghost btn-sm" onclick="copyFaqOutput()"><i class="bi bi-clipboard"></i> Copiar</button>
-      </div>
-      <div class="faq-output-code" id="faqOutput"></div>
     </div>
   </div>
 
@@ -1185,7 +1148,6 @@ body {
         </div>
         <div class="field">
           <label>Estado</label>
-          <!-- ← AÑADIDO pnj -->
           <select id="uEstado" onchange="onUserEstadoChange()">
             <option value="">Sin asignar</option>
             <option value="activo">Personaje activo</option>
@@ -1279,6 +1241,13 @@ body {
         <div class="field">
           <label>Ocupación / Rol</label>
           <input type="text" id="pnjOcupacion" placeholder="Ej: Guardiana del Umbral">
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>PB (Playby)</label>
+          <input type="text" id="pnjPb" placeholder="Ej: Nombre del actor/actriz">
         </div>
       </div>
 
@@ -1471,10 +1440,6 @@ async function loadAll() {
 //  USUARIOS
 // ══════════════════════════════
 
-/**
- * Genera el HTML de la pill de estado.
- * ← AÑADIDO: caso 'pnj'
- */
 function estadoPill(estado) {
   if (!estado) return '<span class="estado-pill estado-inactivo">—</span>';
   const map = {
@@ -1591,7 +1556,7 @@ document.getElementById('userFilterTabs').addEventListener('click', e => {
   renderUsers();
 });
 
-// ── USER ESTADO FILTER ← NUEVO ──
+// ── USER ESTADO FILTER ──
 document.getElementById('userEstadoFilterTabs').addEventListener('click', e => {
   const btn = e.target.closest('.parl-tab');
   if (!btn) return;
@@ -1650,7 +1615,6 @@ window.openEditUser = (userId) => {
 };
 
 window.onUserEstadoChange = () => {
-  // Mostrar campo fecha solo para reserva
   document.getElementById('uReservaWrap').style.display =
     document.getElementById('uEstado').value === 'reserva' ? '' : 'none';
 };
@@ -1749,7 +1713,6 @@ function pnjThumbHTML(p) {
   const color = GRUPOS_COLOR[p.grupo] || '#b5a081';
   return `
     <div class="pnj-thumb" style="--grupo-color:${color}">
-      <span class="drag-handle" title="Reordenar"><i class="bi bi-grip-vertical"></i></span>
       <div class="pnj-thumb-img">
         ${p.imagen
           ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy">`
@@ -1761,6 +1724,7 @@ function pnjThumbHTML(p) {
           <span class="pnj-grupo-dot" style="background:${color}"></span>
           ${p.grupo || '—'}
           ${p.ocupacion ? ` · ${p.ocupacion}` : ''}
+          ${p.pb ? ` · <em>${p.pb}</em>` : ''}
         </div>
         <div class="pnj-thumb-actions">
           <button class="btn btn-ghost btn-sm" onclick="openEditPnj('${p.id}')">
@@ -1788,6 +1752,7 @@ function pnjListRowHTML(p) {
           ${p.grupo || '—'}
           ${p.edad ? ` · ${p.edad}` : ''}
           ${p.ocupacion ? ` · ${p.ocupacion}` : ''}
+          ${p.pb ? ` · PB: ${p.pb}` : ''}
         </div>
       </div>
       <span style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">#${p.orden ?? '—'}</span>
@@ -1818,7 +1783,7 @@ window.setPnjView = (v) => {
 window.openAddPnj = () => {
   document.getElementById('pnjModalTitle').innerHTML = 'Nuevo <em>PNJ</em>';
   document.getElementById('pnjEditId').value = '';
-  ['pnjNombre','pnjEdad','pnjOcupacion','pnjImagen'].forEach(id => document.getElementById(id).value = '');
+  ['pnjNombre','pnjEdad','pnjOcupacion','pnjPb','pnjImagen'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('pnjGrupo').value = '';
   document.getElementById('pnjOrden').value = allPNJs.length;
   document.getElementById('pnjImgPreview').innerHTML = '<span class="placeholder"><i class="bi bi-image"></i></span>';
@@ -1834,6 +1799,7 @@ window.openEditPnj = (id) => {
   document.getElementById('pnjEdad').value      = p.edad      || '';
   document.getElementById('pnjGrupo').value     = p.grupo     || '';
   document.getElementById('pnjOcupacion').value = p.ocupacion || '';
+  document.getElementById('pnjPb').value        = p.pb        || '';
   document.getElementById('pnjImagen').value    = p.imagen    || '';
   document.getElementById('pnjOrden').value     = p.orden     ?? 0;
   previewPnjImg(p.imagen || '');
@@ -1856,13 +1822,14 @@ window.savePnj = async () => {
   const edad      = document.getElementById('pnjEdad').value.trim();
   const grupo     = document.getElementById('pnjGrupo').value;
   const ocupacion = document.getElementById('pnjOcupacion').value.trim();
+  const pb        = document.getElementById('pnjPb').value.trim();
   const imagen    = document.getElementById('pnjImagen').value.trim();
   const orden     = parseInt(document.getElementById('pnjOrden').value) || 0;
   const editId    = document.getElementById('pnjEditId').value;
 
   if (!nombre) { toast('El nombre es obligatorio', 'err'); return; }
 
-  const data = { nombre, edad, grupo, ocupacion, imagen, orden, updatedAt: Date.now() };
+  const data = { nombre, edad, grupo, ocupacion, pb, imagen, orden, updatedAt: Date.now() };
 
   try {
     if (editId) {
@@ -2136,7 +2103,7 @@ window.deleteItem = async (id, nombre) => {
 //  FAQs
 // ══════════════════════════════
 let allFaqs = [];
-let faqTagsActive = new Set(); // tags seleccionados en el filtro
+let faqTagsActive = new Set();
 
 async function loadFaqs() {
   try {
@@ -2212,52 +2179,6 @@ window.renderFaqs = () => {
         </div>`;
     }).join('');
   }
-  renderFaqOutput();
-};
-
-function renderFaqOutput() {
-  const out = document.getElementById('faqOutput');
-  if (!out) return;
-  // Genera el output completo: tags únicos para el sidebar + s-faq elements
-  const allTags = getAllTags();
-  const tagsSidebar = allTags.map(t => {
-    const id   = t.replace(/\s+/g,'').toLowerCase();
-    const label = t.toUpperCase();
-    return `<li class="form-control">\n<input type="radio" id="${id}" name="faq" value="${id}" />\n<label for="${id}">${label}</label>\n</li>`;
-  }).join('\n');
-
-  // Fecha de última actualización (la más reciente de todas las faqs)
-  const fechas = allFaqs.map(f => f.fecha).filter(Boolean).sort().reverse();
-  const lastUpdate = fechas[0] || '';
-  const updateComment = lastUpdate ? `<!-- Última actualización: ${lastUpdate} -->` : '';
-
-  const faqs = allFaqs.map(f => {
-    const tagsAttr = (f.tags || []).join(' ');
-    const respuesta = (f.respuesta || '').trim();
-    return `<s-faq tags="${tagsAttr}" pregunta="${(f.pregunta||'').replace(/"/g,'&quot;')}">\n${respuesta}\n</s-faq>`;
-  }).join('\n');
-
-  out.textContent = `${updateComment}
-<section class="s-post-wide sp-ambientacion">
-<aside class="sp-nav">
-<menu class="filters">
-<li class="filter-title">Filtrar</li>
-<li class="form-control">
-<input type="radio" id="allfaqs" name="faq" value="allfaqs" checked/>
-<label for="allfaqs">TODAS</label>
-</li>
-${tagsSidebar}
-</menu>
-</aside>
-<section class="s-ambientacion-content faq no-br">
-${faqs}
-</section>
-</section>`;
-}
-
-window.copyFaqOutput = () => {
-  const text = document.getElementById('faqOutput').textContent;
-  navigator.clipboard.writeText(text).then(() => toast('Output copiado al portapapeles', 'ok'));
 };
 
 // ── FAQ TAG INPUT ──
