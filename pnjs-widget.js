@@ -423,6 +423,7 @@
             <div class="sp-meta">
               ${p.edad ? '<span>' + icon("hourglass-split") + " " + escapeHTML(p.edad) + "</span>" : ""}
               ${p.ocupacion ? '<span>' + icon("briefcase") + " " + escapeHTML(p.ocupacion) + "</span>" : ""}
+              ${p.pb ? '<span>' + icon("person-badge") + " " + escapeHTML(p.pb) + "</span>" : ""}
             </div>
             ${p.historia ? '<p class="sp-desc">' + escapeHTML(p.historia) + "</p>" : ""}
           </div>
@@ -450,7 +451,8 @@
     root.querySelector('[data-role="detail-name"]').textContent = p.nombre || "Sin nombre";
     root.querySelector('[data-role="detail-meta"]').innerHTML = [
       p.edad ? '<span>' + icon("hourglass-split") + " " + escapeHTML(p.edad) + "</span>" : "",
-      p.ocupacion ? '<span>' + icon("briefcase") + " " + escapeHTML(p.ocupacion) + "</span>" : ""
+      p.ocupacion ? '<span>' + icon("briefcase") + " " + escapeHTML(p.ocupacion) + "</span>" : "",
+      p.pb ? '<span>' + icon("person-badge") + " " + escapeHTML(p.pb) + "</span>" : ""
     ].join("");
     root.querySelector('[data-role="detail-historia"]').textContent = p.historia || "Sin descripción.";
 
