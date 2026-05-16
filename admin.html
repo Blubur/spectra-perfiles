@@ -4,23 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Panel de Administración — Spectra</title>
-<!-- Anti-flash: carga el tema antes que el CSS -->
-<script>
-(function () {
-  const saved = localStorage.getItem("theme");
-  const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const theme = saved || (systemDark ? "dark" : "light");
-  document.documentElement.style.colorScheme = theme;
-})();
-</script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
 :root {
-  color-scheme: light;
   interpolate-size: allow-keywords;
 
   --mono-surface1: light-dark(#fdfdfc, #111110);
@@ -129,7 +118,13 @@ body {
   color: var(--mono-text2);
   min-height: 100vh;
   overflow-x: clip;
-  transition: background .3s ease, color .3s ease;
+  color-scheme: dark;
+  transition: all 0.3s ease;
+
+  &:has(#theme-switch:checked), &.light-mode {
+    color-scheme: light;
+    transition: all .5s allow-discrete;
+  }
 }
 
 /* ─── NAV ─── */
@@ -179,34 +174,6 @@ body {
 .nav-tab i { font-size: .8rem; opacity: .6; }
 .nav-tab:hover { color: var(--accent-text1); }
 .nav-tab.active { color: var(--accent-text1); border-bottom-color: var(--accent-solid1); }
-
-.nav-spacer { flex: 1; }
-
-.theme-btn {
-  display: flex; align-items: center; justify-content: center;
-  width: 34px; height: 34px; align-self: center; flex-shrink: 0;
-  background: none; border: 1px solid var(--mono-border1);
-  border-radius: var(--br-pill); cursor: pointer;
-  color: var(--mono-text1); font-size: .95rem;
-  transition: var(--transition-ease);
-  margin-left: var(--spacing-xs);
-}
-.theme-btn:hover { border-color: var(--accent-border2); color: var(--accent-text1); }
-
-.nav-link-index {
-  display: flex; align-items: center; gap: var(--spacing-2xs);
-  padding: 0 var(--spacing-s);
-  font: 300 var(--f-s) var(--f-mono);
-  letter-spacing: .1em; text-transform: uppercase;
-  color: var(--mono-text1);
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  white-space: nowrap; flex-shrink: 0;
-  transition: var(--transition-ease);
-  align-self: stretch;
-}
-.nav-link-index i { font-size: .8rem; opacity: .6; }
-.nav-link-index:hover { color: var(--accent-text1); }
 
 /* ─── BUTTONS ─── */
 .btn {
@@ -439,14 +406,6 @@ body {
   background: var(--grupo-color, var(--accent-solid1));
   margin-right: .3em;
 }
-.drag-handle {
-  position: absolute; top: var(--spacing-2xs); right: var(--spacing-2xs);
-  color: var(--mono-text1); opacity: .4; cursor: grab; font-size: 1rem;
-  background: var(--mono-surface2); border: 1px solid var(--mono-border1);
-  border-radius: var(--br-small); padding: 2px 4px;
-}
-.drag-handle:active { cursor: grabbing; }
-
 .pnj-list { display: none; flex-direction: column; gap: 0; margin-top: var(--spacing-s); }
 .pnj-list-row {
   display: grid; grid-template-columns: auto 1fr auto auto auto;
@@ -490,32 +449,6 @@ body {
 .modal-actions { display: flex; gap: var(--spacing-xs); justify-content: flex-end; margin-top: var(--spacing); }
 
 .form-list { display: flex; flex-direction: column; gap: var(--spacing-xs); }
-
-/* ─── USER SEARCH ─── */
-.user-search-wrap {
-  position: relative;
-  margin-bottom: var(--spacing-s);
-}
-.user-search-wrap i {
-  position: absolute; left: var(--spacing-xs); top: 50%; transform: translateY(-50%);
-  color: var(--mono-text1); font-size: .9rem; pointer-events: none;
-}
-.user-search {
-  width: 100%;
-  background: var(--input-surface);
-  border: 1px solid var(--input-border);
-  border-radius: var(--input-br);
-  padding: var(--spacing-2xs) var(--spacing-xs) var(--spacing-2xs) calc(var(--spacing-xs) * 2 + .9rem);
-  font: 300 var(--f-base) var(--f-sans);
-  color: var(--mono-text2);
-  outline: none;
-  transition: border-color .2s;
-}
-.user-search:focus {
-  border-color: var(--accent-border2);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-solid1), transparent 80%);
-}
-.user-search::placeholder { color: var(--mono-text1); }
 
 /* ─── LOGIN ─── */
 #loginWrap {
@@ -808,98 +741,11 @@ body {
   content: "\f1d8";
 }
 
-/* ─── FAQ ─── */
-.faq-grid {
-  display: flex; flex-direction: column; gap: var(--spacing-xs);
-  margin-top: var(--spacing-s);
-}
-.faq-card {
-  background: var(--mono-surface2);
-  border: 1px solid var(--mono-border1);
-  border-radius: var(--br);
-  padding: var(--spacing-s);
-  display: flex; flex-direction: column; gap: var(--spacing-xs);
-  transition: var(--transition-ease);
-}
-.faq-card:hover { border-color: var(--mono-border2); box-shadow: var(--shadow-lg); }
-.faq-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--spacing-s); }
-.faq-card-pregunta { font: italic var(--f-l) var(--f-deco); flex: 1; }
-.faq-card-actions { display: flex; gap: var(--spacing-2xs); flex-shrink: 0; }
-.faq-card-respuesta { font: 300 var(--f-s) var(--f-sans); color: var(--mono-text1); line-height: 1.7; }
-.faq-card-footer { display: flex; align-items: center; gap: var(--spacing-xs); flex-wrap: wrap; }
-.faq-tag {
-  display: inline-flex; align-items: center;
-  font: 300 var(--f-xs) var(--f-mono);
-  text-transform: uppercase; letter-spacing: .08em;
-  background: var(--accent-component1); border: 1px solid var(--accent-border2);
-  color: var(--accent-text1);
-  padding: 1px var(--spacing-2xs); border-radius: var(--br-pill);
-}
-.faq-date {
-  font: 300 var(--f-xs) var(--f-mono);
-  color: var(--mono-text1);
-  margin-left: auto;
-}
-.faq-filter-bar {
-  display: flex; align-items: center; gap: var(--spacing-xs);
-  flex-wrap: wrap;
-  margin-bottom: var(--spacing-s);
-}
-.faq-search-wrap { position: relative; flex: 1; min-width: 200px; }
-.faq-search-wrap i { position: absolute; left: var(--spacing-xs); top: 50%; transform: translateY(-50%); color: var(--mono-text1); font-size: .9rem; pointer-events: none; }
-.faq-search {
-  width: 100%;
-  background: var(--input-surface); border: 1px solid var(--input-border);
-  border-radius: var(--input-br);
-  padding: var(--spacing-2xs) var(--spacing-xs) var(--spacing-2xs) calc(var(--spacing-xs) * 2 + .9rem);
-  font: 300 var(--f-base) var(--f-sans); color: var(--mono-text2); outline: none;
-  transition: border-color .2s;
-}
-.faq-search:focus { border-color: var(--accent-border2); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-solid1), transparent 80%); }
-.faq-search::placeholder { color: var(--mono-text1); }
-
-.faq-output-wrap {
-  background: var(--mono-component1);
-  border: 1px solid var(--mono-border1);
-  border-radius: var(--br);
-  margin-top: var(--spacing-l);
-}
-.faq-output-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: var(--spacing-xs) var(--spacing-s);
-  border-bottom: 1px solid var(--mono-border1);
-}
-.faq-output-title { font: 300 var(--f-s) var(--f-mono); text-transform: uppercase; letter-spacing: .14em; color: var(--mono-text1); }
-.faq-output-code {
-  padding: var(--spacing-s);
-  font: 300 var(--f-s) var(--f-mono);
-  color: var(--mono-text2);
-  white-space: pre-wrap; word-break: break-all;
-  max-height: 300px; overflow-y: auto;
-}
-
-/* tags input */
-.tags-input-wrap {
-  display: flex; flex-wrap: wrap; gap: var(--spacing-2xs);
-  background: var(--input-surface); border: 1px solid var(--input-border);
-  border-radius: var(--input-br);
-  padding: var(--spacing-2xs) var(--spacing-xs);
-  cursor: text;
-  transition: border-color .2s;
-}
-.tags-input-wrap:focus-within { border-color: var(--accent-border2); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-solid1), transparent 80%); }
-.tag-chip {
-  display: inline-flex; align-items: center; gap: .3em;
-  font: 300 var(--f-xs) var(--f-mono); text-transform: uppercase; letter-spacing: .07em;
-  background: var(--accent-component2); border: 1px solid var(--accent-border2);
-  color: var(--accent-text1); padding: 2px var(--spacing-2xs); border-radius: var(--br-pill);
-}
-.tag-chip button { background: none; border: none; cursor: pointer; color: inherit; padding: 0; line-height: 1; font-size: .75rem; display: flex; }
-.tags-real-input { border: none; background: none; outline: none; font: 300 var(--f-s) var(--f-sans); color: var(--mono-text2); min-width: 80px; flex: 1; }
-.tags-real-input::placeholder { color: var(--mono-text1); }
-
-@media(max-width:700px){
-  .faq-card-header { flex-direction: column; }
+@media(max-width:700px) {
+  .tienda-grid { grid-template-columns: 1fr 1fr; }
+  .tienda-list-row { grid-template-columns: 56px 1fr auto auto; }
+  .tienda-list-row .tienda-list-price, .tienda-list-row .tienda-list-orden { display: none; }
+  .user-grid { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
@@ -924,6 +770,11 @@ body {
 <div id="adminUI" style="display:none;">
 
   <nav class="admin-nav">
+  <button id="themeToggle" class="theme-btn">
+  <i class="bi"></i>
+</button>
+
+    
     <div class="nav-brand">Spectra <small>Admin</small></div>
     <button class="nav-tab active" data-page="usuarios" onclick="goTo('usuarios')">
       <i class="bi bi-people"></i> Usuarios
@@ -934,15 +785,8 @@ body {
     <button class="nav-tab" data-page="tienda" onclick="goTo('tienda')">
       <i class="bi bi-shop"></i> Tienda
     </button>
-    <button class="nav-tab" data-page="faqs" onclick="goTo('faqs')">
-      <i class="bi bi-question-circle"></i> FAQs
-    </button>
-    <div class="nav-spacer"></div>
-    <a href="index.html" class="nav-link-index">
-      <i class="bi bi-house"></i> Index
-    </a>
-    <button id="themeToggle" class="theme-btn" title="Cambiar tema">
-      <i class="bi"></i>
+    <button class="nav-tab" data-page="visibilidad" onclick="goTo('visibilidad')">
+      <i class="bi bi-eye"></i> Visibilidad
     </button>
   </nav>
 
@@ -981,12 +825,6 @@ body {
       <button class="parl-tab" data-e="inactivo" style="--grupo-color:#6f6d66;font-size:.65rem;">Inactivos</button>
       <button class="parl-tab" data-e="reserva"  style="--grupo-color:#A53E4A;font-size:.65rem;">Reservas</button>
       <button class="parl-tab estado-filter-tab" data-e="pnj" style="font-size:.65rem;">PNJ (staff)</button>
-    </div>
-
-    <!-- Barra de búsqueda -->
-    <div class="user-search-wrap">
-      <i class="bi bi-search"></i>
-      <input type="text" class="user-search" id="userSearch" placeholder="Buscar por username o nombre de personaje…" oninput="onUserSearch()">
     </div>
 
     <!-- Grid view -->
@@ -1072,78 +910,14 @@ body {
     <div class="card" id="tiendaList" style="display:none; padding:0;"></div>
   </div>
 
-  <!-- ══ TAB: FAQs ══ -->
-  <div class="page" id="page-faqs">
-    <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:var(--spacing-xs);">
-      <div>
-        <div class="page-title">Preguntas <em>frecuentes</em></div>
-        <div class="page-subtitle">Crea · Edita · Filtra · Genera output para el Guidebook</div>
-      </div>
-      <button class="btn" onclick="openAddFaq()">
-        <i class="bi bi-plus-lg"></i> Nueva FAQ
-      </button>
+  <!-- ══ TAB: VISIBILIDAD ══ -->
+  <div class="page" id="page-visibilidad">
+    <div class="page-header">
+      <div class="page-title">Visibilidad de <em>campos</em></div>
+      <div class="page-subtitle">Decide qué aparece públicamente en memberlist y perfiles</div>
     </div>
-
-    <!-- Filtro texto + tags -->
-    <div class="faq-filter-bar">
-      <div class="faq-search-wrap">
-        <i class="bi bi-search"></i>
-        <input type="text" class="faq-search" id="faqSearch" placeholder="Buscar por pregunta o respuesta…" oninput="renderFaqs()">
-      </div>
-      <div id="faqTagFilter" style="display:flex;gap:var(--spacing-2xs);flex-wrap:wrap;"></div>
-    </div>
-
-    <div class="faq-grid" id="faqGrid">
-      <div class="empty"><i class="bi bi-question-circle"></i>Sin FAQs todavía</div>
-    </div>
-
-    <!-- Output para copiar al Guidebook -->
-    <div class="faq-output-wrap">
-      <div class="faq-output-header">
-        <span class="faq-output-title"><i class="bi bi-code-slash"></i> Output para el Guidebook</span>
-        <button class="btn btn-ghost btn-sm" onclick="copyFaqOutput()"><i class="bi bi-clipboard"></i> Copiar</button>
-      </div>
-      <div class="faq-output-code" id="faqOutput"></div>
-    </div>
-  </div>
-
-</div>
-
-<!-- ═══════ MODAL: NUEVA / EDITAR FAQ ═══════ -->
-<div class="modal-overlay" id="faqModal">
-  <div class="modal" style="max-width:620px;">
-    <div class="modal-title" id="faqModalTitle">Nueva <em>FAQ</em></div>
-    <input type="hidden" id="faqEditId">
-    <div class="form-list">
-
-      <div class="field">
-        <label>Pregunta</label>
-        <input type="text" id="faqPregunta" placeholder="¿Puedo tirarme peos?">
-      </div>
-
-      <div class="field">
-        <label>Respuesta</label>
-        <textarea id="faqRespuesta" rows="5" placeholder="Sí, con moderación."></textarea>
-      </div>
-
-      <div class="field">
-        <label>Tags <small style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">Escribe y pulsa Enter o coma</small></label>
-        <div class="tags-input-wrap" id="faqTagsWrap" onclick="document.getElementById('faqTagInput').focus()">
-          <input type="text" class="tags-real-input" id="faqTagInput" placeholder="sistema, ambientacion…">
-        </div>
-        <input type="hidden" id="faqTagsHidden">
-      </div>
-
-      <div class="field">
-        <label>Fecha de actualización</label>
-        <input type="date" id="faqFecha">
-        <small>Se mostrará en el header del post del Guidebook</small>
-      </div>
-
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeFaqModal()">Cancelar</button>
-      <button class="btn" onclick="saveFaq()"><i class="bi bi-check-lg"></i> Guardar FAQ</button>
+    <div class="card" id="visibilityCard">
+      <div class="card-header"><span class="card-title">Campos públicos</span></div>
     </div>
   </div>
 </div>
@@ -1228,6 +1002,24 @@ body {
         </select>
       </div>
 
+      <div class="modal-section-title"><i class="bi bi-link-45deg"></i> Enlaces</div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Enlace a ficha</label>
+          <input type="url" id="uFichaUrl" placeholder="https://...">
+        </div>
+        <div class="field">
+          <label>Enlace a baúl</label>
+          <input type="url" id="uBaulUrl" placeholder="https://...">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Descripción del personaje</label>
+        <textarea id="uCharDesc" rows="3" placeholder="Breve descripción del personaje..."></textarea>
+      </div>
+
       <div class="field">
         <label>Orden de aparición</label>
         <input type="number" id="uOrden" value="0" min="0">
@@ -1283,12 +1075,23 @@ body {
       </div>
 
       <div class="field">
+        <label>PB</label>
+        <input type="text" id="pnjPb" placeholder="Ej: Nombre del PB">
+        <small>Nombre del played by</small>
+      </div>
+
+      <div class="field">
         <label>URL de imagen</label>
         <input type="url" id="pnjImagen" placeholder="https://..." oninput="previewPnjImg(this.value)">
         <small>Imagen cuadrada o vertical recomendada</small>
         <div class="img-preview-wrap" id="pnjImgPreview">
           <span class="placeholder"><i class="bi bi-image"></i></span>
         </div>
+      </div>
+
+      <div class="field">
+        <label>Historia / descripción</label>
+        <textarea id="pnjHistoria" placeholder="Escribe aquí la historia del personaje..." rows="5"></textarea>
       </div>
 
       <div class="field">
@@ -1427,6 +1230,7 @@ const db  = getFirestore(app);
 
 // ── STATE ──
 let allUsers = {};
+let visConfig = {};
 let allPNJs = [];
 let allItems = [];
 let tiendaFilter = 'all';
@@ -1434,10 +1238,18 @@ let tiendaView = 'grid';
 let imgType = 'svg';
 let pnjFilter = 'all';
 let pnjView = 'grid';
-let userFilter = 'all';
-let userEstadoFilter = 'all';
-let userSearch = '';
+let userFilter = 'all';      // parlamento filter
+let userEstadoFilter = 'all'; // ← NUEVO: estado filter
 let userView = 'grid';
+
+const fieldsDef = [
+  { key: 'charName',      label: 'Nombre del personaje' },
+  { key: 'charAge',       label: 'Edad del personaje' },
+  { key: 'charOcupacion', label: 'Ocupación' },
+  { key: 'charDesc',      label: 'Descripción' },
+  { key: 'fichaUrl',      label: 'Enlace a ficha' },
+  { key: 'baulUrl',       label: 'Enlace a baúl' },
+];
 
 // ── ESC TO CLOSE ALL MODALS ──
 document.addEventListener('keydown', e => {
@@ -1460,11 +1272,15 @@ async function loadAll() {
   allUsers = {};
   uSnap.forEach(d => { allUsers[d.id] = d.data(); });
 
+  const vc = await getDoc(doc(db,'config','fieldVisibility'));
+  visConfig = vc.exists() ? vc.data() : {};
+  fieldsDef.forEach(f => { if (visConfig[f.key] === undefined) visConfig[f.key] = true; });
+
   await loadPNJs();
   await loadItems();
-  await loadFaqs();
 
   renderUsers();
+  renderVisibility();
 }
 
 // ══════════════════════════════
@@ -1489,16 +1305,11 @@ function estadoPill(estado) {
 
 function getUserList() {
   let users = Object.entries(allUsers).map(([id, data]) => ({ _id: id, ...data }));
+  // Filtro por parlamento
   if (userFilter !== 'all') users = users.filter(u => u.parlamento === userFilter);
+  // Filtro por estado ← NUEVO
   if (userEstadoFilter !== 'all') {
     users = users.filter(u => (u.registro?.estado || '') === userEstadoFilter);
-  }
-  if (userSearch) {
-    const q = userSearch.toLowerCase();
-    users = users.filter(u =>
-      (u.username || u._id || '').toLowerCase().includes(q) ||
-      (u.charName || '').toLowerCase().includes(q)
-    );
   }
   return users;
 }
@@ -1570,6 +1381,7 @@ function userCardHTML(u) {
         <div class="user-card-charname">${u.charName || '—'}</div>
         ${reg.faceclaim1 ? `<div class="user-card-meta">FC: ${reg.faceclaim1}${reg.faceclaim2 ? ` · ${reg.faceclaim2}` : ''}</div>` : ''}
         ${reservaBadge}
+        ${u.charDesc ? `<div class="user-card-meta" style="margin-top:var(--spacing-3xs);">${u.charDesc.substring(0,80)}${u.charDesc.length > 80 ? '…' : ''}</div>` : ''}
       </div>
       <div class="user-card-actions">
         <button class="btn btn-ghost btn-sm" onclick="openEditUser('${u._id}')">
@@ -1600,12 +1412,6 @@ document.getElementById('userEstadoFilterTabs').addEventListener('click', e => {
   renderUsers();
 });
 
-// ── USER SEARCH ──
-window.onUserSearch = () => {
-  userSearch = document.getElementById('userSearch').value.trim();
-  renderUsers();
-};
-
 // ── USER VIEW ──
 window.setUserView = (v) => {
   userView = v;
@@ -1619,7 +1425,7 @@ window.openAddUser = () => {
   document.getElementById('userModalTitle').innerHTML = 'Nuevo <em>usuario</em>';
   document.getElementById('userEditId').value = '';
   ['uUsername','uNumUsuario','uPerfilUrl','uCharName','uFaceclaim1','uFaceclaim2',
-   'uFechaReserva'].forEach(id => {
+   'uFechaReserva','uFichaUrl','uBaulUrl','uCharDesc'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
   });
   document.getElementById('uEstado').value = '';
@@ -1644,6 +1450,9 @@ window.openEditUser = (userId) => {
   document.getElementById('uFaceclaim2').value   = reg.faceclaim2  || '';
   document.getElementById('uFechaReserva').value = reg.fechaReserva|| '';
   document.getElementById('uParlamento').value   = u.parlamento    || '';
+  document.getElementById('uFichaUrl').value     = u.fichaUrl      || '';
+  document.getElementById('uBaulUrl').value      = u.baulUrl       || '';
+  document.getElementById('uCharDesc').value     = u.charDesc      || '';
   document.getElementById('uOrden').value        = u.orden         ?? 0;
   document.getElementById('uReservaWrap').style.display = reg.estado === 'reserva' ? '' : 'none';
   document.getElementById('userModal').classList.add('show');
@@ -1667,13 +1476,16 @@ window.saveUser = async () => {
   const faceclaim2  = document.getElementById('uFaceclaim2').value.trim();
   const fechaReserva= estado === 'reserva' ? document.getElementById('uFechaReserva').value : '';
   const parlamento  = document.getElementById('uParlamento').value;
+  const fichaUrl    = document.getElementById('uFichaUrl').value.trim();
+  const baulUrl     = document.getElementById('uBaulUrl').value.trim();
+  const charDesc    = document.getElementById('uCharDesc').value.trim();
   const orden       = parseInt(document.getElementById('uOrden').value) || 0;
   const editId      = document.getElementById('userEditId').value;
 
   if (!username) { toast('El username es obligatorio', 'err'); return; }
 
   const data = {
-    username, charName, parlamento, orden,
+    username, charName, parlamento, fichaUrl, baulUrl, charDesc, orden,
     registro: { numUsuario, perfilUrl, estado, faceclaim1, faceclaim2, fechaReserva },
     updatedAt: Date.now()
   };
@@ -1749,7 +1561,6 @@ function pnjThumbHTML(p) {
   const color = GRUPOS_COLOR[p.grupo] || '#b5a081';
   return `
     <div class="pnj-thumb" style="--grupo-color:${color}">
-      <span class="drag-handle" title="Reordenar"><i class="bi bi-grip-vertical"></i></span>
       <div class="pnj-thumb-img">
         ${p.imagen
           ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy">`
@@ -1761,6 +1572,7 @@ function pnjThumbHTML(p) {
           <span class="pnj-grupo-dot" style="background:${color}"></span>
           ${p.grupo || '—'}
           ${p.ocupacion ? ` · ${p.ocupacion}` : ''}
+          ${p.pb ? `<br><span style="opacity:.7">PB: ${p.pb}</span>` : ''}
         </div>
         <div class="pnj-thumb-actions">
           <button class="btn btn-ghost btn-sm" onclick="openEditPnj('${p.id}')">
@@ -1788,6 +1600,7 @@ function pnjListRowHTML(p) {
           ${p.grupo || '—'}
           ${p.edad ? ` · ${p.edad}` : ''}
           ${p.ocupacion ? ` · ${p.ocupacion}` : ''}
+          ${p.pb ? ` · PB: ${p.pb}` : ''}
         </div>
       </div>
       <span style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">#${p.orden ?? '—'}</span>
@@ -1818,7 +1631,7 @@ window.setPnjView = (v) => {
 window.openAddPnj = () => {
   document.getElementById('pnjModalTitle').innerHTML = 'Nuevo <em>PNJ</em>';
   document.getElementById('pnjEditId').value = '';
-  ['pnjNombre','pnjEdad','pnjOcupacion','pnjImagen'].forEach(id => document.getElementById(id).value = '');
+  ['pnjNombre','pnjEdad','pnjOcupacion','pnjPb','pnjImagen','pnjHistoria'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
   document.getElementById('pnjGrupo').value = '';
   document.getElementById('pnjOrden').value = allPNJs.length;
   document.getElementById('pnjImgPreview').innerHTML = '<span class="placeholder"><i class="bi bi-image"></i></span>';
@@ -1834,7 +1647,9 @@ window.openEditPnj = (id) => {
   document.getElementById('pnjEdad').value      = p.edad      || '';
   document.getElementById('pnjGrupo').value     = p.grupo     || '';
   document.getElementById('pnjOcupacion').value = p.ocupacion || '';
+  document.getElementById('pnjPb').value        = p.pb        || '';
   document.getElementById('pnjImagen').value    = p.imagen    || '';
+  document.getElementById('pnjHistoria').value  = p.historia  || '';
   document.getElementById('pnjOrden').value     = p.orden     ?? 0;
   previewPnjImg(p.imagen || '');
   document.getElementById('pnjModal').classList.add('show');
@@ -1856,13 +1671,15 @@ window.savePnj = async () => {
   const edad      = document.getElementById('pnjEdad').value.trim();
   const grupo     = document.getElementById('pnjGrupo').value;
   const ocupacion = document.getElementById('pnjOcupacion').value.trim();
+  const pb        = document.getElementById('pnjPb').value.trim();
   const imagen    = document.getElementById('pnjImagen').value.trim();
+  const historia  = document.getElementById('pnjHistoria').value.trim();
   const orden     = parseInt(document.getElementById('pnjOrden').value) || 0;
   const editId    = document.getElementById('pnjEditId').value;
 
   if (!nombre) { toast('El nombre es obligatorio', 'err'); return; }
 
-  const data = { nombre, edad, grupo, ocupacion, imagen, orden, updatedAt: Date.now() };
+  const data = { nombre, edad, grupo, ocupacion, pb, imagen, historia, orden, updatedAt: Date.now() };
 
   try {
     if (editId) {
@@ -2133,260 +1950,32 @@ window.deleteItem = async (id, nombre) => {
 };
 
 // ══════════════════════════════
-//  FAQs
+//  VISIBILIDAD
 // ══════════════════════════════
-let allFaqs = [];
-let faqTagsActive = new Set(); // tags seleccionados en el filtro
-
-async function loadFaqs() {
-  try {
-    const q = query(collection(db, 'faqs'), orderBy('orden', 'asc'));
-    const snap = await getDocs(q);
-    allFaqs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  } catch {
-    const snap = await getDocs(collection(db, 'faqs'));
-    allFaqs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  }
-  renderFaqTagFilter();
-  renderFaqs();
-}
-
-function getFaqsFiltered() {
-  const q = (document.getElementById('faqSearch')?.value || '').toLowerCase();
-  return allFaqs.filter(f => {
-    const matchText = !q ||
-      (f.pregunta || '').toLowerCase().includes(q) ||
-      (f.respuesta || '').toLowerCase().includes(q);
-    const matchTag = faqTagsActive.size === 0 ||
-      (f.tags || []).some(t => faqTagsActive.has(t));
-    return matchText && matchTag;
-  });
-}
-
-function getAllTags() {
-  const set = new Set();
-  allFaqs.forEach(f => (f.tags || []).forEach(t => set.add(t)));
-  return [...set].sort();
-}
-
-function renderFaqTagFilter() {
-  const tags = getAllTags();
-  const wrap = document.getElementById('faqTagFilter');
-  if (!wrap) return;
-  wrap.innerHTML = tags.map(t => {
-    const active = faqTagsActive.has(t);
-    return `<button class="parl-tab${active ? ' active' : ''}" style="font-size:.65rem;" onclick="toggleFaqTag('${t}')">${t}</button>`;
-  }).join('');
-}
-
-window.toggleFaqTag = (tag) => {
-  if (faqTagsActive.has(tag)) faqTagsActive.delete(tag);
-  else faqTagsActive.add(tag);
-  renderFaqTagFilter();
-  renderFaqs();
-};
-
-window.renderFaqs = () => {
-  const filtered = getFaqsFiltered();
-  const grid = document.getElementById('faqGrid');
-  if (!filtered.length) {
-    grid.innerHTML = '<div class="empty"><i class="bi bi-question-circle"></i>Sin FAQs que coincidan</div>';
-  } else {
-    grid.innerHTML = filtered.map(f => {
-      const tags = (f.tags || []).map(t => `<span class="faq-tag">${t}</span>`).join('');
-      const fecha = f.fecha ? `<span class="faq-date"><i class="bi bi-calendar3"></i> ${f.fecha}</span>` : '';
-      return `
-        <div class="faq-card">
-          <div class="faq-card-header">
-            <div class="faq-card-pregunta">${f.pregunta || '—'}</div>
-            <div class="faq-card-actions">
-              <button class="btn btn-ghost btn-sm" onclick="openEditFaq('${f.id}')"><i class="bi bi-pencil"></i></button>
-              <button class="btn btn-danger btn-sm" onclick="deleteFaq('${f.id}','${(f.pregunta||'').replace(/'/g,"\\'").replace(/"/g,'&quot;')}')"><i class="bi bi-trash"></i></button>
-            </div>
+function renderVisibility() {
+  const card = document.getElementById('visibilityCard');
+  card.innerHTML = `
+    <div class="card-header"><span class="card-title">Campos públicos en memberlist y perfiles</span></div>
+    ${fieldsDef.map(f => `
+      <div class="vis-row">
+        <div class="vis-label">
+          <div class="name">${f.label}</div>
+          <div class="key">${f.key}</div>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" ${visConfig[f.key] ? 'checked' : ''} onchange="toggleVis('${f.key}',this.checked)">
+          <div class="toggle-track">
+            <div class="toggle-thumb"></div>
           </div>
-          <div class="faq-card-respuesta">${(f.respuesta || '').replace(/\n/g,'<br>')}</div>
-          <div class="faq-card-footer">
-            ${tags}
-            ${fecha}
-          </div>
-        </div>`;
-    }).join('');
-  }
-  renderFaqOutput();
-};
-
-function renderFaqOutput() {
-  const out = document.getElementById('faqOutput');
-  if (!out) return;
-  // Genera el output completo: tags únicos para el sidebar + s-faq elements
-  const allTags = getAllTags();
-  const tagsSidebar = allTags.map(t => {
-    const id   = t.replace(/\s+/g,'').toLowerCase();
-    const label = t.toUpperCase();
-    return `<li class="form-control">\n<input type="radio" id="${id}" name="faq" value="${id}" />\n<label for="${id}">${label}</label>\n</li>`;
-  }).join('\n');
-
-  // Fecha de última actualización (la más reciente de todas las faqs)
-  const fechas = allFaqs.map(f => f.fecha).filter(Boolean).sort().reverse();
-  const lastUpdate = fechas[0] || '';
-  const updateComment = lastUpdate ? `<!-- Última actualización: ${lastUpdate} -->` : '';
-
-  const faqs = allFaqs.map(f => {
-    const tagsAttr = (f.tags || []).join(' ');
-    const respuesta = (f.respuesta || '').trim();
-    return `<s-faq tags="${tagsAttr}" pregunta="${(f.pregunta||'').replace(/"/g,'&quot;')}">\n${respuesta}\n</s-faq>`;
-  }).join('\n');
-
-  out.textContent = `${updateComment}
-<section class="s-post-wide sp-ambientacion">
-<aside class="sp-nav">
-<menu class="filters">
-<li class="filter-title">Filtrar</li>
-<li class="form-control">
-<input type="radio" id="allfaqs" name="faq" value="allfaqs" checked/>
-<label for="allfaqs">TODAS</label>
-</li>
-${tagsSidebar}
-</menu>
-</aside>
-<section class="s-ambientacion-content faq no-br">
-${faqs}
-</section>
-</section>`;
+        </label>
+      </div>`).join('')}`;
 }
 
-window.copyFaqOutput = () => {
-  const text = document.getElementById('faqOutput').textContent;
-  navigator.clipboard.writeText(text).then(() => toast('Output copiado al portapapeles', 'ok'));
-};
-
-// ── FAQ TAG INPUT ──
-function initTagInput() {
-  const input = document.getElementById('faqTagInput');
-  const wrap  = document.getElementById('faqTagsWrap');
-  if (!input || !wrap) return;
-
-  function addTag(raw) {
-    const val = raw.trim().toLowerCase().replace(/\s+/g,'');
-    if (!val) return;
-    const existing = getModalTags();
-    if (existing.includes(val)) return;
-    const chip = document.createElement('span');
-    chip.className = 'tag-chip';
-    chip.dataset.tag = val;
-    chip.innerHTML = `${val}<button type="button" onclick="this.parentElement.remove();syncTagsHidden()"><i class="bi bi-x"></i></button>`;
-    wrap.insertBefore(chip, input);
-    syncTagsHidden();
-  }
-
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ',') {
-      e.preventDefault();
-      addTag(input.value);
-      input.value = '';
-    } else if (e.key === 'Backspace' && !input.value) {
-      const chips = wrap.querySelectorAll('.tag-chip');
-      if (chips.length) chips[chips.length - 1].remove();
-      syncTagsHidden();
-    }
-  });
-  input.addEventListener('blur', () => {
-    if (input.value.trim()) { addTag(input.value); input.value = ''; }
-  });
-}
-
-window.syncTagsHidden = () => {
-  const tags = getModalTags();
-  document.getElementById('faqTagsHidden').value = tags.join(',');
-};
-
-function getModalTags() {
-  return [...document.querySelectorAll('#faqTagsWrap .tag-chip')].map(c => c.dataset.tag);
-}
-
-function setModalTags(tags) {
-  const wrap = document.getElementById('faqTagsWrap');
-  wrap.querySelectorAll('.tag-chip').forEach(c => c.remove());
-  tags.forEach(t => {
-    const chip = document.createElement('span');
-    chip.className = 'tag-chip';
-    chip.dataset.tag = t;
-    chip.innerHTML = `${t}<button type="button" onclick="this.parentElement.remove();syncTagsHidden()"><i class="bi bi-x"></i></button>`;
-    wrap.insertBefore(chip, document.getElementById('faqTagInput'));
-  });
-  syncTagsHidden();
-}
-
-// ── FAQ MODAL ──
-window.openAddFaq = () => {
-  document.getElementById('faqModalTitle').innerHTML = 'Nueva <em>FAQ</em>';
-  document.getElementById('faqEditId').value = '';
-  document.getElementById('faqPregunta').value = '';
-  document.getElementById('faqRespuesta').value = '';
-  document.getElementById('faqFecha').value = new Date().toISOString().slice(0,10);
-  setModalTags([]);
-  document.getElementById('faqModal').classList.add('show');
-  setTimeout(initTagInput, 50);
-};
-
-window.openEditFaq = (id) => {
-  const f = allFaqs.find(x => x.id === id);
-  if (!f) return;
-  document.getElementById('faqModalTitle').innerHTML = 'Editar <em>FAQ</em>';
-  document.getElementById('faqEditId').value = id;
-  document.getElementById('faqPregunta').value = f.pregunta || '';
-  document.getElementById('faqRespuesta').value = f.respuesta || '';
-  document.getElementById('faqFecha').value = f.fecha || '';
-  setModalTags(f.tags || []);
-  document.getElementById('faqModal').classList.add('show');
-  setTimeout(initTagInput, 50);
-};
-
-window.closeFaqModal = () => document.getElementById('faqModal').classList.remove('show');
-
-window.saveFaq = async () => {
-  const pregunta  = document.getElementById('faqPregunta').value.trim();
-  const respuesta = document.getElementById('faqRespuesta').value.trim();
-  const fecha     = document.getElementById('faqFecha').value;
-  const tags      = getModalTags();
-  const editId    = document.getElementById('faqEditId').value;
-
-  if (!pregunta) { toast('La pregunta es obligatoria', 'err'); return; }
-  if (!respuesta) { toast('La respuesta es obligatoria', 'err'); return; }
-
-  const data = { pregunta, respuesta, tags, fecha, orden: editId ? (allFaqs.find(f=>f.id===editId)?.orden ?? allFaqs.length) : allFaqs.length, updatedAt: Date.now() };
-
-  try {
-    if (editId) {
-      await updateDoc(doc(db, 'faqs', editId), data);
-      const idx = allFaqs.findIndex(x => x.id === editId);
-      if (idx >= 0) allFaqs[idx] = { ...allFaqs[idx], ...data };
-      toast(`FAQ actualizada`, 'ok');
-    } else {
-      data.createdAt = Date.now();
-      const ref = await addDoc(collection(db, 'faqs'), data);
-      allFaqs.push({ id: ref.id, ...data });
-      toast(`FAQ creada`, 'ok');
-    }
-    renderFaqTagFilter();
-    renderFaqs();
-    closeFaqModal();
-  } catch(err) {
-    toast('Error al guardar: ' + err.message, 'err');
-  }
-};
-
-window.deleteFaq = async (id, pregunta) => {
-  if (!confirm(`¿Eliminar la FAQ "${pregunta}"?`)) return;
-  try {
-    await deleteDoc(doc(db, 'faqs', id));
-    allFaqs = allFaqs.filter(f => f.id !== id);
-    renderFaqTagFilter();
-    renderFaqs();
-    toast('FAQ eliminada');
-  } catch(err) {
-    toast('Error al eliminar: ' + err.message, 'err');
-  }
+window.toggleVis = async (key, val) => {
+  visConfig[key] = val;
+  await setDoc(doc(db,'config','fieldVisibility'), visConfig);
+  renderVisibility();
+  toast(`"${key}" → ${val ? 'público' : 'privado'}`);
 };
 
 // ══════════════════════════════
