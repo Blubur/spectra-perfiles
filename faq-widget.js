@@ -334,7 +334,7 @@
       <div class="sf-header">
         <h1>Preguntas frecuentes</h1>
         <div class="sf-header-meta">
-          <span>Guía · Spectra</span>
+          <span>Puedes usar el buscador para buscar por palabra y el filtro para buscar por categoría</span>
           <span class="sf-update-date" data-role="update-date" style="display:none">
             ${icon("calendar3")} <span data-role="update-date-text"></span>
           </span>
