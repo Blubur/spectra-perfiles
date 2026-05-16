@@ -491,6 +491,32 @@ body {
 
 .form-list { display: flex; flex-direction: column; gap: var(--spacing-xs); }
 
+/* ─── USER SEARCH ─── */
+.user-search-wrap {
+  position: relative;
+  margin-bottom: var(--spacing-s);
+}
+.user-search-wrap i {
+  position: absolute; left: var(--spacing-xs); top: 50%; transform: translateY(-50%);
+  color: var(--mono-text1); font-size: .9rem; pointer-events: none;
+}
+.user-search {
+  width: 100%;
+  background: var(--input-surface);
+  border: 1px solid var(--input-border);
+  border-radius: var(--input-br);
+  padding: var(--spacing-2xs) var(--spacing-xs) var(--spacing-2xs) calc(var(--spacing-xs) * 2 + .9rem);
+  font: 300 var(--f-base) var(--f-sans);
+  color: var(--mono-text2);
+  outline: none;
+  transition: border-color .2s;
+}
+.user-search:focus {
+  border-color: var(--accent-border2);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-solid1), transparent 80%);
+}
+.user-search::placeholder { color: var(--mono-text1); }
+
 /* ─── LOGIN ─── */
 #loginWrap {
   min-height: 100vh; display: flex; align-items: center; justify-content: center;
@@ -821,9 +847,6 @@ body {
     <button class="nav-tab" data-page="tienda" onclick="goTo('tienda')">
       <i class="bi bi-shop"></i> Tienda
     </button>
-    <button class="nav-tab" data-page="visibilidad" onclick="goTo('visibilidad')">
-      <i class="bi bi-eye"></i> Visibilidad
-    </button>
     <div class="nav-spacer"></div>
     <a href="index.html" class="nav-link-index">
       <i class="bi bi-house"></i> Index
@@ -868,6 +891,12 @@ body {
       <button class="parl-tab" data-e="inactivo" style="--grupo-color:#6f6d66;font-size:.65rem;">Inactivos</button>
       <button class="parl-tab" data-e="reserva"  style="--grupo-color:#A53E4A;font-size:.65rem;">Reservas</button>
       <button class="parl-tab estado-filter-tab" data-e="pnj" style="font-size:.65rem;">PNJ (staff)</button>
+    </div>
+
+    <!-- Barra de búsqueda -->
+    <div class="user-search-wrap">
+      <i class="bi bi-search"></i>
+      <input type="text" class="user-search" id="userSearch" placeholder="Buscar por username o nombre de personaje…" oninput="onUserSearch()">
     </div>
 
     <!-- Grid view -->
@@ -953,16 +982,6 @@ body {
     <div class="card" id="tiendaList" style="display:none; padding:0;"></div>
   </div>
 
-  <!-- ══ TAB: VISIBILIDAD ══ -->
-  <div class="page" id="page-visibilidad">
-    <div class="page-header">
-      <div class="page-title">Visibilidad de <em>campos</em></div>
-      <div class="page-subtitle">Decide qué aparece públicamente en memberlist y perfiles</div>
-    </div>
-    <div class="card" id="visibilityCard">
-      <div class="card-header"><span class="card-title">Campos públicos</span></div>
-    </div>
-  </div>
 </div>
 
 <!-- ═══════ MODAL: NUEVO / EDITAR USUARIO ═══════ -->
@@ -1219,7 +1238,7 @@ body {
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import {
-  getFirestore, doc, getDoc, setDoc, getDocs,
+  getFirestore, doc, getDocs,
   collection, updateDoc, addDoc, deleteDoc, query, orderBy
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
@@ -1244,7 +1263,6 @@ const db  = getFirestore(app);
 
 // ── STATE ──
 let allUsers = {};
-let visConfig = {};
 let allPNJs = [];
 let allItems = [];
 let tiendaFilter = 'all';
@@ -1252,18 +1270,10 @@ let tiendaView = 'grid';
 let imgType = 'svg';
 let pnjFilter = 'all';
 let pnjView = 'grid';
-let userFilter = 'all';      // parlamento filter
-let userEstadoFilter = 'all'; // ← NUEVO: estado filter
+let userFilter = 'all';
+let userEstadoFilter = 'all';
+let userSearch = '';
 let userView = 'grid';
-
-const fieldsDef = [
-  { key: 'charName',      label: 'Nombre del personaje' },
-  { key: 'charAge',       label: 'Edad del personaje' },
-  { key: 'charOcupacion', label: 'Ocupación' },
-  { key: 'charDesc',      label: 'Descripción' },
-  { key: 'fichaUrl',      label: 'Enlace a ficha' },
-  { key: 'baulUrl',       label: 'Enlace a baúl' },
-];
 
 // ── ESC TO CLOSE ALL MODALS ──
 document.addEventListener('keydown', e => {
@@ -1286,15 +1296,10 @@ async function loadAll() {
   allUsers = {};
   uSnap.forEach(d => { allUsers[d.id] = d.data(); });
 
-  const vc = await getDoc(doc(db,'config','fieldVisibility'));
-  visConfig = vc.exists() ? vc.data() : {};
-  fieldsDef.forEach(f => { if (visConfig[f.key] === undefined) visConfig[f.key] = true; });
-
   await loadPNJs();
   await loadItems();
 
   renderUsers();
-  renderVisibility();
 }
 
 // ══════════════════════════════
@@ -1319,11 +1324,16 @@ function estadoPill(estado) {
 
 function getUserList() {
   let users = Object.entries(allUsers).map(([id, data]) => ({ _id: id, ...data }));
-  // Filtro por parlamento
   if (userFilter !== 'all') users = users.filter(u => u.parlamento === userFilter);
-  // Filtro por estado ← NUEVO
   if (userEstadoFilter !== 'all') {
     users = users.filter(u => (u.registro?.estado || '') === userEstadoFilter);
+  }
+  if (userSearch) {
+    const q = userSearch.toLowerCase();
+    users = users.filter(u =>
+      (u.username || u._id || '').toLowerCase().includes(q) ||
+      (u.charName || '').toLowerCase().includes(q)
+    );
   }
   return users;
 }
@@ -1424,6 +1434,12 @@ document.getElementById('userEstadoFilterTabs').addEventListener('click', e => {
   document.querySelectorAll('#userEstadoFilterTabs .parl-tab').forEach(b => b.classList.toggle('active', b === btn));
   renderUsers();
 });
+
+// ── USER SEARCH ──
+window.onUserSearch = () => {
+  userSearch = document.getElementById('userSearch').value.trim();
+  renderUsers();
+};
 
 // ── USER VIEW ──
 window.setUserView = (v) => {
@@ -1637,7 +1653,7 @@ window.setPnjView = (v) => {
 window.openAddPnj = () => {
   document.getElementById('pnjModalTitle').innerHTML = 'Nuevo <em>PNJ</em>';
   document.getElementById('pnjEditId').value = '';
-  ['pnjNombre','pnjEdad','pnjOcupacion','pnjImagen','pnjHistoria'].forEach(id => document.getElementById(id).value = '');
+  ['pnjNombre','pnjEdad','pnjOcupacion','pnjImagen'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('pnjGrupo').value = '';
   document.getElementById('pnjOrden').value = allPNJs.length;
   document.getElementById('pnjImgPreview').innerHTML = '<span class="placeholder"><i class="bi bi-image"></i></span>';
@@ -1654,7 +1670,6 @@ window.openEditPnj = (id) => {
   document.getElementById('pnjGrupo').value     = p.grupo     || '';
   document.getElementById('pnjOcupacion').value = p.ocupacion || '';
   document.getElementById('pnjImagen').value    = p.imagen    || '';
-  document.getElementById('pnjHistoria').value  = p.historia  || '';
   document.getElementById('pnjOrden').value     = p.orden     ?? 0;
   previewPnjImg(p.imagen || '');
   document.getElementById('pnjModal').classList.add('show');
@@ -1677,13 +1692,12 @@ window.savePnj = async () => {
   const grupo     = document.getElementById('pnjGrupo').value;
   const ocupacion = document.getElementById('pnjOcupacion').value.trim();
   const imagen    = document.getElementById('pnjImagen').value.trim();
-  const historia  = document.getElementById('pnjHistoria').value.trim();
   const orden     = parseInt(document.getElementById('pnjOrden').value) || 0;
   const editId    = document.getElementById('pnjEditId').value;
 
   if (!nombre) { toast('El nombre es obligatorio', 'err'); return; }
 
-  const data = { nombre, edad, grupo, ocupacion, imagen, historia, orden, updatedAt: Date.now() };
+  const data = { nombre, edad, grupo, ocupacion, imagen, orden, updatedAt: Date.now() };
 
   try {
     if (editId) {
@@ -1951,35 +1965,6 @@ window.deleteItem = async (id, nombre) => {
   } catch(err) {
     toast('Error al eliminar: ' + err.message, 'err');
   }
-};
-
-// ══════════════════════════════
-//  VISIBILIDAD
-// ══════════════════════════════
-function renderVisibility() {
-  const card = document.getElementById('visibilityCard');
-  card.innerHTML = `
-    <div class="card-header"><span class="card-title">Campos públicos en memberlist y perfiles</span></div>
-    ${fieldsDef.map(f => `
-      <div class="vis-row">
-        <div class="vis-label">
-          <div class="name">${f.label}</div>
-          <div class="key">${f.key}</div>
-        </div>
-        <label class="toggle-wrap">
-          <input type="checkbox" ${visConfig[f.key] ? 'checked' : ''} onchange="toggleVis('${f.key}',this.checked)">
-          <div class="toggle-track">
-            <div class="toggle-thumb"></div>
-          </div>
-        </label>
-      </div>`).join('')}`;
-}
-
-window.toggleVis = async (key, val) => {
-  visConfig[key] = val;
-  await setDoc(doc(db,'config','fieldVisibility'), visConfig);
-  renderVisibility();
-  toast(`"${key}" → ${val ? 'público' : 'privado'}`);
 };
 
 // ══════════════════════════════
