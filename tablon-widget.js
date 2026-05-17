@@ -94,10 +94,12 @@
         align-items: center;
         font: var(--f-tablon-subtitle, 300 .75rem var(--f-mono));
         text-decoration: none;
-        color: var(--accent-text1);
+        text-transform: uppercase;
       }
-      #spectra-tablon .anuncios .anuncio em { font-style: italic; }
-      #spectra-tablon .anuncios .anuncio a:hover { text-decoration: underline; }
+      #spectra-tablon .anuncios .anuncio em { 
+      font-style: italic;
+      color: var(--accent-text1);
+      }
       #spectra-tablon .anuncios .anuncio p {
         grid-column: 1 / -1;
         border-top: 1px solid var(--mono-border1);
