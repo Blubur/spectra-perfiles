@@ -1,6 +1,9 @@
 (function () {
   "use strict";
-
+  
+  if (window.__spectraPnjsLoaded) return;
+  window.__spectraPnjsLoaded = true;
+  
   var WIDGET_ID = "spectra-pnjs";
   var APP_NAME = "spectra-pnjs-widget";
   var FIREBASE_CONFIG = {
