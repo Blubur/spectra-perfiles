@@ -99,8 +99,7 @@
     </div>
     <div class="user-search-wrap">
       <i class="bi bi-search"></i>
-      <input type="text" class="user-search" id="userSearch" placeholder="Buscar por username o nombre de personaje…" oninput="onUserSearch()">
-    </div>
+      <input type="text" class="user-search" id="userSearch" placeholder="Buscar por username o nombre de personaje…" oninput="onUserSearch()" autocomplete="off">    </div>
     <div class="user-grid" id="userGrid"></div>
     <div class="card" id="userTable" style="display:none; padding:0;">
       <div class="table-wrap">
@@ -535,6 +534,7 @@ async function loadAll() {
   await loadTablon();
 
   renderUsers();
+  document.getElementById('userSearch').value = ''; // ← Añade esta línea
 }
 
 // ══════════════════════════════
