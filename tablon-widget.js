@@ -262,7 +262,7 @@
 
     /* ──  eventos ── */
     if (eventos.length) {
-      html += '<div class="eventos">';
+      html += '<div class="eventos"><h3>Eventos</ht3>';
       eventos.forEach(function(ev) {
         var imgTag = ev.imagen
           ? '<img class="evento-img" src="' + esc(ev.imagen) + '" alt="">'
