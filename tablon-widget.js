@@ -64,46 +64,47 @@
         display: flex;
         flex-direction: column;
         gap: 0;
-        font-family: var(--f-sans, 'DM Sans', sans-serif);
-        color: var(--mono-text2, #21201c);
+        font-family: var(--f-sans);
+        color: var(--mono-text2);
+        padding: 1rem;
       }
 
       /* ═══════════════════════════ ANUNCIOS ═══════════════════════════ */
       #spectra-tablon .anuncios {}
       #spectra-tablon .anuncios h3 {
-        font: 300 var(--f-s, .8rem) var(--f-mono, monospace);
+        font: 300 var(--f-s) var(--f-mono);
         text-transform: uppercase;
         letter-spacing: .12em;
-        color: var(--mono-text1, #63635e);
-        padding: var(--spacing-2xs, .5rem) 0 var(--spacing-2xs, .5rem);
+        color: var(--mono-text1);
+        padding: var(--spacing-2xs) 0 var(--spacing-2xs);
       }
       #spectra-tablon .anuncios ul {
         display: flex;
         flex-direction: column;
-        gap: var(--spacing-xs, .75rem);
+        gap: var(--spacing-xs);
         list-style: none;
       }
       #spectra-tablon .anuncios .anuncio {
-        border: 1px solid var(--mono-border1, #dad9d6);
+        border: 1px solid var(--mono-border1);
         display: grid;
         grid-template-columns: .5fr 1fr;
       }
       #spectra-tablon .anuncios .anuncio em,
       #spectra-tablon .anuncios .anuncio a {
-        padding: var(--spacing-3xs, .25rem);
+        padding: var(--spacing-3xs);
         display: flex;
         align-items: center;
-        font: var(--f-tablon-subtitle, 300 .75rem var(--f-mono, monospace));
+        font: var(--f-tablon-subtitle, 300 .75rem var(--f-mono));
         text-decoration: none;
-        color: var(--accent-text1, #6f6048);
+        color: var(--accent-text1);
       }
       #spectra-tablon .anuncios .anuncio em { font-style: italic; }
       #spectra-tablon .anuncios .anuncio a:hover { text-decoration: underline; }
       #spectra-tablon .anuncios .anuncio p {
         grid-column: 1 / -1;
-        border-top: 1px solid var(--mono-border1, #dad9d6);
-        padding: var(--spacing-2xs, .5rem);
-        font-size: var(--f-s, .8rem);
+        border-top: 1px solid var(--mono-border1);
+        padding: var(--spacing-2xs);
+        font-size: var(--f-s);
       }
 
       /* ═══════════════════════════ CICLO ═══════════════════════════ */
@@ -112,61 +113,57 @@
       #spectra-tablon .ciclo .capitulo {
         display: flex;
         align-items: center;
-        font-family: var(--f-display, var(--f-deco, 'DM Serif Display', serif));
-        gap: var(--spacing-xs, .75rem);
+        font-family: var(--f-display, var(--f-deco));
+        gap: var(--spacing-xs);
       }
       #spectra-tablon .ciclo .capitulo > span:first-of-type {
-        font-size: var(--f-2xl, 1.95rem);
+        font-size: var(--f-2xl);
       }
       #spectra-tablon .ciclo .capitulo > span:nth-of-type(2) {
         text-decoration: underline;
-        text-decoration-color: var(--accent-solid1, #b5a081);
-        text-underline-offset: var(--spacing-3xs, .25rem);
+        text-decoration-color: var(--accent-solid1);
+        text-underline-offset: var(--spacing-3xs);
       }
       #spectra-tablon .ciclo .periodo {
-        font: bold var(--f-2xl, 1.95rem) var(--f-display, var(--f-deco, 'DM Serif Display', serif));
+        font: bold var(--f-2xl) var(--f-display);
       }
       #spectra-tablon .ciclo .descripcion {
-        font-size: var(--f-s, .8rem);
+        font-size: var(--f-s);
         line-height: 1.6;
-        color: var(--mono-text1, #63635e);
-        margin-top: var(--spacing-xs, .75rem);
+        color: var(--mono-text1);
+        margin-top: var(--spacing-xs);
       }
 
       /* ═══════════════════════════  EVENTOS  ═══════════════════════════ */
       #spectra-tablon .eventos {
         display: flex;
         flex-wrap: wrap;
-        gap: var(--spacing-xs, .75rem);
+        gap: var(--spacing-xs);
       }
       #spectra-tablon .eventos a {
         display: flex;
         align-items: center;
-        gap: var(--spacing-2xs, .5rem);
-        font: 500 var(--f-s, .8rem) var(--f-display-sans, var(--f-sans, sans-serif));
+        gap: var(--spacing-2xs);
+        font: 500 var(--f-s, .8rem) var(--f-display-sans);
         letter-spacing: .08em;
         text-transform: uppercase;
         text-decoration: none;
-        color: var(--mono-text2, #21201c);
-        border: 1px solid var(--mono-border2, #cfceca);
-        padding: var(--spacing-3xs, .25rem) var(--spacing-xs, .75rem);
-        border-radius: var(--br, 5px);
+        color: var(--mono-text2);
+        border-top: 1px solid var(--mono-border2);
+        padding-top: 1rem;
         transition: border-color .2s, box-shadow .2s;
       }
-      #spectra-tablon .eventos a:hover {
-        border-color: var(--accent-border2, #cfbfa8);
-        box-shadow: 0 2px 8px rgba(0,0,0,.08);
-      }
+      
       #spectra-tablon .eventos .evento-img {
-        width: 60px;
-        height: 60px;
+        width: 130px;
+        height: 80px;
         object-fit: cover;
         border-radius: calc(var(--br, 5px) - 1px);
         flex-shrink: 0;
       }
       #spectra-tablon .eventos .evento-desc {
         font: 300 var(--f-s, .8rem) var(--f-sans, sans-serif);
-        color: var(--mono-text1, #63635e);
+        color: var(--mono-text1);
         text-transform: none;
         letter-spacing: 0;
         margin-top: 1px;
@@ -179,15 +176,15 @@
 
       /* ═══════════════════════════  INTRO ═══════════════════════════ */
       #spectra-tablon .intro > span {
-        font: italic var(--f-2xl, 1.95rem) var(--f-display, var(--f-deco, 'DM Serif Display', serif));
+        font: italic var(--f-2xl, 1.95rem) var(--f-display);
         display: block;
-        margin-bottom: var(--spacing-xs, .75rem);
+        margin-bottom: var(--spacing-xs);
       }
       #spectra-tablon .intro > div {
         column-count: 2;
-        font-size: var(--f-s, .8rem);
+        font-size: var(--f-s);
         text-align: justify;
-        column-gap: var(--spacing-l, 2rem);
+        column-gap: var(--spacing-l);
         line-height: 1.7;
       }
       @media (max-width: 520px) {
