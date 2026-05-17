@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Panel de Administración — Spectra</title>
-<!-- Anti-flash: carga el tema antes que el CSS -->
 <script>
 (function () {
   const saved = localStorage.getItem("theme");
@@ -59,7 +58,6 @@
   --warning-surface: light-dark(#ffefd6, #331e0b);
   --warning-border: light-dark(#ffc182, #66350c);
 
-  /* PNJ estado color (azul suave) */
   --pnj-text: light-dark(#1a4a7a, #7ec8f7);
   --pnj-surface: light-dark(#e8f2fd, #0d2440);
   --pnj-border: light-dark(#93c5f0, #1e4a7a);
@@ -132,7 +130,6 @@ body {
   transition: background .3s ease, color .3s ease;
 }
 
-/* ─── NAV ─── */
 .admin-nav {
   height: var(--nav-size);
   background: color-mix(in srgb, var(--mono-surface1), transparent 50%);
@@ -208,7 +205,6 @@ body {
 .nav-link-index i { font-size: .8rem; opacity: .6; }
 .nav-link-index:hover { color: var(--accent-text1); }
 
-/* ─── BUTTONS ─── */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-2xs);
   padding: var(--spacing-button);
@@ -250,12 +246,8 @@ body {
 }
 .btn:disabled { background: var(--mono-solid2); border-color: var(--mono-solid1); opacity: .6; cursor: not-allowed; }
 
-/* ─── INPUTS ─── */
 .field { display: flex; flex-direction: column; gap: var(--spacing-2xs); }
-.field label {
-  font: var(--f-base) var(--f-deco);
-  color: var(--mono-text2);
-}
+.field label { font: var(--f-base) var(--f-deco); color: var(--mono-text2); }
 .field input, .field select, .field textarea {
   background: var(--input-surface);
   border: 1px solid var(--input-border);
@@ -274,101 +266,40 @@ body {
 .field textarea { resize: vertical; min-height: 100px; }
 .field small { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); }
 
-/* ─── LAYOUT ─── */
 .page { display: none; padding: var(--spacing-l); max-width: 1100px; margin: 0 auto; animation: fadeUp .35s ease both; }
 .page.active { display: block; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 
 .page-header { margin-bottom: var(--spacing-l); }
-.page-title {
-  font: 200 var(--f-2xl) var(--f-sans);
-  line-height: 1.1;
-  margin-bottom: var(--spacing-2xs);
-}
+.page-title { font: 200 var(--f-2xl) var(--f-sans); line-height: 1.1; margin-bottom: var(--spacing-2xs); }
 .page-title em { font-style: italic; color: var(--accent-text1); font-weight: 300; }
-.page-subtitle {
-  font: 300 var(--f-s) var(--f-mono);
-  color: var(--mono-text1);
-  text-transform: uppercase;
-  letter-spacing: .12em;
-}
+.page-subtitle { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); text-transform: uppercase; letter-spacing: .12em; }
 
-/* ─── CARDS ─── */
-.card {
-  background: var(--mono-surface2);
-  border: 1px solid var(--mono-border1);
-  border-radius: var(--br);
-  padding: var(--spacing-s);
-  margin-bottom: var(--spacing);
-}
-.card-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding-bottom: var(--spacing-xs);
-  border-bottom: 1px solid var(--mono-border1);
-  margin-bottom: var(--spacing-s);
-}
-.card-title {
-  font: 300 var(--f-s) var(--f-mono);
-  text-transform: uppercase; letter-spacing: .14em;
-  color: var(--mono-text1);
-}
+.card { background: var(--mono-surface2); border: 1px solid var(--mono-border1); border-radius: var(--br); padding: var(--spacing-s); margin-bottom: var(--spacing); }
+.card-header { display: flex; align-items: center; justify-content: space-between; padding-bottom: var(--spacing-xs); border-bottom: 1px solid var(--mono-border1); margin-bottom: var(--spacing-s); }
+.card-title { font: 300 var(--f-s) var(--f-mono); text-transform: uppercase; letter-spacing: .14em; color: var(--mono-text1); }
 .card-actions { display: flex; gap: var(--spacing-2xs); }
 
-/* ─── GRID ─── */
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-s); }
 .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--spacing-s); }
 .flex-col { display: flex; flex-direction: column; gap: var(--spacing-xs); }
 .flex-row { display: flex; gap: var(--spacing-xs); align-items: center; }
 
-/* ─── TABLE ─── */
 .data-table { width: 100%; border-collapse: collapse; }
-.data-table th {
-  font: 300 var(--f-s) var(--f-mono);
-  text-transform: uppercase; letter-spacing: .1em;
-  color: var(--mono-text1);
-  padding: var(--spacing-2xs) var(--spacing-xs);
-  text-align: left;
-  background: var(--mono-component1);
-  border-bottom: 1px solid var(--mono-border1);
-}
-.data-table td {
-  padding: var(--spacing-xs) var(--spacing-xs);
-  border-bottom: 1px solid var(--mono-border1);
-  font-size: var(--f-s);
-  vertical-align: middle;
-}
+.data-table th { font: 300 var(--f-s) var(--f-mono); text-transform: uppercase; letter-spacing: .1em; color: var(--mono-text1); padding: var(--spacing-2xs) var(--spacing-xs); text-align: left; background: var(--mono-component1); border-bottom: 1px solid var(--mono-border1); }
+.data-table td { padding: var(--spacing-xs) var(--spacing-xs); border-bottom: 1px solid var(--mono-border1); font-size: var(--f-s); vertical-align: middle; }
 .data-table tr:last-child td { border-bottom: none; }
 .data-table tr:hover td { background: var(--mono-component1); }
 .table-wrap { overflow-x: auto; }
 
-/* ─── BADGES ─── */
-.badge {
-  display: inline-flex; align-items: center; gap: .3em;
-  font: 300 var(--f-s) var(--f-mono);
-  text-transform: uppercase; letter-spacing: .06em;
-  padding: 2px var(--spacing-2xs);
-  border-radius: var(--br-pill);
-  border: 1px solid;
-  white-space: nowrap;
-}
+.badge { display: inline-flex; align-items: center; gap: .3em; font: 300 var(--f-s) var(--f-mono); text-transform: uppercase; letter-spacing: .06em; padding: 2px var(--spacing-2xs); border-radius: var(--br-pill); border: 1px solid; white-space: nowrap; }
 .badge-accent { background: var(--accent-component1); border-color: var(--accent-border2); color: var(--accent-text1); }
 .badge-pending { background: var(--warning-surface); border-color: var(--warning-border); color: var(--warning-text); }
 .badge-success { background: var(--success-surface); border-color: var(--success-border); color: var(--success-text); }
 .badge-danger  { background: var(--danger-surface); border-color: var(--danger-border); color: var(--danger-text); }
 
-/* ─── PARL TABS ─── */
 .parl-tabs { display: flex; flex-wrap: wrap; gap: var(--spacing-2xs); margin-bottom: var(--spacing-s); }
-.parl-tab {
-  padding: var(--spacing-3xs) var(--spacing-xs);
-  font: 300 var(--f-s) var(--f-mono);
-  text-transform: uppercase; letter-spacing: .1em;
-  background: var(--mono-component1);
-  border: 1px solid var(--mono-border2);
-  border-radius: var(--br-pill);
-  color: var(--mono-text1);
-  cursor: pointer;
-  transition: var(--transition-ease);
-}
+.parl-tab { padding: var(--spacing-3xs) var(--spacing-xs); font: 300 var(--f-s) var(--f-mono); text-transform: uppercase; letter-spacing: .1em; background: var(--mono-component1); border: 1px solid var(--mono-border2); border-radius: var(--br-pill); color: var(--mono-text1); cursor: pointer; transition: var(--transition-ease); }
 .parl-tab:hover { border-color: var(--accent-border2); color: var(--accent-text1); }
 .parl-tab.active { background: var(--grupo-color, var(--accent-solid1)); border-color: var(--grupo-color, var(--accent-solid1)); color: #fff; }
 .parl-tab[data-p="primigenios"] { --grupo-color: #A53E67; }
@@ -377,77 +308,31 @@ body {
 .parl-tab[data-p="caoticos"]    { --grupo-color: #5A4160; }
 .parl-tab[data-p="staff"]       { --grupo-color: var(--accent-solid1); }
 
-/* ─── VISIBILITY ─── */
-.vis-row {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: var(--spacing-xs) 0;
-  border-bottom: 1px solid var(--mono-border1);
-}
+.vis-row { display: flex; align-items: center; justify-content: space-between; padding: var(--spacing-xs) 0; border-bottom: 1px solid var(--mono-border1); }
 .vis-row:last-child { border-bottom: none; }
 .vis-label .name { font: 300 var(--f-base) var(--f-sans); }
 .vis-label .key { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); margin-top: 2px; }
-
 .toggle-wrap { position: relative; width: 36px; height: 20px; cursor: pointer; flex-shrink: 0; }
 .toggle-wrap input { opacity: 0; width: 0; height: 0; position: absolute; }
-.toggle-track {
-  position: absolute; inset: 0;
-  background: var(--mono-border2);
-  border-radius: var(--br-pill);
-  transition: background .3s;
-}
-.toggle-thumb {
-  position: absolute; width: 14px; height: 14px; border-radius: 50%;
-  background: #fff; top: 3px; left: 3px;
-  transition: left .3s;
-  box-shadow: var(--shadow-sm);
-}
+.toggle-track { position: absolute; inset: 0; background: var(--mono-border2); border-radius: var(--br-pill); transition: background .3s; }
+.toggle-thumb { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #fff; top: 3px; left: 3px; transition: left .3s; box-shadow: var(--shadow-sm); }
 .toggle-wrap input:checked ~ .toggle-track { background: var(--accent-solid1); }
 .toggle-wrap input:checked ~ .toggle-track .toggle-thumb { left: 19px; }
 
-/* ─── PNJ ─── */
-.pnj-thumb-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: var(--spacing-s);
-  margin-top: var(--spacing-s);
-}
-.pnj-thumb {
-  background: var(--mono-component1);
-  border: 1px solid var(--mono-border1);
-  border-radius: var(--br);
-  overflow: hidden;
-  transition: var(--transition-ease);
-  position: relative;
-}
+.pnj-thumb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--spacing-s); margin-top: var(--spacing-s); }
+.pnj-thumb { background: var(--mono-component1); border: 1px solid var(--mono-border1); border-radius: var(--br); overflow: hidden; transition: var(--transition-ease); position: relative; }
 .pnj-thumb:hover { border-color: var(--accent-border2); box-shadow: var(--shadow-lg); }
 .pnj-thumb-img { aspect-ratio: 3/2; overflow: hidden; background: var(--mono-component2); }
 .pnj-thumb-img img { width: 100%; height: 100%; object-fit: cover; }
-.pnj-thumb-img .no-img {
-  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
-  color: var(--mono-border2); font-size: 2rem;
-}
+.pnj-thumb-img .no-img { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--mono-border2); font-size: 2rem; }
 .pnj-thumb-body { padding: var(--spacing-xs); }
 .pnj-thumb-name { font: italic var(--f-base) var(--f-deco); margin-bottom: var(--spacing-3xs); }
 .pnj-thumb-meta { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); }
-.pnj-thumb-actions {
-  display: flex; gap: var(--spacing-2xs); margin-top: var(--spacing-xs);
-  padding-top: var(--spacing-xs); border-top: 1px solid var(--mono-border1);
-}
+.pnj-thumb-actions { display: flex; gap: var(--spacing-2xs); margin-top: var(--spacing-xs); padding-top: var(--spacing-xs); border-top: 1px solid var(--mono-border1); }
 .pnj-thumb-actions .btn { flex: 1; }
-.pnj-grupo-dot {
-  display: inline-block; width: 8px; height: 8px; border-radius: 50%;
-  background: var(--grupo-color, var(--accent-solid1));
-  margin-right: .3em;
-}
-
+.pnj-grupo-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--grupo-color, var(--accent-solid1)); margin-right: .3em; }
 .pnj-list { display: none; flex-direction: column; gap: 0; margin-top: var(--spacing-s); }
-.pnj-list-row {
-  display: grid; grid-template-columns: auto 1fr auto auto auto;
-  gap: var(--spacing-xs); align-items: center;
-  padding: var(--spacing-xs) var(--spacing-xs);
-  border-bottom: 1px solid var(--mono-border1);
-  transition: background .2s;
-}
+.pnj-list-row { display: grid; grid-template-columns: auto 1fr auto auto auto; gap: var(--spacing-xs); align-items: center; padding: var(--spacing-xs) var(--spacing-xs); border-bottom: 1px solid var(--mono-border1); transition: background .2s; }
 .pnj-list-row:hover { background: var(--mono-component1); }
 .pnj-list-row:last-child { border-bottom: none; }
 .pnj-list-img { width: 48px; height: 48px; object-fit: cover; border-radius: var(--br); background: var(--mono-component2); flex-shrink: 0; }
@@ -455,207 +340,58 @@ body {
 .pnj-list-info .name { font: italic var(--f-base) var(--f-deco); }
 .pnj-list-info .meta { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); }
 
-/* ─── MODAL ─── */
-.modal-overlay {
-  position: fixed; inset: 0;
-  background: var(--overlay-strong);
-  z-index: 100;
-  display: none; align-items: center; justify-content: center;
-}
+.modal-overlay { position: fixed; inset: 0; background: var(--overlay-strong); z-index: 100; display: none; align-items: center; justify-content: center; }
 .modal-overlay.show { display: flex; }
-.modal {
-  background: var(--mono-surface1);
-  border: 1px solid var(--mono-border1);
-  border-radius: var(--br-l);
-  padding: var(--spacing-l);
-  width: 90%; max-width: 560px;
-  max-height: 85vh; overflow-y: auto;
-  animation: fadeUp .25s ease;
-  box-shadow: var(--shadow-xl);
-}
-.modal-title {
-  font: 200 var(--f-2xl) var(--f-sans);
-  margin-bottom: var(--spacing-s);
-  padding-bottom: var(--spacing-xs);
-  border-bottom: 1px solid var(--mono-border1);
-}
+.modal { background: var(--mono-surface1); border: 1px solid var(--mono-border1); border-radius: var(--br-l); padding: var(--spacing-l); width: 90%; max-width: 560px; max-height: 85vh; overflow-y: auto; animation: fadeUp .25s ease; box-shadow: var(--shadow-xl); }
+.modal-title { font: 200 var(--f-2xl) var(--f-sans); margin-bottom: var(--spacing-s); padding-bottom: var(--spacing-xs); border-bottom: 1px solid var(--mono-border1); }
 .modal-title em { font-style: italic; color: var(--accent-text1); }
 .modal-actions { display: flex; gap: var(--spacing-xs); justify-content: flex-end; margin-top: var(--spacing); }
-
 .form-list { display: flex; flex-direction: column; gap: var(--spacing-xs); }
 
-/* ─── USER SEARCH ─── */
-.user-search-wrap {
-  position: relative;
-  margin-bottom: var(--spacing-s);
-}
-.user-search-wrap i {
-  position: absolute; left: var(--spacing-xs); top: 50%; transform: translateY(-50%);
-  color: var(--mono-text1); font-size: .9rem; pointer-events: none;
-}
-.user-search {
-  width: 100%;
-  background: var(--input-surface);
-  border: 1px solid var(--input-border);
-  border-radius: var(--input-br);
-  padding: var(--spacing-2xs) var(--spacing-xs) var(--spacing-2xs) calc(var(--spacing-xs) * 2 + .9rem);
-  font: 300 var(--f-base) var(--f-sans);
-  color: var(--mono-text2);
-  outline: none;
-  transition: border-color .2s;
-}
-.user-search:focus {
-  border-color: var(--accent-border2);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-solid1), transparent 80%);
-}
+.user-search-wrap { position: relative; margin-bottom: var(--spacing-s); }
+.user-search-wrap i { position: absolute; left: var(--spacing-xs); top: 50%; transform: translateY(-50%); color: var(--mono-text1); font-size: .9rem; pointer-events: none; }
+.user-search { width: 100%; background: var(--input-surface); border: 1px solid var(--input-border); border-radius: var(--input-br); padding: var(--spacing-2xs) var(--spacing-xs) var(--spacing-2xs) calc(var(--spacing-xs) * 2 + .9rem); font: 300 var(--f-base) var(--f-sans); color: var(--mono-text2); outline: none; transition: border-color .2s; }
+.user-search:focus { border-color: var(--accent-border2); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-solid1), transparent 80%); }
 .user-search::placeholder { color: var(--mono-text1); }
 
-/* ─── LOGIN ─── */
-#loginWrap {
-  min-height: 100vh; display: flex; align-items: center; justify-content: center;
-  background: var(--mono-surface1);
-  padding: var(--spacing-l);
-}
-.login-card {
-  width: 100%; max-width: 380px;
-  background: var(--mono-surface2);
-  border: 1px solid var(--mono-border1);
-  border-radius: var(--br-l);
-  padding: var(--spacing-xl);
-  text-align: center;
-  box-shadow: var(--shadow-xl);
-}
-.login-logo {
-  font: italic var(--f-3xl) var(--f-deco);
-  color: var(--accent-text1);
-  margin-bottom: var(--spacing-2xs);
-}
-.login-sub {
-  font: 300 var(--f-s) var(--f-mono);
-  color: var(--mono-text1);
-  text-transform: uppercase;
-  letter-spacing: .14em;
-  margin-bottom: var(--spacing-l);
-}
+#loginWrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--mono-surface1); padding: var(--spacing-l); }
+.login-card { width: 100%; max-width: 380px; background: var(--mono-surface2); border: 1px solid var(--mono-border1); border-radius: var(--br-l); padding: var(--spacing-xl); text-align: center; box-shadow: var(--shadow-xl); }
+.login-logo { font: italic var(--f-3xl) var(--f-deco); color: var(--accent-text1); margin-bottom: var(--spacing-2xs); }
+.login-sub { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); text-transform: uppercase; letter-spacing: .14em; margin-bottom: var(--spacing-l); }
 .login-card .field { text-align: left; margin-bottom: var(--spacing-s); }
 .login-card .btn { width: 100%; }
 
-/* ─── TOAST ─── */
-#toast {
-  position: fixed; bottom: var(--spacing); right: var(--spacing);
-  background: var(--mono-component3); color: var(--mono-text2);
-  border: 1px solid var(--mono-border2);
-  font: 300 var(--f-s) var(--f-mono);
-  padding: var(--spacing-xs) var(--spacing-s);
-  border-radius: var(--br-l);
-  letter-spacing: .06em;
-  opacity: 0; pointer-events: none;
-  transition: opacity .3s, transform .3s;
-  transform: translateY(8px);
-  z-index: 200; max-width: 320px;
-  box-shadow: var(--shadow-lg);
-  display: flex; align-items: center; gap: var(--spacing-xs);
-}
+#toast { position: fixed; bottom: var(--spacing); right: var(--spacing); background: var(--mono-component3); color: var(--mono-text2); border: 1px solid var(--mono-border2); font: 300 var(--f-s) var(--f-mono); padding: var(--spacing-xs) var(--spacing-s); border-radius: var(--br-l); letter-spacing: .06em; opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s; transform: translateY(8px); z-index: 200; max-width: 320px; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: var(--spacing-xs); }
 #toast.show { opacity: 1; transform: translateY(0); }
 #toast.err { background: var(--danger-surface); border-color: var(--danger-border); color: var(--danger-text); }
 #toast.ok  { background: var(--success-surface); border-color: var(--success-border); color: var(--success-text); }
 
-/* ─── EMPTY ─── */
-.empty {
-  text-align: center; padding: var(--spacing-xl);
-  color: var(--mono-text1);
-  font: 300 var(--f-s) var(--f-mono);
-  text-transform: uppercase; letter-spacing: .1em;
-}
+.empty { text-align: center; padding: var(--spacing-xl); color: var(--mono-text1); font: 300 var(--f-s) var(--f-mono); text-transform: uppercase; letter-spacing: .1em; }
 .empty i { display: block; font-size: 2.5rem; opacity: .3; margin-bottom: var(--spacing-xs); }
 
-/* ─── VIEW TOGGLE ─── */
 .view-toggle { display: flex; border: 1px solid var(--mono-border2); border-radius: var(--br); overflow: hidden; }
-.view-btn {
-  padding: var(--spacing-3xs) var(--spacing-xs);
-  background: none; border: none; color: var(--mono-text1); cursor: pointer;
-  transition: all .2s;
-}
+.view-btn { padding: var(--spacing-3xs) var(--spacing-xs); background: none; border: none; color: var(--mono-text1); cursor: pointer; transition: all .2s; }
 .view-btn.active, .view-btn:hover { background: var(--mono-component2); color: var(--accent-text1); }
 
-/* ─── IMAGE PREVIEW ─── */
-.img-preview-wrap {
-  width: 100%; aspect-ratio: 16/9;
-  background: var(--mono-component2);
-  border: 1px solid var(--mono-border1);
-  border-radius: var(--br);
-  overflow: hidden; display: flex; align-items: center; justify-content: center;
-  margin-top: var(--spacing-2xs);
-}
+.img-preview-wrap { width: 100%; aspect-ratio: 16/9; background: var(--mono-component2); border: 1px solid var(--mono-border1); border-radius: var(--br); overflow: hidden; display: flex; align-items: center; justify-content: center; margin-top: var(--spacing-2xs); }
 .img-preview-wrap img { width: 100%; height: 100%; object-fit: cover; }
 .img-preview-wrap .placeholder { color: var(--mono-border2); font-size: 2rem; }
 
-/* ─── ESTADO PILLS ─── */
-.modal-section-title {
-  font: 300 var(--f-s) var(--f-mono);
-  text-transform: uppercase; letter-spacing: .1em;
-  color: var(--mono-text1);
-  margin-top: var(--spacing-s);
-  padding-top: var(--spacing-s);
-  border-top: 1px solid var(--mono-border1);
-}
+.modal-section-title { font: 300 var(--f-s) var(--f-mono); text-transform: uppercase; letter-spacing: .1em; color: var(--mono-text1); margin-top: var(--spacing-s); padding-top: var(--spacing-s); border-top: 1px solid var(--mono-border1); }
 
-.estado-pill {
-  display: inline-flex; align-items: center; gap: .3em;
-  font: 300 var(--f-xs) var(--f-mono);
-  text-transform: uppercase; letter-spacing: .06em;
-  padding: 2px var(--spacing-2xs);
-  border-radius: var(--br-pill);
-  border: 1px solid;
-  white-space: nowrap;
-}
+.estado-pill { display: inline-flex; align-items: center; gap: .3em; font: 300 var(--f-xs) var(--f-mono); text-transform: uppercase; letter-spacing: .06em; padding: 2px var(--spacing-2xs); border-radius: var(--br-pill); border: 1px solid; white-space: nowrap; }
 .estado-activo   { background: var(--success-surface); border-color: var(--success-border); color: var(--success-text); }
 .estado-inactivo { background: var(--mono-component2); border-color: var(--mono-border2);   color: var(--mono-text1); }
 .estado-reserva  { background: var(--warning-surface); border-color: var(--warning-border); color: var(--warning-text); }
 .estado-pnj      { background: var(--pnj-surface);    border-color: var(--pnj-border);     color: var(--pnj-text); }
 
-/* ─── TIENDA ─── */
-.tienda-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: var(--spacing-s);
-  margin-top: var(--spacing-s);
-}
-
-.tienda-item-card {
-  background: var(--mono-component1);
-  border: 1px solid var(--mono-border1);
-  border-radius: var(--br);
-  overflow: hidden;
-  transition: var(--transition-ease);
-  position: relative;
-  display: flex; flex-direction: column;
-}
+.tienda-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--spacing-s); margin-top: var(--spacing-s); }
+.tienda-item-card { background: var(--mono-component1); border: 1px solid var(--mono-border1); border-radius: var(--br); overflow: hidden; transition: var(--transition-ease); position: relative; display: flex; flex-direction: column; }
 .tienda-item-card:hover { border-color: var(--accent-border2); box-shadow: var(--shadow-lg); }
-
-.tienda-item-media {
-  aspect-ratio: 4/3;
-  background: var(--mono-component2);
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
+.tienda-item-media { aspect-ratio: 4/3; background: var(--mono-component2); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
 .tienda-item-media img { width: 100%; height: 100%; object-fit: cover; }
-.tienda-item-media .media-svg { width: 60%; height: 60%; color: var(--accent-solid1); display: flex; align-items: center; justify-content: center; }
-.tienda-item-media .media-svg svg { width: 100%; height: 100%; }
 .tienda-item-media .no-media { font-size: 2.5rem; color: var(--mono-border2); }
-
-.tienda-item-cat {
-  position: absolute; top: var(--spacing-xs); left: var(--spacing-xs);
-  font: 300 var(--f-s) var(--f-mono);
-  text-transform: uppercase; letter-spacing: .08em;
-  background: var(--mono-surface1);
-  border: 1px solid var(--mono-border2);
-  color: var(--mono-text1);
-  padding: 2px var(--spacing-2xs);
-  border-radius: var(--br-pill);
-}
-
+.tienda-item-cat { position: absolute; top: var(--spacing-xs); left: var(--spacing-xs); font: 300 var(--f-s) var(--f-mono); text-transform: uppercase; letter-spacing: .08em; background: var(--mono-surface1); border: 1px solid var(--mono-border2); color: var(--mono-text1); padding: 2px var(--spacing-2xs); border-radius: var(--br-pill); }
 .tienda-item-body { padding: var(--spacing-xs); flex: 1; display: flex; flex-direction: column; gap: var(--spacing-3xs); }
 .tienda-item-name { font: italic var(--f-base) var(--f-deco); }
 .tienda-item-desc { font: 300 var(--f-s) var(--f-sans); color: var(--mono-text1); flex: 1; }
@@ -663,209 +399,62 @@ body {
 .tienda-item-price { font: 500 var(--f-l) var(--f-deco); color: var(--accent-text1); display: flex; align-items: baseline; gap: .3em; }
 .tienda-item-price small { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); }
 .tienda-item-tags { display: flex; flex-wrap: wrap; gap: var(--spacing-3xs); margin-top: var(--spacing-3xs); }
-.tienda-tag {
-  font: 300 var(--f-s) var(--f-mono);
-  text-transform: uppercase; letter-spacing: .06em;
-  background: var(--mono-component2);
-  border: 1px solid var(--mono-border1);
-  color: var(--mono-text1);
-  padding: 1px var(--spacing-3xs);
-  border-radius: var(--br-pill);
-}
-
-.tienda-item-actions {
-  display: flex; gap: var(--spacing-2xs); margin-top: var(--spacing-xs);
-  padding-top: var(--spacing-xs); border-top: 1px solid var(--mono-border1);
-}
+.tienda-tag { font: 300 var(--f-s) var(--f-mono); text-transform: uppercase; letter-spacing: .06em; background: var(--mono-component2); border: 1px solid var(--mono-border1); color: var(--mono-text1); padding: 1px var(--spacing-3xs); border-radius: var(--br-pill); }
+.tienda-item-actions { display: flex; gap: var(--spacing-2xs); margin-top: var(--spacing-xs); padding-top: var(--spacing-xs); border-top: 1px solid var(--mono-border1); }
 .tienda-item-actions .btn { flex: 1; }
-
-.tienda-orden-badge {
-  position: absolute; top: var(--spacing-xs); right: var(--spacing-xs);
-  background: var(--mono-surface1);
-  border: 1px solid var(--mono-border2);
-  color: var(--mono-solid1);
-  font: 300 var(--f-s) var(--f-mono);
-  padding: 2px var(--spacing-3xs);
-  border-radius: var(--br-small);
-}
-
-.tienda-list-row {
-  display: grid; grid-template-columns: 56px 1fr auto auto auto auto;
-  gap: var(--spacing-xs); align-items: center;
-  padding: var(--spacing-xs);
-  border-bottom: 1px solid var(--mono-border1);
-  transition: background .2s;
-}
+.tienda-orden-badge { position: absolute; top: var(--spacing-xs); right: var(--spacing-xs); background: var(--mono-surface1); border: 1px solid var(--mono-border2); color: var(--mono-solid1); font: 300 var(--f-s) var(--f-mono); padding: 2px var(--spacing-3xs); border-radius: var(--br-small); }
+.tienda-list-row { display: grid; grid-template-columns: 56px 1fr auto auto auto auto; gap: var(--spacing-xs); align-items: center; padding: var(--spacing-xs); border-bottom: 1px solid var(--mono-border1); transition: background .2s; }
 .tienda-list-row:hover { background: var(--mono-component1); }
 .tienda-list-row:last-child { border-bottom: none; }
-.tienda-list-thumb {
-  width: 56px; height: 42px;
-  background: var(--mono-component2);
-  border-radius: var(--br);
-  overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  color: var(--accent-solid1);
-}
+.tienda-list-thumb { width: 56px; height: 42px; background: var(--mono-component2); border-radius: var(--br); overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--accent-solid1); }
 .tienda-list-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .tienda-list-thumb svg { width: 60%; height: 60%; }
 .tienda-list-info .name { font: italic var(--f-base) var(--f-deco); }
 .tienda-list-info .meta { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); }
-
 .tienda-cat-tabs { display: flex; flex-wrap: wrap; gap: var(--spacing-2xs); margin-bottom: var(--spacing-s); }
-
-.svg-preview-wrap {
-  width: 100%; aspect-ratio: 4/3;
-  background: var(--mono-component2);
-  border: 1px solid var(--mono-border1);
-  border-radius: var(--br);
-  overflow: hidden; display: flex; align-items: center; justify-content: center;
-  margin-top: var(--spacing-2xs);
-  color: var(--accent-solid1);
-}
+.svg-preview-wrap { width: 100%; aspect-ratio: 4/3; background: var(--mono-component2); border: 1px solid var(--mono-border1); border-radius: var(--br); overflow: hidden; display: flex; align-items: center; justify-content: center; margin-top: var(--spacing-2xs); color: var(--accent-solid1); }
 .svg-preview-wrap svg { max-width: 60%; max-height: 60%; }
 
-/* ─── USER GRID ─── */
-.user-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: var(--spacing-s);
-  margin-top: var(--spacing-s);
-}
-.user-card {
-  background: var(--mono-component1);
-  border: 1px solid var(--mono-border1);
-  border-radius: var(--br);
-  overflow: hidden;
-  transition: var(--transition-ease);
-  position: relative;
-  display: flex; flex-direction: column;
-}
+.user-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--spacing-s); margin-top: var(--spacing-s); }
+.user-card { background: var(--mono-component1); border: 1px solid var(--mono-border1); border-radius: var(--br); overflow: hidden; transition: var(--transition-ease); position: relative; display: flex; flex-direction: column; }
 .user-card:hover { border-color: var(--accent-border2); box-shadow: var(--shadow-lg); }
-.user-card-header {
-  padding: var(--spacing-xs);
-  border-bottom: 1px solid var(--mono-border1);
-  display: flex; align-items: center; gap: var(--spacing-xs);
-}
-
-.user-card-username {
-  font: 300 var(--f-base) var(--f-mono);
-  color: var(--accent-text1);
-  text-decoration: none;
-}
+.user-card-header { padding: var(--spacing-xs); border-bottom: 1px solid var(--mono-border1); display: flex; align-items: center; gap: var(--spacing-xs); }
+.user-card-username { font: 300 var(--f-base) var(--f-mono); color: var(--accent-text1); text-decoration: none; }
 .user-card-username:hover { text-decoration: underline; }
 .user-card-body { padding: var(--spacing-xs); flex: 1; display: flex; flex-direction: column; gap: var(--spacing-3xs); }
 .user-card-charname { font: italic var(--f-base) var(--f-deco); }
 .user-card-meta { font: 300 var(--f-s) var(--f-mono); color: var(--mono-text1); }
-.user-card-actions {
-  display: flex; gap: var(--spacing-2xs); margin-top: var(--spacing-xs);
-  border-top: 1px solid var(--mono-border1);
-  padding: var(--spacing-xs);
-}
+.user-card-actions { display: flex; gap: var(--spacing-2xs); margin-top: var(--spacing-xs); border-top: 1px solid var(--mono-border1); padding: var(--spacing-xs); }
 .user-card-actions .btn { flex: 1; }
-
-/* Table view user link */
-.user-link {
-  font: 300 var(--f-s) var(--f-mono);
-  color: var(--accent-text1);
-  text-decoration: none;
-  display: inline-flex; align-items: center; gap: .3em;
-  padding-right: 1rem;
-}
+.user-link { font: 300 var(--f-s) var(--f-mono); color: var(--accent-text1); text-decoration: none; display: inline-flex; align-items: center; gap: .3em; padding-right: 1rem; }
 .user-link:hover { text-decoration: underline; }
 .user-link i { opacity: .6; font-size: .7rem; }
-
-/* Reserva date inline */
-.reserva-date {
-  display: block;
-  font: 300 var(--f-s) var(--f-mono);
-  color: var(--warning-text);
-  margin-top: 2px;
-}
-
-/* Filtro estado en usuarios */
+.reserva-date { display: block; font: 300 var(--f-s) var(--f-mono); color: var(--warning-text); margin-top: 2px; }
 .estado-filter-tab[data-e="pnj"] { --grupo-color: var(--pnj-text, #7ec8f7); }
 .parl-tab[data-e="pnj"].active { background: var(--pnj-surface); border-color: var(--pnj-border); color: var(--pnj-text); }
 
-.theme-toggle {
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-}
+.theme-toggle { cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 1.5rem; }
 .theme-toggle input { display: none; }
-.theme-toggle .icon::before {
-  font-family: "bootstrap-icons";
-  content: "\f1d8";
-}
 
-/* ─── FAQ ─── */
-.faq-grid {
-  display: flex; flex-direction: column; gap: var(--spacing-xs);
-  margin-top: var(--spacing-s);
-}
-.faq-card {
-  background: var(--mono-surface2);
-  border: 1px solid var(--mono-border1);
-  border-radius: var(--br);
-  padding: var(--spacing-s);
-  display: flex; flex-direction: column; gap: var(--spacing-xs);
-  transition: var(--transition-ease);
-}
+.faq-grid { display: flex; flex-direction: column; gap: var(--spacing-xs); margin-top: var(--spacing-s); }
+.faq-card { background: var(--mono-surface2); border: 1px solid var(--mono-border1); border-radius: var(--br); padding: var(--spacing-s); display: flex; flex-direction: column; gap: var(--spacing-xs); transition: var(--transition-ease); }
 .faq-card:hover { border-color: var(--mono-border2); box-shadow: var(--shadow-lg); }
 .faq-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--spacing-s); }
 .faq-card-pregunta { font: italic var(--f-l) var(--f-deco); flex: 1; }
 .faq-card-actions { display: flex; gap: var(--spacing-2xs); flex-shrink: 0; }
 .faq-card-respuesta { font: 300 var(--f-s) var(--f-sans); color: var(--mono-text1); line-height: 1.7; }
 .faq-card-footer { display: flex; align-items: center; gap: var(--spacing-xs); flex-wrap: wrap; }
-.faq-tag {
-  display: inline-flex; align-items: center;
-  font: 300 var(--f-xs) var(--f-mono);
-  text-transform: uppercase; letter-spacing: .08em;
-  background: var(--accent-component1); border: 1px solid var(--accent-border2);
-  color: var(--accent-text1);
-  padding: 1px var(--spacing-2xs); border-radius: var(--br-pill);
-}
-.faq-date {
-  font: 300 var(--f-xs) var(--f-mono);
-  color: var(--mono-text1);
-  margin-left: auto;
-}
-.faq-filter-bar {
-  display: flex; align-items: center; gap: var(--spacing-xs);
-  flex-wrap: wrap;
-  margin-bottom: var(--spacing-s);
-}
+.faq-tag { display: inline-flex; align-items: center; font: 300 var(--f-xs) var(--f-mono); text-transform: uppercase; letter-spacing: .08em; background: var(--accent-component1); border: 1px solid var(--accent-border2); color: var(--accent-text1); padding: 1px var(--spacing-2xs); border-radius: var(--br-pill); }
+.faq-date { font: 300 var(--f-xs) var(--f-mono); color: var(--mono-text1); margin-left: auto; }
+.faq-filter-bar { display: flex; align-items: center; gap: var(--spacing-xs); flex-wrap: wrap; margin-bottom: var(--spacing-s); }
 .faq-search-wrap { position: relative; flex: 1; min-width: 200px; }
 .faq-search-wrap i { position: absolute; left: var(--spacing-xs); top: 50%; transform: translateY(-50%); color: var(--mono-text1); font-size: .9rem; pointer-events: none; }
-.faq-search {
-  width: 100%;
-  background: var(--input-surface); border: 1px solid var(--input-border);
-  border-radius: var(--input-br);
-  padding: var(--spacing-2xs) var(--spacing-xs) var(--spacing-2xs) calc(var(--spacing-xs) * 2 + .9rem);
-  font: 300 var(--f-base) var(--f-sans); color: var(--mono-text2); outline: none;
-  transition: border-color .2s;
-}
+.faq-search { width: 100%; background: var(--input-surface); border: 1px solid var(--input-border); border-radius: var(--input-br); padding: var(--spacing-2xs) var(--spacing-xs) var(--spacing-2xs) calc(var(--spacing-xs) * 2 + .9rem); font: 300 var(--f-base) var(--f-sans); color: var(--mono-text2); outline: none; transition: border-color .2s; }
 .faq-search:focus { border-color: var(--accent-border2); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-solid1), transparent 80%); }
 .faq-search::placeholder { color: var(--mono-text1); }
-
-/* tags input */
-.tags-input-wrap {
-  display: flex; flex-wrap: wrap; gap: var(--spacing-2xs);
-  background: var(--input-surface); border: 1px solid var(--input-border);
-  border-radius: var(--input-br);
-  padding: var(--spacing-2xs) var(--spacing-xs);
-  cursor: text;
-  transition: border-color .2s;
-}
+.tags-input-wrap { display: flex; flex-wrap: wrap; gap: var(--spacing-2xs); background: var(--input-surface); border: 1px solid var(--input-border); border-radius: var(--input-br); padding: var(--spacing-2xs) var(--spacing-xs); cursor: text; transition: border-color .2s; }
 .tags-input-wrap:focus-within { border-color: var(--accent-border2); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-solid1), transparent 80%); }
-.tag-chip {
-  display: inline-flex; align-items: center; gap: .3em;
-  font: 300 var(--f-xs) var(--f-mono); text-transform: uppercase; letter-spacing: .07em;
-  background: var(--accent-component2); border: 1px solid var(--accent-border2);
-  color: var(--accent-text1); padding: 2px var(--spacing-2xs); border-radius: var(--br-pill);
-}
+.tag-chip { display: inline-flex; align-items: center; gap: .3em; font: 300 var(--f-xs) var(--f-mono); text-transform: uppercase; letter-spacing: .07em; background: var(--accent-component2); border: 1px solid var(--accent-border2); color: var(--accent-text1); padding: 2px var(--spacing-2xs); border-radius: var(--br-pill); }
 .tag-chip button { background: none; border: none; cursor: pointer; color: inherit; padding: 0; line-height: 1; font-size: .75rem; display: flex; }
 .tags-real-input { border: none; background: none; outline: none; font: 300 var(--f-s) var(--f-sans); color: var(--mono-text2); min-width: 80px; flex: 1; }
 .tags-real-input::placeholder { color: var(--mono-text1); }
@@ -909,6 +498,10 @@ body {
     <button class="nav-tab" data-page="faqs" onclick="goTo('faqs')">
       <i class="bi bi-question-circle"></i> FAQs
     </button>
+    <!-- ══ TABLÓN NAV TAB ══ -->
+    <button class="nav-tab" data-page="tablon" onclick="goTo('tablon')">
+      <i class="bi bi-layout-text-window-reverse"></i> Tablón
+    </button>
     <div class="nav-spacer"></div>
     <a href="index.html" class="nav-link-index">
       <i class="bi bi-house"></i> Index
@@ -935,8 +528,6 @@ body {
         </button>
       </div>
     </div>
-
-    <!-- Parlamento filter pills -->
     <div class="parl-tabs" id="userFilterTabs">
       <button class="parl-tab active" data-g="all">Todos</button>
       <button class="parl-tab" data-p="primigenios" data-g="primigenios">Primigenios</button>
@@ -945,8 +536,6 @@ body {
       <button class="parl-tab" data-p="caoticos" data-g="caoticos">Caóticos</button>
       <button class="parl-tab" data-g="staff">Staff</button>
     </div>
-
-    <!-- Estado filter pills (secundario) -->
     <div class="parl-tabs" id="userEstadoFilterTabs" style="margin-top:calc(var(--spacing-s) * -1 + var(--spacing-2xs)); margin-bottom:var(--spacing-s);">
       <button class="parl-tab active" data-e="all" style="font-size:.65rem;">★ Todos los estados</button>
       <button class="parl-tab" data-e="activo"   style="--grupo-color:#00674E;font-size:.65rem;">Activos</button>
@@ -954,30 +543,18 @@ body {
       <button class="parl-tab" data-e="reserva"  style="--grupo-color:#A53E4A;font-size:.65rem;">Reservas</button>
       <button class="parl-tab estado-filter-tab" data-e="pnj" style="font-size:.65rem;">PNJ (staff)</button>
     </div>
-
-    <!-- Barra de búsqueda -->
     <div class="user-search-wrap">
       <i class="bi bi-search"></i>
       <input type="text" class="user-search" id="userSearch" placeholder="Buscar por username o nombre de personaje…" oninput="onUserSearch()">
     </div>
-
-    <!-- Grid view -->
     <div class="user-grid" id="userGrid"></div>
-
-    <!-- Table view -->
     <div class="card" id="userTable" style="display:none; padding:0;">
       <div class="table-wrap">
         <table class="data-table">
           <thead>
             <tr>
-              <th>Usuario</th>
-              <th>Personaje</th>
-              <th>Parlamento</th>
-              <th>FC 1</th>
-              <th>FC 2</th>
-              <th>Estado</th>
-              <th>Reserva hasta</th>
-              <th>Acción</th>
+              <th>Usuario</th><th>Personaje</th><th>Parlamento</th>
+              <th>FC 1</th><th>FC 2</th><th>Estado</th><th>Reserva hasta</th><th>Acción</th>
             </tr>
           </thead>
           <tbody id="usersTableBody"></tbody>
@@ -998,12 +575,9 @@ body {
           <button class="view-btn active" id="viewGrid" onclick="setPnjView('grid')" title="Vista cuadrícula"><i class="bi bi-grid-3x3-gap"></i></button>
           <button class="view-btn" id="viewList" onclick="setPnjView('list')" title="Vista lista"><i class="bi bi-list-ul"></i></button>
         </div>
-        <button class="btn" onclick="openAddPnj()">
-          <i class="bi bi-person-plus"></i> Nuevo PNJ
-        </button>
+        <button class="btn" onclick="openAddPnj()"><i class="bi bi-person-plus"></i> Nuevo PNJ</button>
       </div>
     </div>
-
     <div class="parl-tabs" id="pnjFilterTabs">
       <button class="parl-tab active" data-g="all">Todos</button>
       <button class="parl-tab" data-p="primigenios" data-g="primigenios">Primigenios</button>
@@ -1013,7 +587,6 @@ body {
       <button class="parl-tab" data-p="exterminadores" data-g="exterminadores">Exterminadores</button>
       <button class="parl-tab" data-p="staff" data-g="staff">Staff</button>
     </div>
-
     <div class="pnj-thumb-grid" id="pnjGrid"></div>
     <div class="pnj-list card" id="pnjList" style="display:none;"></div>
   </div>
@@ -1030,16 +603,12 @@ body {
           <button class="view-btn active" id="tiendaViewGrid" onclick="setTiendaView('grid')" title="Vista cuadrícula"><i class="bi bi-grid-3x3-gap"></i></button>
           <button class="view-btn" id="tiendaViewList" onclick="setTiendaView('list')" title="Vista lista"><i class="bi bi-list-ul"></i></button>
         </div>
-        <button class="btn" onclick="openAddItem()">
-          <i class="bi bi-plus-lg"></i> Nuevo item
-        </button>
+        <button class="btn" onclick="openAddItem()"><i class="bi bi-plus-lg"></i> Nuevo item</button>
       </div>
     </div>
-
     <div class="tienda-cat-tabs" id="tiendaCatTabs">
       <button class="parl-tab active" data-cat="all">Todos</button>
     </div>
-
     <div class="tienda-grid" id="tiendaGrid"></div>
     <div class="card" id="tiendaList" style="display:none; padding:0;"></div>
   </div>
@@ -1051,12 +620,8 @@ body {
         <div class="page-title">Preguntas <em>frecuentes</em></div>
         <div class="page-subtitle">Crea · Edita · Filtra</div>
       </div>
-      <button class="btn" onclick="openAddFaq()">
-        <i class="bi bi-plus-lg"></i> Nueva FAQ
-      </button>
+      <button class="btn" onclick="openAddFaq()"><i class="bi bi-plus-lg"></i> Nueva FAQ</button>
     </div>
-
-    <!-- Filtro texto + tags -->
     <div class="faq-filter-bar">
       <div class="faq-search-wrap">
         <i class="bi bi-search"></i>
@@ -1064,13 +629,34 @@ body {
       </div>
       <div id="faqTagFilter" style="display:flex;gap:var(--spacing-2xs);flex-wrap:wrap;"></div>
     </div>
-
     <div class="faq-grid" id="faqGrid">
       <div class="empty"><i class="bi bi-question-circle"></i>Sin FAQs todavía</div>
     </div>
   </div>
 
-</div>
+  <!-- ══ TAB: TABLÓN ══ -->
+  <div class="page" id="page-tablon">
+    <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:var(--spacing-xs);">
+      <div>
+        <div class="page-title">Gestión del <em>tablón</em></div>
+        <div class="page-subtitle">El principio · Prólogo · Anuncios · Próximo evento</div>
+      </div>
+      <button class="btn" onclick="openAddTablon()">
+        <i class="bi bi-plus-lg"></i> Nuevo módulo
+      </button>
+    </div>
+    <div class="parl-tabs" id="tablonCatTabs">
+      <button class="parl-tab active" data-tc="all">Todos</button>
+      <button class="parl-tab" data-tc="principio">El principio</button>
+      <button class="parl-tab" data-tc="prologo">Prólogo</button>
+      <button class="parl-tab" data-tc="anuncio">Anuncios</button>
+      <button class="parl-tab" data-tc="evento">Próximo evento</button>
+    </div>
+    <div id="tablonList" class="flex-col"></div>
+  </div>
+
+</div><!-- /adminUI -->
+
 
 <!-- ═══════ MODAL: NUEVA / EDITAR FAQ ═══════ -->
 <div class="modal-overlay" id="faqModal">
@@ -1078,17 +664,8 @@ body {
     <div class="modal-title" id="faqModalTitle">Nueva <em>FAQ</em></div>
     <input type="hidden" id="faqEditId">
     <div class="form-list">
-
-      <div class="field">
-        <label>Pregunta</label>
-        <input type="text" id="faqPregunta" placeholder="¿Puedo tirarme peos?">
-      </div>
-
-      <div class="field">
-        <label>Respuesta</label>
-        <textarea id="faqRespuesta" rows="5" placeholder="Sí, con moderación."></textarea>
-      </div>
-
+      <div class="field"><label>Pregunta</label><input type="text" id="faqPregunta" placeholder="¿Puedo tirarme peos?"></div>
+      <div class="field"><label>Respuesta</label><textarea id="faqRespuesta" rows="5" placeholder="Sí, con moderación."></textarea></div>
       <div class="field">
         <label>Tags <small style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">Escribe y pulsa Enter o coma</small></label>
         <div class="tags-input-wrap" id="faqTagsWrap" onclick="document.getElementById('faqTagInput').focus()">
@@ -1096,13 +673,11 @@ body {
         </div>
         <input type="hidden" id="faqTagsHidden">
       </div>
-
       <div class="field">
         <label>Fecha de actualización</label>
         <input type="date" id="faqFecha">
         <small>Se mostrará en el header del post del Guidebook</small>
       </div>
-
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeFaqModal()">Cancelar</button>
@@ -1116,38 +691,17 @@ body {
   <div class="modal" style="max-width:640px;">
     <div class="modal-title" id="userModalTitle">Nuevo <em>usuario</em></div>
     <input type="hidden" id="userEditId">
-
     <div class="form-list">
-
       <div class="modal-section-title"><i class="bi bi-person"></i> Datos del usuario</div>
-
       <div class="grid-2">
-        <div class="field">
-          <label>Username (Foroactivo)</label>
-          <input type="text" id="uUsername" placeholder="Ej: Mara_Voss">
-          <small>Se usa como identificador único</small>
-        </div>
-        <div class="field">
-          <label>Nº usuario Foroactivo</label>
-          <input type="number" id="uNumUsuario" placeholder="Ej: 42" min="1">
-        </div>
+        <div class="field"><label>Username (Foroactivo)</label><input type="text" id="uUsername" placeholder="Ej: Mara_Voss"><small>Se usa como identificador único</small></div>
+        <div class="field"><label>Nº usuario Foroactivo</label><input type="number" id="uNumUsuario" placeholder="Ej: 42" min="1"></div>
       </div>
-
-      <div class="field">
-        <label>Enlace a su perfil</label>
-        <input type="url" id="uPerfilUrl" placeholder="https://spectra.foroactivo.com/u42">
-        <small>URL al perfil público en Foroactivo</small>
-      </div>
-
+      <div class="field"><label>Enlace a su perfil</label><input type="url" id="uPerfilUrl" placeholder="https://spectra.foroactivo.com/u42"><small>URL al perfil público en Foroactivo</small></div>
       <div class="modal-section-title"><i class="bi bi-person-badge"></i> Personaje y registro</div>
-
       <div class="grid-2">
-        <div class="field">
-          <label>Nombre del personaje</label>
-          <input type="text" id="uCharName" placeholder="Ej: Mara Voss">
-        </div>
-        <div class="field">
-          <label>Estado</label>
+        <div class="field"><label>Nombre del personaje</label><input type="text" id="uCharName" placeholder="Ej: Mara Voss"></div>
+        <div class="field"><label>Estado</label>
           <select id="uEstado" onchange="onUserEstadoChange()">
             <option value="">Sin asignar</option>
             <option value="activo">Personaje activo</option>
@@ -1157,29 +711,15 @@ body {
           </select>
         </div>
       </div>
-
       <div id="uReservaWrap" style="display:none;">
-        <div class="field">
-          <label>Fecha fin de reserva</label>
-          <input type="date" id="uFechaReserva">
-        </div>
+        <div class="field"><label>Fecha fin de reserva</label><input type="date" id="uFechaReserva"></div>
       </div>
-
       <div class="grid-2">
-        <div class="field">
-          <label>Faceclaim 1</label>
-          <input type="text" id="uFaceclaim1" placeholder="Nombre del FC">
-        </div>
-        <div class="field">
-          <label>Faceclaim 2</label>
-          <input type="text" id="uFaceclaim2" placeholder="Nombre del FC (opcional)">
-        </div>
+        <div class="field"><label>Faceclaim 1</label><input type="text" id="uFaceclaim1" placeholder="Nombre del FC"></div>
+        <div class="field"><label>Faceclaim 2</label><input type="text" id="uFaceclaim2" placeholder="Nombre del FC (opcional)"></div>
       </div>
-
       <div class="modal-section-title"><i class="bi bi-people"></i> Parlamento</div>
-
-      <div class="field">
-        <label>Parlamento</label>
+      <div class="field"><label>Parlamento</label>
         <select id="uParlamento">
           <option value="">Sin asignar</option>
           <option value="primigenios">Primigenios</option>
@@ -1189,20 +729,11 @@ body {
           <option value="staff">Staff</option>
         </select>
       </div>
-
-      <div class="field">
-        <label>Orden de aparición</label>
-        <input type="number" id="uOrden" value="0" min="0">
-        <small>Menor número = aparece antes</small>
-      </div>
-
+      <div class="field"><label>Orden de aparición</label><input type="number" id="uOrden" value="0" min="0"><small>Menor número = aparece antes</small></div>
     </div>
-
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeUserModal()">Cancelar</button>
-      <button class="btn" onclick="saveUser()">
-        <i class="bi bi-check-lg"></i> Guardar usuario
-      </button>
+      <button class="btn" onclick="saveUser()"><i class="bi bi-check-lg"></i> Guardar usuario</button>
     </div>
   </div>
 </div>
@@ -1212,22 +743,13 @@ body {
   <div class="modal" style="max-width:640px;">
     <div class="modal-title" id="pnjModalTitle">Nuevo <em>PNJ</em></div>
     <input type="hidden" id="pnjEditId">
-
     <div class="form-list">
       <div class="grid-2">
-        <div class="field">
-          <label>Nombre del personaje</label>
-          <input type="text" id="pnjNombre" placeholder="Ej: Mara Voss">
-        </div>
-        <div class="field">
-          <label>Edad</label>
-          <input type="text" id="pnjEdad" placeholder="Ej: 34 años">
-        </div>
+        <div class="field"><label>Nombre del personaje</label><input type="text" id="pnjNombre" placeholder="Ej: Mara Voss"></div>
+        <div class="field"><label>Edad</label><input type="text" id="pnjEdad" placeholder="Ej: 34 años"></div>
       </div>
-
       <div class="grid-2">
-        <div class="field">
-          <label>Grupo / Parlamento</label>
+        <div class="field"><label>Grupo / Parlamento</label>
           <select id="pnjGrupo">
             <option value="">Sin grupo</option>
             <option value="primigenios">Primigenios</option>
@@ -1238,40 +760,22 @@ body {
             <option value="staff">Staff</option>
           </select>
         </div>
-        <div class="field">
-          <label>Ocupación / Rol</label>
-          <input type="text" id="pnjOcupacion" placeholder="Ej: Guardiana del Umbral">
-        </div>
+        <div class="field"><label>Ocupación / Rol</label><input type="text" id="pnjOcupacion" placeholder="Ej: Guardiana del Umbral"></div>
       </div>
-
       <div class="grid-2">
-        <div class="field">
-          <label>PB (Playby)</label>
-          <input type="text" id="pnjPb" placeholder="Ej: Nombre del actor/actriz">
-        </div>
+        <div class="field"><label>PB (Playby)</label><input type="text" id="pnjPb" placeholder="Ej: Nombre del actor/actriz"></div>
       </div>
-
       <div class="field">
         <label>URL de imagen</label>
         <input type="url" id="pnjImagen" placeholder="https://..." oninput="previewPnjImg(this.value)">
         <small>Imagen cuadrada o vertical recomendada</small>
-        <div class="img-preview-wrap" id="pnjImgPreview">
-          <span class="placeholder"><i class="bi bi-image"></i></span>
-        </div>
+        <div class="img-preview-wrap" id="pnjImgPreview"><span class="placeholder"><i class="bi bi-image"></i></span></div>
       </div>
-
-      <div class="field">
-        <label>Orden de aparición</label>
-        <input type="number" id="pnjOrden" value="0" min="0">
-        <small>Los personajes se ordenan de menor a mayor</small>
-      </div>
+      <div class="field"><label>Orden de aparición</label><input type="number" id="pnjOrden" value="0" min="0"><small>Los personajes se ordenan de menor a mayor</small></div>
     </div>
-
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closePnjModal()">Cancelar</button>
-      <button class="btn" onclick="savePnj()">
-        <i class="bi bi-check-lg"></i> Guardar PNJ
-      </button>
+      <button class="btn" onclick="savePnj()"><i class="bi bi-check-lg"></i> Guardar PNJ</button>
     </div>
   </div>
 </div>
@@ -1281,85 +785,116 @@ body {
   <div class="modal" style="max-width:680px;">
     <div class="modal-title" id="itemModalTitle">Nuevo <em>item</em></div>
     <input type="hidden" id="itemEditId">
-
     <div class="form-list">
-
       <div class="grid-2">
-        <div class="field">
-          <label>Nombre del item</label>
-          <input type="text" id="itemNombre" placeholder="Ej: Pegar Hostias">
-        </div>
-        <div class="field">
-          <label>ID interno</label>
-          <input type="text" id="itemId" placeholder="ej: pegar_hostias">
-          <small>Sin espacios · único · se usa en el output del foro</small>
-        </div>
+        <div class="field"><label>Nombre del item</label><input type="text" id="itemNombre" placeholder="Ej: Pegar Hostias"></div>
+        <div class="field"><label>ID interno</label><input type="text" id="itemId" placeholder="ej: pegar_hostias"><small>Sin espacios · único · se usa en el output del foro</small></div>
       </div>
-
       <div class="grid-2">
-        <div class="field">
-          <label>Categoría</label>
-          <input type="text" id="itemCategoria" placeholder="Ej: Habilidades" list="categoriasSuggestions">
-          <datalist id="categoriasSuggestions"></datalist>
-        </div>
-        <div class="field">
-          <label>Tipo</label>
-          <input type="text" id="itemTipo" placeholder="Ej: Habilidad">
-        </div>
+        <div class="field"><label>Categoría</label><input type="text" id="itemCategoria" placeholder="Ej: Habilidades" list="categoriasSuggestions"><datalist id="categoriasSuggestions"></datalist></div>
+        <div class="field"><label>Tipo</label><input type="text" id="itemTipo" placeholder="Ej: Habilidad"></div>
       </div>
-
       <div class="grid-2">
-        <div class="field">
-          <label>Precio</label>
-          <input type="number" id="itemPrecio" placeholder="50" min="0" step="1">
-        </div>
-        <div class="field">
-          <label>Orden de aparición</label>
-          <input type="number" id="itemOrden" value="0" min="0">
-          <small>Menor número = aparece antes</small>
-        </div>
+        <div class="field"><label>Precio</label><input type="number" id="itemPrecio" placeholder="50" min="0" step="1"></div>
+        <div class="field"><label>Orden de aparición</label><input type="number" id="itemOrden" value="0" min="0"><small>Menor número = aparece antes</small></div>
       </div>
-
-      <div class="field">
-        <label>Descripción</label>
-        <input type="text" id="itemDescripcion" placeholder="Permite pegar hostias como panes">
-      </div>
-
-      <div class="field">
-        <label>Bonus</label>
-        <input type="text" id="itemBonus" placeholder="Ej: +2 ataque">
-      </div>
-
-      <div class="field">
-        <label>Tags <small style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">separados por comas</small></label>
-        <input type="text" id="itemTags" placeholder="mente, magia, habilidad">
-      </div>
-
+      <div class="field"><label>Descripción</label><input type="text" id="itemDescripcion" placeholder="Permite pegar hostias como panes"></div>
+      <div class="field"><label>Bonus</label><input type="text" id="itemBonus" placeholder="Ej: +2 ataque"></div>
+      <div class="field"><label>Tags <small style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">separados por comas</small></label><input type="text" id="itemTags" placeholder="mente, magia, habilidad"></div>
       <div class="field">
         <label>Imagen</label>
         <div style="display:flex;gap:var(--spacing-xs);margin-bottom:var(--spacing-2xs);">
           <button type="button" class="btn btn-ghost btn-sm" id="imgTypeUrl" onclick="setImgType('url')">URL de imagen</button>
           <button type="button" class="btn btn-sm" id="imgTypeSvg" onclick="setImgType('svg')">SVG inline</button>
         </div>
-        <div id="imgUrlWrap" style="display:none;">
-          <input type="url" id="itemImagenUrl" placeholder="https://..." oninput="previewItemImg()">
+        <div id="imgUrlWrap" style="display:none;"><input type="url" id="itemImagenUrl" placeholder="https://..." oninput="previewItemImg()"></div>
+        <div id="imgSvgWrap"><textarea id="itemImagenSvg" rows="5" placeholder='<svg viewBox="0 0 24 24">...</svg>' oninput="previewItemImg()"></textarea><small>Pega aquí el SVG completo incluyendo la etiqueta &lt;svg&gt;</small></div>
+        <div class="svg-preview-wrap" id="itemImgPreview"><i class="bi bi-image" style="font-size:2rem;color:var(--mono-border2);"></i></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeItemModal()">Cancelar</button>
+      <button class="btn" onclick="saveItem()"><i class="bi bi-check-lg"></i> Guardar item</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ MODAL: NUEVO / EDITAR MÓDULO TABLÓN ═══════ -->
+<div class="modal-overlay" id="tablonModal">
+  <div class="modal" style="max-width:660px;">
+    <div class="modal-title" id="tablonModalTitle">Nuevo <em>módulo</em></div>
+    <input type="hidden" id="tablonEditId">
+    <div class="form-list">
+
+      <div class="field">
+        <label>Categoría</label>
+        <select id="tablonCategoria" onchange="onTablonCatChange()">
+          <option value="">— Elige categoría —</option>
+          <option value="principio">El principio (título + texto)</option>
+          <option value="prologo">Prólogo (título + subtítulo + texto)</option>
+          <option value="anuncio">Anuncio (fecha + enlace + descripción)</option>
+          <option value="evento">Próximo evento (título + imagen + descripción)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Modo</label>
+        <select id="tablonModo">
+          <option value="añadir">Añadir (se coloca al principio)</option>
+          <option value="sustituir">Sustituir (elimina el anterior de esta categoría)</option>
+        </select>
+        <small>Para anuncios usa "Añadir"; para prólogo y eventos usa "Sustituir"</small>
+      </div>
+
+      <div class="field">
+        <label>Orden de aparición</label>
+        <input type="number" id="tablonOrden" value="0" min="0">
+        <small>Menor número = aparece antes dentro de la categoría</small>
+      </div>
+
+      <!-- El principio -->
+      <div id="fields-principio" style="display:none;" class="flex-col">
+        <div class="modal-section-title"><i class="bi bi-type-h1"></i> El principio</div>
+        <div class="field"><label>Título</label><input type="text" id="pTitulo" placeholder="Al principio…"></div>
+        <div class="field"><label>Texto</label><textarea id="pTexto" rows="5" placeholder="Texto introductorio de la historia…"></textarea></div>
+      </div>
+
+      <!-- Prólogo -->
+      <div id="fields-prologo" style="display:none;" class="flex-col">
+        <div class="modal-section-title"><i class="bi bi-book"></i> Prólogo</div>
+        <div class="field"><label>Título (capítulo)</label><input type="text" id="prTitulo" placeholder="Ej: 0. PRÓLOGO"></div>
+        <div class="field"><label>Subtítulo (periodo / lugar)</label><input type="text" id="prSubtitulo" placeholder="Ej: LUGAR, 2026"></div>
+        <div class="field"><label>Texto / descripción</label><textarea id="prTexto" rows="5" placeholder="Lorem ipsum…"></textarea></div>
+      </div>
+
+      <!-- Anuncio -->
+      <div id="fields-anuncio" style="display:none;" class="flex-col">
+        <div class="modal-section-title"><i class="bi bi-megaphone"></i> Anuncio</div>
+        <div class="field"><label>Fecha</label><input type="date" id="anFecha"></div>
+        <div class="field"><label>Enlace (URL)</label><input type="url" id="anEnlace" placeholder="https://…"></div>
+        <div class="field"><label>Texto del enlace</label><input type="text" id="anEnlaceTexto" placeholder="Ej: Ver convocatoria"></div>
+        <div class="field"><label>Descripción</label><textarea id="anDescripcion" rows="3" placeholder="Descripción breve del anuncio…"></textarea></div>
+      </div>
+
+      <!-- Evento -->
+      <div id="fields-evento" style="display:none;" class="flex-col">
+        <div class="modal-section-title"><i class="bi bi-calendar-event"></i> Próximo evento</div>
+        <div class="field"><label>Título</label><input type="text" id="evTitulo" placeholder="Nombre del evento"></div>
+        <div class="field">
+          <label>URL de imagen pequeña</label>
+          <input type="url" id="evImagen" placeholder="https://…" oninput="previewEvImg(this.value)">
+          <div class="img-preview-wrap" id="evImgPreview" style="aspect-ratio:4/3;margin-top:var(--spacing-2xs);">
+            <span class="placeholder"><i class="bi bi-image"></i></span>
+          </div>
         </div>
-        <div id="imgSvgWrap">
-          <textarea id="itemImagenSvg" rows="5" placeholder='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">&#10;  ...&#10;</svg>' oninput="previewItemImg()"></textarea>
-          <small>Pega aquí el SVG completo incluyendo la etiqueta &lt;svg&gt;</small>
-        </div>
-        <div class="svg-preview-wrap" id="itemImgPreview">
-          <i class="bi bi-image" style="font-size:2rem;color:var(--mono-border2);"></i>
-        </div>
+        <div class="field"><label>Descripción breve</label><textarea id="evDescripcion" rows="3" placeholder="Descripción corta del evento…"></textarea></div>
+        <div class="field"><label>Enlace del evento (URL)</label><input type="url" id="evEnlace" placeholder="https://…"></div>
       </div>
 
     </div>
-
     <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeItemModal()">Cancelar</button>
-      <button class="btn" onclick="saveItem()">
-        <i class="bi bi-check-lg"></i> Guardar item
-      </button>
+      <button class="btn btn-ghost" onclick="closeTablonModal()">Cancelar</button>
+      <button class="btn" onclick="saveTablon()"><i class="bi bi-check-lg"></i> Guardar módulo</button>
     </div>
   </div>
 </div>
@@ -1398,6 +933,7 @@ const db  = getFirestore(app);
 let allUsers = {};
 let allPNJs = [];
 let allItems = [];
+let allTablon = [];
 let tiendaFilter = 'all';
 let tiendaView = 'grid';
 let imgType = 'svg';
@@ -1407,6 +943,16 @@ let userFilter = 'all';
 let userEstadoFilter = 'all';
 let userSearch = '';
 let userView = 'grid';
+let tablonCatFilter = 'all';
+
+const TABLON_CAT_LABELS = {
+  principio: 'El principio', prologo: 'Prólogo',
+  anuncio: 'Anuncio', evento: 'Próximo evento'
+};
+const TABLON_CAT_ICONS = {
+  principio: 'bi-type-h1', prologo: 'bi-book',
+  anuncio: 'bi-megaphone', evento: 'bi-calendar-event'
+};
 
 // ── ESC TO CLOSE ALL MODALS ──
 document.addEventListener('keydown', e => {
@@ -1432,6 +978,7 @@ async function loadAll() {
   await loadPNJs();
   await loadItems();
   await loadFaqs();
+  await loadTablon();
 
   renderUsers();
 }
@@ -1470,7 +1017,6 @@ function getUserList() {
 
 function renderUsers() {
   const users = getUserList();
-
   if (userView === 'grid') {
     document.getElementById('userGrid').style.display = '';
     document.getElementById('userTable').style.display = 'none';
@@ -1486,28 +1032,16 @@ function renderUsers() {
       const profileLink = reg.perfilUrl
         ? `<a class="user-link" href="${reg.perfilUrl}" target="_blank">${u.username || u._id}<i class="bi bi-box-arrow-up-right"></i></a>`
         : `<span style="font:300 var(--f-s) var(--f-mono);">${u.username || u._id || '—'}</span>`;
-      const reservaDate = reg.estado === 'reserva' && reg.fechaReserva
-        ? `<span class="reserva-date"><i class="bi bi-calendar-x"></i> hasta ${reg.fechaReserva}</span>`
-        : '';
       return `
         <tr>
           <td>${profileLink}</td>
           <td>${u.charName || '—'}</td>
-          <td>
-            <span style="display:inline-flex;align-items:center;gap:.4em;font:300 var(--f-s) var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:${parlColor(u)};">
-              <span style="width:6px;height:6px;border-radius:50%;background:${parlColor(u)};flex-shrink:0;"></span>
-              ${u.parlamento || '—'}
-            </span>
-          </td>
+          <td><span style="display:inline-flex;align-items:center;gap:.4em;font:300 var(--f-s) var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:${parlColor(u)};"><span style="width:6px;height:6px;border-radius:50%;background:${parlColor(u)};flex-shrink:0;"></span>${u.parlamento || '—'}</span></td>
           <td style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">${reg.faceclaim1 || '—'}</td>
           <td style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">${reg.faceclaim2 || '—'}</td>
           <td>${estadoPill(reg.estado)}</td>
           <td style="font:300 var(--f-s) var(--f-mono);color:var(--warning-text);">${reg.estado === 'reserva' && reg.fechaReserva ? reg.fechaReserva : '—'}</td>
-          <td>
-            <button class="btn btn-ghost btn-sm" onclick="openEditUser('${u._id}')">
-              <i class="bi bi-pencil"></i> Editar
-            </button>
-          </td>
+          <td><button class="btn btn-ghost btn-sm" onclick="openEditUser('${u._id}')"><i class="bi bi-pencil"></i> Editar</button></td>
         </tr>`;
     }).join('') || `<tr><td colspan="8"><div class="empty"><i class="bi bi-people"></i>Sin usuarios registrados</div></td></tr>`;
   }
@@ -1525,10 +1059,7 @@ function userCardHTML(u) {
   return `
     <div class="user-card">
       <div class="user-card-header">
-        <div style="flex:1;min-width:0;">
-          ${profileLink}
-          <div style="font:300 var(--f-s) var(--f-mono);color:${color};text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">${u.parlamento || '—'}</div>
-        </div>
+        <div style="flex:1;min-width:0;">${profileLink}<div style="font:300 var(--f-s) var(--f-mono);color:${color};text-transform:uppercase;letter-spacing:.06em;margin-top:1px;">${u.parlamento || '—'}</div></div>
         ${estadoPill(reg.estado)}
       </div>
       <div class="user-card-body">
@@ -1537,66 +1068,43 @@ function userCardHTML(u) {
         ${reservaBadge}
       </div>
       <div class="user-card-actions">
-        <button class="btn btn-ghost btn-sm" onclick="openEditUser('${u._id}')">
-          <i class="bi bi-pencil"></i> Editar
-        </button>
-        <button class="btn btn-danger btn-sm" onclick="deleteUser('${u._id}','${(u.username||u._id||'').replace(/'/g,'')}')">
-          <i class="bi bi-trash"></i>
-        </button>
+        <button class="btn btn-ghost btn-sm" onclick="openEditUser('${u._id}')"><i class="bi bi-pencil"></i> Editar</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteUser('${u._id}','${(u.username||u._id||'').replace(/'/g,'')}')"><i class="bi bi-trash"></i></button>
       </div>
     </div>`;
 }
 
-// ── USER PARLAMENTO FILTER ──
 document.getElementById('userFilterTabs').addEventListener('click', e => {
-  const btn = e.target.closest('.parl-tab');
-  if (!btn) return;
+  const btn = e.target.closest('.parl-tab'); if (!btn) return;
   userFilter = btn.dataset.g;
   document.querySelectorAll('#userFilterTabs .parl-tab').forEach(b => b.classList.toggle('active', b === btn));
   renderUsers();
 });
-
-// ── USER ESTADO FILTER ──
 document.getElementById('userEstadoFilterTabs').addEventListener('click', e => {
-  const btn = e.target.closest('.parl-tab');
-  if (!btn) return;
+  const btn = e.target.closest('.parl-tab'); if (!btn) return;
   userEstadoFilter = btn.dataset.e;
   document.querySelectorAll('#userEstadoFilterTabs .parl-tab').forEach(b => b.classList.toggle('active', b === btn));
   renderUsers();
 });
-
-// ── USER SEARCH ──
-window.onUserSearch = () => {
-  userSearch = document.getElementById('userSearch').value.trim();
-  renderUsers();
-};
-
-// ── USER VIEW ──
+window.onUserSearch = () => { userSearch = document.getElementById('userSearch').value.trim(); renderUsers(); };
 window.setUserView = (v) => {
   userView = v;
   document.getElementById('userViewGrid').classList.toggle('active', v === 'grid');
   document.getElementById('userViewList').classList.toggle('active', v === 'list');
   renderUsers();
 };
-
-// ── USER MODAL: OPEN/CLOSE ──
 window.openAddUser = () => {
   document.getElementById('userModalTitle').innerHTML = 'Nuevo <em>usuario</em>';
   document.getElementById('userEditId').value = '';
-  ['uUsername','uNumUsuario','uPerfilUrl','uCharName','uFaceclaim1','uFaceclaim2',
-   'uFechaReserva'].forEach(id => {
-    const el = document.getElementById(id); if (el) el.value = '';
-  });
+  ['uUsername','uNumUsuario','uPerfilUrl','uCharName','uFaceclaim1','uFaceclaim2','uFechaReserva'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
   document.getElementById('uEstado').value = '';
   document.getElementById('uParlamento').value = '';
   document.getElementById('uOrden').value = Object.keys(allUsers).length;
   document.getElementById('uReservaWrap').style.display = 'none';
   document.getElementById('userModal').classList.add('show');
 };
-
 window.openEditUser = (userId) => {
-  const u = allUsers[userId];
-  if (!u) return;
+  const u = allUsers[userId]; if (!u) return;
   const reg = u.registro || {};
   document.getElementById('userModalTitle').innerHTML = 'Editar <em>usuario</em>';
   document.getElementById('userEditId').value = userId;
@@ -1613,14 +1121,10 @@ window.openEditUser = (userId) => {
   document.getElementById('uReservaWrap').style.display = reg.estado === 'reserva' ? '' : 'none';
   document.getElementById('userModal').classList.add('show');
 };
-
 window.onUserEstadoChange = () => {
-  document.getElementById('uReservaWrap').style.display =
-    document.getElementById('uEstado').value === 'reserva' ? '' : 'none';
+  document.getElementById('uReservaWrap').style.display = document.getElementById('uEstado').value === 'reserva' ? '' : 'none';
 };
-
 window.closeUserModal = () => document.getElementById('userModal').classList.remove('show');
-
 window.saveUser = async () => {
   const username    = document.getElementById('uUsername').value.trim();
   const numUsuario  = parseInt(document.getElementById('uNumUsuario').value) || null;
@@ -1633,15 +1137,8 @@ window.saveUser = async () => {
   const parlamento  = document.getElementById('uParlamento').value;
   const orden       = parseInt(document.getElementById('uOrden').value) || 0;
   const editId      = document.getElementById('userEditId').value;
-
   if (!username) { toast('El username es obligatorio', 'err'); return; }
-
-  const data = {
-    username, charName, parlamento, orden,
-    registro: { numUsuario, perfilUrl, estado, faceclaim1, faceclaim2, fechaReserva },
-    updatedAt: Date.now()
-  };
-
+  const data = { username, charName, parlamento, orden, registro: { numUsuario, perfilUrl, estado, faceclaim1, faceclaim2, fechaReserva }, updatedAt: Date.now() };
   try {
     const docId = editId || username;
     if (editId) {
@@ -1655,23 +1152,16 @@ window.saveUser = async () => {
       allUsers[docId] = { ...data };
       toast(`"${username}" creado`, 'ok');
     }
-    renderUsers();
-    closeUserModal();
-  } catch(err) {
-    toast('Error al guardar: ' + err.message, 'err');
-  }
+    renderUsers(); closeUserModal();
+  } catch(err) { toast('Error al guardar: ' + err.message, 'err'); }
 };
-
 window.deleteUser = async (userId, username) => {
   if (!confirm(`¿Eliminar al usuario "${username}"? Esta acción no se puede deshacer.`)) return;
   try {
     await deleteDoc(doc(db,'users', userId));
     delete allUsers[userId];
-    renderUsers();
-    toast(`"${username}" eliminado`);
-  } catch(err) {
-    toast('Error al eliminar: ' + err.message, 'err');
-  }
+    renderUsers(); toast(`"${username}" eliminado`);
+  } catch(err) { toast('Error al eliminar: ' + err.message, 'err'); }
 };
 
 // ══════════════════════════════
@@ -1692,7 +1182,6 @@ async function loadPNJs() {
 
 function renderPNJs() {
   const filtered = pnjFilter === 'all' ? allPNJs : allPNJs.filter(p => p.grupo === pnjFilter);
-
   if (pnjView === 'grid') {
     document.getElementById('pnjGrid').style.display = '';
     document.getElementById('pnjList').style.display = 'none';
@@ -1703,83 +1192,29 @@ function renderPNJs() {
     document.getElementById('pnjGrid').style.display = 'none';
     const list = document.getElementById('pnjList');
     list.style.display = 'flex';
-    list.innerHTML = filtered.length
-      ? filtered.map(p => pnjListRowHTML(p)).join('')
-      : `<div class="empty"><i class="bi bi-person-slash"></i>Sin PNJs en este grupo</div>`;
+    list.innerHTML = filtered.length ? filtered.map(p => pnjListRowHTML(p)).join('') : `<div class="empty"><i class="bi bi-person-slash"></i>Sin PNJs en este grupo</div>`;
   }
 }
-
 function pnjThumbHTML(p) {
   const color = GRUPOS_COLOR[p.grupo] || '#b5a081';
-  return `
-    <div class="pnj-thumb" style="--grupo-color:${color}">
-      <div class="pnj-thumb-img">
-        ${p.imagen
-          ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy">`
-          : `<div class="no-img"><i class="bi bi-person"></i></div>`}
-      </div>
-      <div class="pnj-thumb-body">
-        <div class="pnj-thumb-name">${p.nombre || 'Sin nombre'}</div>
-        <div class="pnj-thumb-meta">
-          <span class="pnj-grupo-dot" style="background:${color}"></span>
-          ${p.grupo || '—'}
-          ${p.ocupacion ? ` · ${p.ocupacion}` : ''}
-          ${p.pb ? ` · <em>${p.pb}</em>` : ''}
-        </div>
-        <div class="pnj-thumb-actions">
-          <button class="btn btn-ghost btn-sm" onclick="openEditPnj('${p.id}')">
-            <i class="bi bi-pencil"></i> Editar
-          </button>
-          <button class="btn btn-danger btn-sm" onclick="deletePnj('${p.id}','${(p.nombre||'').replace(/'/g,'')}')">
-            <i class="bi bi-trash"></i>
-          </button>
-        </div>
-      </div>
-    </div>`;
+  return `<div class="pnj-thumb" style="--grupo-color:${color}"><div class="pnj-thumb-img">${p.imagen ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy">` : `<div class="no-img"><i class="bi bi-person"></i></div>`}</div><div class="pnj-thumb-body"><div class="pnj-thumb-name">${p.nombre || 'Sin nombre'}</div><div class="pnj-thumb-meta"><span class="pnj-grupo-dot" style="background:${color}"></span>${p.grupo || '—'}${p.ocupacion ? ` · ${p.ocupacion}` : ''}${p.pb ? ` · <em>${p.pb}</em>` : ''}</div><div class="pnj-thumb-actions"><button class="btn btn-ghost btn-sm" onclick="openEditPnj('${p.id}')"><i class="bi bi-pencil"></i> Editar</button><button class="btn btn-danger btn-sm" onclick="deletePnj('${p.id}','${(p.nombre||'').replace(/'/g,'')}')"><i class="bi bi-trash"></i></button></div></div></div>`;
 }
-
 function pnjListRowHTML(p) {
   const color = GRUPOS_COLOR[p.grupo] || '#b5a081';
-  return `
-    <div class="pnj-list-row">
-      ${p.imagen
-        ? `<img class="pnj-list-img" src="${p.imagen}" alt="" loading="lazy">`
-        : `<div class="pnj-list-img placeholder"><i class="bi bi-person"></i></div>`}
-      <div class="pnj-list-info">
-        <div class="name">${p.nombre || 'Sin nombre'}</div>
-        <div class="meta">
-          <span class="pnj-grupo-dot" style="background:${color}"></span>
-          ${p.grupo || '—'}
-          ${p.edad ? ` · ${p.edad}` : ''}
-          ${p.ocupacion ? ` · ${p.ocupacion}` : ''}
-          ${p.pb ? ` · PB: ${p.pb}` : ''}
-        </div>
-      </div>
-      <span style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">#${p.orden ?? '—'}</span>
-      <button class="btn btn-ghost btn-sm" onclick="openEditPnj('${p.id}')">
-        <i class="bi bi-pencil"></i> Editar
-      </button>
-      <button class="btn btn-danger btn-sm" onclick="deletePnj('${p.id}','${(p.nombre||'').replace(/'/g,'')}')">
-        <i class="bi bi-trash"></i>
-      </button>
-    </div>`;
+  return `<div class="pnj-list-row">${p.imagen ? `<img class="pnj-list-img" src="${p.imagen}" alt="" loading="lazy">` : `<div class="pnj-list-img placeholder"><i class="bi bi-person"></i></div>`}<div class="pnj-list-info"><div class="name">${p.nombre || 'Sin nombre'}</div><div class="meta"><span class="pnj-grupo-dot" style="background:${color}"></span>${p.grupo || '—'}${p.edad ? ` · ${p.edad}` : ''}${p.ocupacion ? ` · ${p.ocupacion}` : ''}${p.pb ? ` · PB: ${p.pb}` : ''}</div></div><span style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">#${p.orden ?? '—'}</span><button class="btn btn-ghost btn-sm" onclick="openEditPnj('${p.id}')"><i class="bi bi-pencil"></i> Editar</button><button class="btn btn-danger btn-sm" onclick="deletePnj('${p.id}','${(p.nombre||'').replace(/'/g,'')}')"><i class="bi bi-trash"></i></button></div>`;
 }
-
 document.getElementById('pnjFilterTabs').addEventListener('click', e => {
-  const btn = e.target.closest('.parl-tab');
-  if (!btn) return;
+  const btn = e.target.closest('.parl-tab'); if (!btn) return;
   pnjFilter = btn.dataset.g;
   document.querySelectorAll('#pnjFilterTabs .parl-tab').forEach(b => b.classList.toggle('active', b === btn));
   renderPNJs();
 });
-
 window.setPnjView = (v) => {
   pnjView = v;
   document.getElementById('viewGrid').classList.toggle('active', v === 'grid');
   document.getElementById('viewList').classList.toggle('active', v === 'list');
   renderPNJs();
 };
-
 window.openAddPnj = () => {
   document.getElementById('pnjModalTitle').innerHTML = 'Nuevo <em>PNJ</em>';
   document.getElementById('pnjEditId').value = '';
@@ -1789,10 +1224,8 @@ window.openAddPnj = () => {
   document.getElementById('pnjImgPreview').innerHTML = '<span class="placeholder"><i class="bi bi-image"></i></span>';
   document.getElementById('pnjModal').classList.add('show');
 };
-
 window.openEditPnj = (id) => {
-  const p = allPNJs.find(x => x.id === id);
-  if (!p) return;
+  const p = allPNJs.find(x => x.id === id); if (!p) return;
   document.getElementById('pnjModalTitle').innerHTML = 'Editar <em>PNJ</em>';
   document.getElementById('pnjEditId').value = id;
   document.getElementById('pnjNombre').value   = p.nombre    || '';
@@ -1805,18 +1238,13 @@ window.openEditPnj = (id) => {
   previewPnjImg(p.imagen || '');
   document.getElementById('pnjModal').classList.add('show');
 };
-
 window.closePnjModal = () => document.getElementById('pnjModal').classList.remove('show');
-
 window.previewPnjImg = (url) => {
   const wrap = document.getElementById('pnjImgPreview');
   if (url && url.startsWith('http')) {
     wrap.innerHTML = `<img src="${url}" alt="" onerror="this.parentElement.innerHTML='<span class=\\'placeholder\\'><i class=\\'bi bi-broken-image\\'></i></span>'">`;
-  } else {
-    wrap.innerHTML = '<span class="placeholder"><i class="bi bi-image"></i></span>';
-  }
+  } else { wrap.innerHTML = '<span class="placeholder"><i class="bi bi-image"></i></span>'; }
 };
-
 window.savePnj = async () => {
   const nombre    = document.getElementById('pnjNombre').value.trim();
   const edad      = document.getElementById('pnjEdad').value.trim();
@@ -1826,11 +1254,8 @@ window.savePnj = async () => {
   const imagen    = document.getElementById('pnjImagen').value.trim();
   const orden     = parseInt(document.getElementById('pnjOrden').value) || 0;
   const editId    = document.getElementById('pnjEditId').value;
-
   if (!nombre) { toast('El nombre es obligatorio', 'err'); return; }
-
   const data = { nombre, edad, grupo, ocupacion, pb, imagen, orden, updatedAt: Date.now() };
-
   try {
     if (editId) {
       await updateDoc(doc(db,'pnjs', editId), data);
@@ -1844,23 +1269,16 @@ window.savePnj = async () => {
       toast(`"${nombre}" creado`, 'ok');
     }
     allPNJs.sort((a,b) => (a.orden||0) - (b.orden||0));
-    renderPNJs();
-    closePnjModal();
-  } catch(err) {
-    toast('Error al guardar: ' + err.message, 'err');
-  }
+    renderPNJs(); closePnjModal();
+  } catch(err) { toast('Error al guardar: ' + err.message, 'err'); }
 };
-
 window.deletePnj = async (id, nombre) => {
   if (!confirm(`¿Eliminar a "${nombre}"? Esta acción no se puede deshacer.`)) return;
   try {
     await deleteDoc(doc(db,'pnjs', id));
     allPNJs = allPNJs.filter(p => p.id !== id);
-    renderPNJs();
-    toast(`"${nombre}" eliminado`);
-  } catch(err) {
-    toast('Error al eliminar: ' + err.message, 'err');
-  }
+    renderPNJs(); toast(`"${nombre}" eliminado`);
+  } catch(err) { toast('Error al eliminar: ' + err.message, 'err'); }
 };
 
 // ══════════════════════════════
@@ -1876,101 +1294,37 @@ async function loadItems() {
     allItems = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     allItems.sort((a,b) => (a.orden||0) - (b.orden||0));
   }
-  renderCatTabs();
-  renderItems();
+  renderCatTabs(); renderItems();
 }
-
-function getCats() {
-  return [...new Set(allItems.map(i => i.categoria).filter(Boolean))];
-}
-
+function getCats() { return [...new Set(allItems.map(i => i.categoria).filter(Boolean))]; }
 function renderCatTabs() {
   const cats = getCats();
   const cont = document.getElementById('tiendaCatTabs');
-  cont.innerHTML = `<button class="parl-tab ${tiendaFilter==='all'?'active':''}" data-cat="all">Todos (${allItems.length})</button>`
-    + cats.map(c => {
-        const count = allItems.filter(i => i.categoria === c).length;
-        return `<button class="parl-tab ${tiendaFilter===c?'active':''}" data-cat="${c}">${c} (${count})</button>`;
-      }).join('');
-
+  cont.innerHTML = `<button class="parl-tab ${tiendaFilter==='all'?'active':''}" data-cat="all">Todos (${allItems.length})</button>` + cats.map(c => { const count = allItems.filter(i => i.categoria === c).length; return `<button class="parl-tab ${tiendaFilter===c?'active':''}" data-cat="${c}">${c} (${count})</button>`; }).join('');
   const dl = document.getElementById('categoriasSuggestions');
   if (dl) dl.innerHTML = cats.map(c => `<option value="${c}">`).join('');
-
-  cont.onclick = e => {
-    const btn = e.target.closest('.parl-tab');
-    if (!btn) return;
-    tiendaFilter = btn.dataset.cat;
-    cont.querySelectorAll('.parl-tab').forEach(b => b.classList.toggle('active', b === btn));
-    renderItems();
-  };
+  cont.onclick = e => { const btn = e.target.closest('.parl-tab'); if (!btn) return; tiendaFilter = btn.dataset.cat; cont.querySelectorAll('.parl-tab').forEach(b => b.classList.toggle('active', b === btn)); renderItems(); };
 }
-
 function itemMediaHTML(item, size = 'full') {
   const small = size === 'small';
-  if (item.imagen_url) {
-    return `<img src="${item.imagen_url}" alt="${small ? '' : item.nombre}" loading="lazy">`;
-  }
+  if (item.imagen_url) return `<img src="${item.imagen_url}" alt="${small ? '' : item.nombre}" loading="lazy">`;
   if (item.imagen_svg) return item.imagen_svg;
-  return small
-    ? `<i class="bi bi-bag" style="font-size:1.2rem;"></i>`
-    : `<i class="bi bi-bag no-media" style="font-size:2.5rem;color:var(--mono-border2);"></i>`;
+  return small ? `<i class="bi bi-bag" style="font-size:1.2rem;"></i>` : `<i class="bi bi-bag no-media" style="font-size:2.5rem;color:var(--mono-border2);"></i>`;
 }
-
 function renderItems() {
   const filtered = tiendaFilter === 'all' ? allItems : allItems.filter(i => i.categoria === tiendaFilter);
-
   if (tiendaView === 'grid') {
     document.getElementById('tiendaGrid').style.display = '';
     document.getElementById('tiendaList').style.display = 'none';
-    document.getElementById('tiendaGrid').innerHTML = filtered.length
-      ? filtered.map(item => `
-          <div class="tienda-item-card">
-            <div class="tienda-item-media">
-              ${itemMediaHTML(item)}
-              ${item.categoria ? `<span class="tienda-item-cat">${item.categoria}</span>` : ''}
-              <span class="tienda-orden-badge">#${item.orden ?? '—'}</span>
-            </div>
-            <div class="tienda-item-body">
-              <div class="tienda-item-name">${item.nombre || 'Sin nombre'}</div>
-              ${item.descripcion ? `<div class="tienda-item-desc">${item.descripcion}</div>` : ''}
-              ${item.bonus ? `<div class="tienda-item-bonus">${item.bonus}</div>` : ''}
-              <div class="tienda-item-price">${item.precio ?? '—'} <small>PUNTOS</small></div>
-              ${item.tags?.length ? `<div class="tienda-item-tags">${item.tags.map(t=>`<span class="tienda-tag">${t}</span>`).join('')}</div>` : ''}
-              <div class="tienda-item-actions">
-                <button class="btn btn-ghost btn-sm" onclick="openEditItem('${item.id}')"><i class="bi bi-pencil"></i> Editar</button>
-                <button class="btn btn-danger btn-sm" onclick="deleteItem('${item.id}','${(item.nombre||'').replace(/'/g,'')}')"><i class="bi bi-trash"></i></button>
-              </div>
-            </div>
-          </div>`).join('')
-      : `<div class="empty" style="grid-column:1/-1"><i class="bi bi-bag-x"></i>Sin items en esta categoría</div>`;
+    document.getElementById('tiendaGrid').innerHTML = filtered.length ? filtered.map(item => `<div class="tienda-item-card"><div class="tienda-item-media">${itemMediaHTML(item)}${item.categoria ? `<span class="tienda-item-cat">${item.categoria}</span>` : ''}<span class="tienda-orden-badge">#${item.orden ?? '—'}</span></div><div class="tienda-item-body"><div class="tienda-item-name">${item.nombre || 'Sin nombre'}</div>${item.descripcion ? `<div class="tienda-item-desc">${item.descripcion}</div>` : ''}${item.bonus ? `<div class="tienda-item-bonus">${item.bonus}</div>` : ''}<div class="tienda-item-price">${item.precio ?? '—'} <small>PUNTOS</small></div>${item.tags?.length ? `<div class="tienda-item-tags">${item.tags.map(t=>`<span class="tienda-tag">${t}</span>`).join('')}</div>` : ''}<div class="tienda-item-actions"><button class="btn btn-ghost btn-sm" onclick="openEditItem('${item.id}')"><i class="bi bi-pencil"></i> Editar</button><button class="btn btn-danger btn-sm" onclick="deleteItem('${item.id}','${(item.nombre||'').replace(/'/g,'')}')"><i class="bi bi-trash"></i></button></div></div></div>`).join('') : `<div class="empty" style="grid-column:1/-1"><i class="bi bi-bag-x"></i>Sin items en esta categoría</div>`;
   } else {
     document.getElementById('tiendaGrid').style.display = 'none';
     const list = document.getElementById('tiendaList');
     list.style.display = 'block';
-    list.innerHTML = filtered.length
-      ? filtered.map(item => `
-          <div class="tienda-list-row">
-            <div class="tienda-list-thumb">${itemMediaHTML(item, 'small')}</div>
-            <div class="tienda-list-info">
-              <div class="name">${item.nombre || 'Sin nombre'}</div>
-              <div class="meta">${item.categoria||'—'}${item.tipo ? ` · ${item.tipo}` : ''}${item.tags?.length ? ` · ${item.tags.join(', ')}` : ''}</div>
-            </div>
-            <span class="tienda-list-price" style="font:300 var(--f-s) var(--f-mono);color:var(--accent-text1);white-space:nowrap;">${item.precio ?? '—'} pts</span>
-            <span class="tienda-list-orden" style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">#${item.orden??'—'}</span>
-            <button class="btn btn-ghost btn-sm" onclick="openEditItem('${item.id}')"><i class="bi bi-pencil"></i> Editar</button>
-            <button class="btn btn-danger btn-sm" onclick="deleteItem('${item.id}','${(item.nombre||'').replace(/'/g,'')}')"><i class="bi bi-trash"></i></button>
-          </div>`).join('')
-      : `<div class="empty"><i class="bi bi-bag-x"></i>Sin items en esta categoría</div>`;
+    list.innerHTML = filtered.length ? filtered.map(item => `<div class="tienda-list-row"><div class="tienda-list-thumb">${itemMediaHTML(item, 'small')}</div><div class="tienda-list-info"><div class="name">${item.nombre || 'Sin nombre'}</div><div class="meta">${item.categoria||'—'}${item.tipo ? ` · ${item.tipo}` : ''}${item.tags?.length ? ` · ${item.tags.join(', ')}` : ''}</div></div><span style="font:300 var(--f-s) var(--f-mono);color:var(--accent-text1);white-space:nowrap;">${item.precio ?? '—'} pts</span><span style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">#${item.orden??'—'}</span><button class="btn btn-ghost btn-sm" onclick="openEditItem('${item.id}')"><i class="bi bi-pencil"></i> Editar</button><button class="btn btn-danger btn-sm" onclick="deleteItem('${item.id}','${(item.nombre||'').replace(/'/g,'')}')"><i class="bi bi-trash"></i></button></div>`).join('') : `<div class="empty"><i class="bi bi-bag-x"></i>Sin items en esta categoría</div>`;
   }
 }
-
-window.setTiendaView = (v) => {
-  tiendaView = v;
-  document.getElementById('tiendaViewGrid').classList.toggle('active', v === 'grid');
-  document.getElementById('tiendaViewList').classList.toggle('active', v === 'list');
-  renderItems();
-};
-
+window.setTiendaView = (v) => { tiendaView = v; document.getElementById('tiendaViewGrid').classList.toggle('active', v === 'grid'); document.getElementById('tiendaViewList').classList.toggle('active', v === 'list'); renderItems(); };
 window.setImgType = (type) => {
   imgType = type;
   document.getElementById('imgTypeUrl').classList.toggle('btn', type === 'url');
@@ -1981,38 +1335,28 @@ window.setImgType = (type) => {
   document.getElementById('imgSvgWrap').style.display = type === 'svg' ? '' : 'none';
   previewItemImg();
 };
-
 window.previewItemImg = () => {
   const wrap = document.getElementById('itemImgPreview');
   if (imgType === 'url') {
     const url = document.getElementById('itemImagenUrl').value.trim();
-    wrap.innerHTML = url
-      ? `<img src="${url}" style="max-width:60%;max-height:100%;object-fit:contain;" onerror="this.outerHTML='<i class=\\'bi bi-broken-image\\'></i>'">`
-      : `<i class="bi bi-image" style="font-size:2rem;color:var(--mono-border2);"></i>`;
+    wrap.innerHTML = url ? `<img src="${url}" style="max-width:60%;max-height:100%;object-fit:contain;" onerror="this.outerHTML='<i class=\\'bi bi-broken-image\\'></i>'">` : `<i class="bi bi-image" style="font-size:2rem;color:var(--mono-border2);"></i>`;
   } else {
     const svg = document.getElementById('itemImagenSvg').value.trim();
-    wrap.innerHTML = svg.startsWith('<svg') || svg.startsWith('<SVG')
-      ? svg
-      : `<i class="bi bi-image" style="font-size:2rem;color:var(--mono-border2);"></i>`;
+    wrap.innerHTML = svg.startsWith('<svg') || svg.startsWith('<SVG') ? svg : `<i class="bi bi-image" style="font-size:2rem;color:var(--mono-border2);"></i>`;
   }
 };
-
 window.openAddItem = () => {
   document.getElementById('itemModalTitle').innerHTML = 'Nuevo <em>item</em>';
   document.getElementById('itemEditId').value = '';
-  ['itemNombre','itemId','itemCategoria','itemTipo','itemDescripcion','itemBonus','itemTags','itemImagenUrl','itemImagenSvg'].forEach(id => {
-    const el = document.getElementById(id); if (el) el.value = '';
-  });
+  ['itemNombre','itemId','itemCategoria','itemTipo','itemDescripcion','itemBonus','itemTags','itemImagenUrl','itemImagenSvg'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
   document.getElementById('itemPrecio').value = '';
   document.getElementById('itemOrden').value = allItems.length;
   document.getElementById('itemImgPreview').innerHTML = '<i class="bi bi-image" style="font-size:2rem;color:var(--mono-border2);"></i>';
   setImgType('svg');
   document.getElementById('itemModal').classList.add('show');
 };
-
 window.openEditItem = (id) => {
-  const item = allItems.find(x => x.id === id);
-  if (!item) return;
+  const item = allItems.find(x => x.id === id); if (!item) return;
   document.getElementById('itemModalTitle').innerHTML = 'Editar <em>item</em>';
   document.getElementById('itemEditId').value = id;
   document.getElementById('itemNombre').value      = item.nombre      || '';
@@ -2024,20 +1368,12 @@ window.openEditItem = (id) => {
   document.getElementById('itemDescripcion').value = item.descripcion || '';
   document.getElementById('itemBonus').value       = item.bonus       || '';
   document.getElementById('itemTags').value        = (item.tags || []).join(', ');
-
-  if (item.imagen_url) {
-    setImgType('url');
-    document.getElementById('itemImagenUrl').value = item.imagen_url;
-  } else {
-    setImgType('svg');
-    document.getElementById('itemImagenSvg').value = item.imagen_svg || '';
-  }
+  if (item.imagen_url) { setImgType('url'); document.getElementById('itemImagenUrl').value = item.imagen_url; }
+  else { setImgType('svg'); document.getElementById('itemImagenSvg').value = item.imagen_svg || ''; }
   previewItemImg();
   document.getElementById('itemModal').classList.add('show');
 };
-
 window.closeItemModal = () => document.getElementById('itemModal').classList.remove('show');
-
 window.saveItem = async () => {
   const nombre      = document.getElementById('itemNombre').value.trim();
   const itemIdVal   = document.getElementById('itemId').value.trim().replace(/\s+/g,'_');
@@ -2052,16 +1388,9 @@ window.saveItem = async () => {
   const imagen_url  = imgType === 'url' ? document.getElementById('itemImagenUrl').value.trim() : '';
   const imagen_svg  = imgType === 'svg' ? document.getElementById('itemImagenSvg').value.trim() : '';
   const editId      = document.getElementById('itemEditId').value;
-
   if (!nombre) { toast('El nombre es obligatorio', 'err'); return; }
   if (!itemIdVal) { toast('El ID interno es obligatorio', 'err'); return; }
-
-  const data = {
-    nombre, itemId: itemIdVal, categoria, tipo, precio,
-    descripcion, bonus, tags, imagen_url, imagen_svg,
-    orden, updatedAt: Date.now()
-  };
-
+  const data = { nombre, itemId: itemIdVal, categoria, tipo, precio, descripcion, bonus, tags, imagen_url, imagen_svg, orden, updatedAt: Date.now() };
   try {
     if (editId) {
       await updateDoc(doc(db,'tienda_items', editId), data);
@@ -2069,34 +1398,23 @@ window.saveItem = async () => {
       if (idx >= 0) allItems[idx] = { ...allItems[idx], ...data };
       toast(`"${nombre}" actualizado`, 'ok');
     } else {
-      if (allItems.some(x => x.itemId === itemIdVal)) {
-        toast(`El ID "${itemIdVal}" ya existe`, 'err'); return;
-      }
+      if (allItems.some(x => x.itemId === itemIdVal)) { toast(`El ID "${itemIdVal}" ya existe`, 'err'); return; }
       data.createdAt = Date.now();
       const ref = await addDoc(collection(db,'tienda_items'), data);
       allItems.push({ id: ref.id, ...data });
       toast(`"${nombre}" creado`, 'ok');
     }
     allItems.sort((a,b) => (a.orden||0) - (b.orden||0));
-    renderCatTabs();
-    renderItems();
-    closeItemModal();
-  } catch(err) {
-    toast('Error al guardar: ' + err.message, 'err');
-  }
+    renderCatTabs(); renderItems(); closeItemModal();
+  } catch(err) { toast('Error al guardar: ' + err.message, 'err'); }
 };
-
 window.deleteItem = async (id, nombre) => {
   if (!confirm(`¿Eliminar "${nombre}"? Esta acción no se puede deshacer.`)) return;
   try {
     await deleteDoc(doc(db,'tienda_items', id));
     allItems = allItems.filter(i => i.id !== id);
-    renderCatTabs();
-    renderItems();
-    toast(`"${nombre}" eliminado`);
-  } catch(err) {
-    toast('Error al eliminar: ' + err.message, 'err');
-  }
+    renderCatTabs(); renderItems(); toast(`"${nombre}" eliminado`);
+  } catch(err) { toast('Error al eliminar: ' + err.message, 'err'); }
 };
 
 // ══════════════════════════════
@@ -2114,131 +1432,61 @@ async function loadFaqs() {
     const snap = await getDocs(collection(db, 'faqs'));
     allFaqs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
   }
-  renderFaqTagFilter();
-  renderFaqs();
+  renderFaqTagFilter(); renderFaqs();
 }
-
 function getFaqsFiltered() {
   const q = (document.getElementById('faqSearch')?.value || '').toLowerCase();
   return allFaqs.filter(f => {
-    const matchText = !q ||
-      (f.pregunta || '').toLowerCase().includes(q) ||
-      (f.respuesta || '').toLowerCase().includes(q);
-    const matchTag = faqTagsActive.size === 0 ||
-      (f.tags || []).some(t => faqTagsActive.has(t));
+    const matchText = !q || (f.pregunta || '').toLowerCase().includes(q) || (f.respuesta || '').toLowerCase().includes(q);
+    const matchTag = faqTagsActive.size === 0 || (f.tags || []).some(t => faqTagsActive.has(t));
     return matchText && matchTag;
   });
 }
-
-function getAllTags() {
-  const set = new Set();
-  allFaqs.forEach(f => (f.tags || []).forEach(t => set.add(t)));
-  return [...set].sort();
-}
-
+function getAllTags() { const set = new Set(); allFaqs.forEach(f => (f.tags || []).forEach(t => set.add(t))); return [...set].sort(); }
 function renderFaqTagFilter() {
   const tags = getAllTags();
-  const wrap = document.getElementById('faqTagFilter');
-  if (!wrap) return;
-  wrap.innerHTML = tags.map(t => {
-    const active = faqTagsActive.has(t);
-    return `<button class="parl-tab${active ? ' active' : ''}" style="font-size:.65rem;" onclick="toggleFaqTag('${t}')">${t}</button>`;
-  }).join('');
+  const wrap = document.getElementById('faqTagFilter'); if (!wrap) return;
+  wrap.innerHTML = tags.map(t => { const active = faqTagsActive.has(t); return `<button class="parl-tab${active ? ' active' : ''}" style="font-size:.65rem;" onclick="toggleFaqTag('${t}')">${t}</button>`; }).join('');
 }
-
-window.toggleFaqTag = (tag) => {
-  if (faqTagsActive.has(tag)) faqTagsActive.delete(tag);
-  else faqTagsActive.add(tag);
-  renderFaqTagFilter();
-  renderFaqs();
-};
-
+window.toggleFaqTag = (tag) => { if (faqTagsActive.has(tag)) faqTagsActive.delete(tag); else faqTagsActive.add(tag); renderFaqTagFilter(); renderFaqs(); };
 window.renderFaqs = () => {
   const filtered = getFaqsFiltered();
   const grid = document.getElementById('faqGrid');
-  if (!filtered.length) {
-    grid.innerHTML = '<div class="empty"><i class="bi bi-question-circle"></i>Sin FAQs que coincidan</div>';
-  } else {
-    grid.innerHTML = filtered.map(f => {
-      const tags = (f.tags || []).map(t => `<span class="faq-tag">${t}</span>`).join('');
-      const fecha = f.fecha ? `<span class="faq-date"><i class="bi bi-calendar3"></i> ${f.fecha}</span>` : '';
-      return `
-        <div class="faq-card">
-          <div class="faq-card-header">
-            <div class="faq-card-pregunta">${f.pregunta || '—'}</div>
-            <div class="faq-card-actions">
-              <button class="btn btn-ghost btn-sm" onclick="openEditFaq('${f.id}')"><i class="bi bi-pencil"></i></button>
-              <button class="btn btn-danger btn-sm" onclick="deleteFaq('${f.id}','${(f.pregunta||'').replace(/'/g,"\\'").replace(/"/g,'&quot;')}')"><i class="bi bi-trash"></i></button>
-            </div>
-          </div>
-          <div class="faq-card-respuesta">${(f.respuesta || '').replace(/\n/g,'<br>')}</div>
-          <div class="faq-card-footer">
-            ${tags}
-            ${fecha}
-          </div>
-        </div>`;
-    }).join('');
-  }
+  if (!filtered.length) { grid.innerHTML = '<div class="empty"><i class="bi bi-question-circle"></i>Sin FAQs que coincidan</div>'; return; }
+  grid.innerHTML = filtered.map(f => {
+    const tags = (f.tags || []).map(t => `<span class="faq-tag">${t}</span>`).join('');
+    const fecha = f.fecha ? `<span class="faq-date"><i class="bi bi-calendar3"></i> ${f.fecha}</span>` : '';
+    return `<div class="faq-card"><div class="faq-card-header"><div class="faq-card-pregunta">${f.pregunta || '—'}</div><div class="faq-card-actions"><button class="btn btn-ghost btn-sm" onclick="openEditFaq('${f.id}')"><i class="bi bi-pencil"></i></button><button class="btn btn-danger btn-sm" onclick="deleteFaq('${f.id}','${(f.pregunta||'').replace(/'/g,"\\'").replace(/"/g,'&quot;')}')"><i class="bi bi-trash"></i></button></div></div><div class="faq-card-respuesta">${(f.respuesta || '').replace(/\n/g,'<br>')}</div><div class="faq-card-footer">${tags}${fecha}</div></div>`;
+  }).join('');
 };
-
-// ── FAQ TAG INPUT ──
 function initTagInput() {
   const input = document.getElementById('faqTagInput');
   const wrap  = document.getElementById('faqTagsWrap');
   if (!input || !wrap) return;
-
   function addTag(raw) {
     const val = raw.trim().toLowerCase().replace(/\s+/g,'');
     if (!val) return;
     const existing = getModalTags();
     if (existing.includes(val)) return;
     const chip = document.createElement('span');
-    chip.className = 'tag-chip';
-    chip.dataset.tag = val;
+    chip.className = 'tag-chip'; chip.dataset.tag = val;
     chip.innerHTML = `${val}<button type="button" onclick="this.parentElement.remove();syncTagsHidden()"><i class="bi bi-x"></i></button>`;
-    wrap.insertBefore(chip, input);
-    syncTagsHidden();
+    wrap.insertBefore(chip, input); syncTagsHidden();
   }
-
   input.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ',') {
-      e.preventDefault();
-      addTag(input.value);
-      input.value = '';
-    } else if (e.key === 'Backspace' && !input.value) {
-      const chips = wrap.querySelectorAll('.tag-chip');
-      if (chips.length) chips[chips.length - 1].remove();
-      syncTagsHidden();
-    }
+    if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addTag(input.value); input.value = ''; }
+    else if (e.key === 'Backspace' && !input.value) { const chips = wrap.querySelectorAll('.tag-chip'); if (chips.length) chips[chips.length - 1].remove(); syncTagsHidden(); }
   });
-  input.addEventListener('blur', () => {
-    if (input.value.trim()) { addTag(input.value); input.value = ''; }
-  });
+  input.addEventListener('blur', () => { if (input.value.trim()) { addTag(input.value); input.value = ''; } });
 }
-
-window.syncTagsHidden = () => {
-  const tags = getModalTags();
-  document.getElementById('faqTagsHidden').value = tags.join(',');
-};
-
-function getModalTags() {
-  return [...document.querySelectorAll('#faqTagsWrap .tag-chip')].map(c => c.dataset.tag);
-}
-
+window.syncTagsHidden = () => { document.getElementById('faqTagsHidden').value = getModalTags().join(','); };
+function getModalTags() { return [...document.querySelectorAll('#faqTagsWrap .tag-chip')].map(c => c.dataset.tag); }
 function setModalTags(tags) {
   const wrap = document.getElementById('faqTagsWrap');
   wrap.querySelectorAll('.tag-chip').forEach(c => c.remove());
-  tags.forEach(t => {
-    const chip = document.createElement('span');
-    chip.className = 'tag-chip';
-    chip.dataset.tag = t;
-    chip.innerHTML = `${t}<button type="button" onclick="this.parentElement.remove();syncTagsHidden()"><i class="bi bi-x"></i></button>`;
-    wrap.insertBefore(chip, document.getElementById('faqTagInput'));
-  });
+  tags.forEach(t => { const chip = document.createElement('span'); chip.className = 'tag-chip'; chip.dataset.tag = t; chip.innerHTML = `${t}<button type="button" onclick="this.parentElement.remove();syncTagsHidden()"><i class="bi bi-x"></i></button>`; wrap.insertBefore(chip, document.getElementById('faqTagInput')); });
   syncTagsHidden();
 }
-
-// ── FAQ MODAL ──
 window.openAddFaq = () => {
   document.getElementById('faqModalTitle').innerHTML = 'Nueva <em>FAQ</em>';
   document.getElementById('faqEditId').value = '';
@@ -2249,10 +1497,8 @@ window.openAddFaq = () => {
   document.getElementById('faqModal').classList.add('show');
   setTimeout(initTagInput, 50);
 };
-
 window.openEditFaq = (id) => {
-  const f = allFaqs.find(x => x.id === id);
-  if (!f) return;
+  const f = allFaqs.find(x => x.id === id); if (!f) return;
   document.getElementById('faqModalTitle').innerHTML = 'Editar <em>FAQ</em>';
   document.getElementById('faqEditId').value = id;
   document.getElementById('faqPregunta').value = f.pregunta || '';
@@ -2262,21 +1508,16 @@ window.openEditFaq = (id) => {
   document.getElementById('faqModal').classList.add('show');
   setTimeout(initTagInput, 50);
 };
-
 window.closeFaqModal = () => document.getElementById('faqModal').classList.remove('show');
-
 window.saveFaq = async () => {
   const pregunta  = document.getElementById('faqPregunta').value.trim();
   const respuesta = document.getElementById('faqRespuesta').value.trim();
   const fecha     = document.getElementById('faqFecha').value;
   const tags      = getModalTags();
   const editId    = document.getElementById('faqEditId').value;
-
   if (!pregunta) { toast('La pregunta es obligatoria', 'err'); return; }
   if (!respuesta) { toast('La respuesta es obligatoria', 'err'); return; }
-
   const data = { pregunta, respuesta, tags, fecha, orden: editId ? (allFaqs.find(f=>f.id===editId)?.orden ?? allFaqs.length) : allFaqs.length, updatedAt: Date.now() };
-
   try {
     if (editId) {
       await updateDoc(doc(db, 'faqs', editId), data);
@@ -2289,25 +1530,200 @@ window.saveFaq = async () => {
       allFaqs.push({ id: ref.id, ...data });
       toast(`FAQ creada`, 'ok');
     }
-    renderFaqTagFilter();
-    renderFaqs();
-    closeFaqModal();
-  } catch(err) {
-    toast('Error al guardar: ' + err.message, 'err');
-  }
+    renderFaqTagFilter(); renderFaqs(); closeFaqModal();
+  } catch(err) { toast('Error al guardar: ' + err.message, 'err'); }
 };
-
 window.deleteFaq = async (id, pregunta) => {
   if (!confirm(`¿Eliminar la FAQ "${pregunta}"?`)) return;
   try {
     await deleteDoc(doc(db, 'faqs', id));
     allFaqs = allFaqs.filter(f => f.id !== id);
-    renderFaqTagFilter();
-    renderFaqs();
-    toast('FAQ eliminada');
-  } catch(err) {
-    toast('Error al eliminar: ' + err.message, 'err');
+    renderFaqTagFilter(); renderFaqs(); toast('FAQ eliminada');
+  } catch(err) { toast('Error al eliminar: ' + err.message, 'err'); }
+};
+
+// ══════════════════════════════
+//  TABLÓN
+// ══════════════════════════════
+async function loadTablon() {
+  try {
+    const q = query(collection(db, 'tablon'), orderBy('orden', 'asc'));
+    const snap = await getDocs(q);
+    allTablon = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch {
+    const snap = await getDocs(collection(db, 'tablon'));
+    allTablon = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    allTablon.sort((a, b) => (a.orden || 0) - (b.orden || 0));
   }
+  renderTablon();
+}
+
+function renderTablon() {
+  const filtered = tablonCatFilter === 'all'
+    ? allTablon
+    : allTablon.filter(m => m.categoria === tablonCatFilter);
+  const container = document.getElementById('tablonList');
+  if (!container) return;
+  if (!filtered.length) {
+    container.innerHTML = `<div class="empty"><i class="bi bi-layout-text-window-reverse"></i>Sin módulos en esta categoría</div>`;
+    return;
+  }
+  container.innerHTML = filtered.map(m => {
+    const icon  = TABLON_CAT_ICONS[m.categoria]  || 'bi-grid';
+    const label = TABLON_CAT_LABELS[m.categoria] || m.categoria;
+    let preview = '';
+    switch (m.categoria) {
+      case 'principio': preview = `<strong>${m.titulo || '—'}</strong><br><span style="color:var(--mono-text1);font-size:var(--f-s);">${(m.texto || '').substring(0, 120)}…</span>`; break;
+      case 'prologo':   preview = `<strong>${m.titulo || '—'}</strong> · <em>${m.subtitulo || ''}</em><br><span style="color:var(--mono-text1);font-size:var(--f-s);">${(m.texto || '').substring(0, 100)}…</span>`; break;
+      case 'anuncio':   preview = `<em>${m.fecha || '—'}</em> · <a href="${m.enlace || '#'}" target="_blank">${m.enlaceTexto || m.enlace || '—'}</a><br><span style="color:var(--mono-text1);font-size:var(--f-s);">${(m.descripcion || '').substring(0, 100)}…</span>`; break;
+      case 'evento':    preview = `<strong>${m.titulo || '—'}</strong><br><span style="color:var(--mono-text1);font-size:var(--f-s);">${(m.descripcion || '').substring(0, 100)}…</span>`; break;
+    }
+    const modoBadge = m.modo === 'sustituir'
+      ? `<span class="badge badge-accent" style="font-size:var(--f-xs);">Sustituir</span>`
+      : `<span class="badge" style="background:var(--mono-component2);border-color:var(--mono-border2);color:var(--mono-text1);font-size:var(--f-xs);">Añadir</span>`;
+    return `
+      <div class="card" style="margin-bottom:var(--spacing-xs);">
+        <div class="card-header">
+          <div style="display:flex;align-items:center;gap:var(--spacing-xs);">
+            <span class="badge badge-accent"><i class="bi ${icon}"></i> ${label}</span>
+            ${modoBadge}
+            <span style="font:300 var(--f-s) var(--f-mono);color:var(--mono-text1);">Orden #${m.orden ?? '—'}</span>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-ghost btn-sm" onclick="openEditTablon('${m.id}')"><i class="bi bi-pencil"></i> Editar</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteTablon('${m.id}','${label}')"><i class="bi bi-trash"></i></button>
+          </div>
+        </div>
+        <div style="font:300 var(--f-s) var(--f-sans);line-height:1.6;">${preview}</div>
+      </div>`;
+  }).join('');
+}
+
+document.getElementById('tablonCatTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.parl-tab'); if (!btn) return;
+  tablonCatFilter = btn.dataset.tc;
+  document.querySelectorAll('#tablonCatTabs .parl-tab').forEach(b => b.classList.toggle('active', b === btn));
+  renderTablon();
+});
+
+window.onTablonCatChange = () => {
+  const cat = document.getElementById('tablonCategoria').value;
+  ['principio','prologo','anuncio','evento'].forEach(c => {
+    document.getElementById(`fields-${c}`).style.display = cat === c ? '' : 'none';
+  });
+};
+
+window.previewEvImg = (url) => {
+  const wrap = document.getElementById('evImgPreview');
+  if (url && url.startsWith('http')) {
+    wrap.innerHTML = `<img src="${url}" alt="" onerror="this.parentElement.innerHTML='<span class=\\'placeholder\\'><i class=\\'bi bi-broken-image\\'></i></span>'">`;
+  } else { wrap.innerHTML = '<span class="placeholder"><i class="bi bi-image"></i></span>'; }
+};
+
+window.openAddTablon = () => {
+  document.getElementById('tablonModalTitle').innerHTML = 'Nuevo <em>módulo</em>';
+  document.getElementById('tablonEditId').value = '';
+  document.getElementById('tablonCategoria').value = '';
+  document.getElementById('tablonModo').value = 'añadir';
+  document.getElementById('tablonOrden').value = allTablon.length;
+  ['pTitulo','pTexto','prTitulo','prSubtitulo','prTexto','anEnlace','anEnlaceTexto','anDescripcion','evTitulo','evImagen','evDescripcion','evEnlace'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  document.getElementById('anFecha').value = new Date().toISOString().slice(0,10);
+  document.getElementById('evImgPreview').innerHTML = '<span class="placeholder"><i class="bi bi-image"></i></span>';
+  ['principio','prologo','anuncio','evento'].forEach(c => { document.getElementById(`fields-${c}`).style.display = 'none'; });
+  document.getElementById('tablonModal').classList.add('show');
+};
+
+window.openEditTablon = (id) => {
+  const m = allTablon.find(x => x.id === id); if (!m) return;
+  document.getElementById('tablonModalTitle').innerHTML = 'Editar <em>módulo</em>';
+  document.getElementById('tablonEditId').value = id;
+  document.getElementById('tablonCategoria').value = m.categoria || '';
+  document.getElementById('tablonModo').value      = m.modo      || 'añadir';
+  document.getElementById('tablonOrden').value     = m.orden     ?? 0;
+  document.getElementById('pTitulo').value         = m.titulo      || '';
+  document.getElementById('pTexto').value          = m.texto       || '';
+  document.getElementById('prTitulo').value        = m.titulo      || '';
+  document.getElementById('prSubtitulo').value     = m.subtitulo   || '';
+  document.getElementById('prTexto').value         = m.texto       || '';
+  document.getElementById('anFecha').value         = m.fecha       || '';
+  document.getElementById('anEnlace').value        = m.enlace      || '';
+  document.getElementById('anEnlaceTexto').value   = m.enlaceTexto || '';
+  document.getElementById('anDescripcion').value   = m.descripcion || '';
+  document.getElementById('evTitulo').value        = m.titulo      || '';
+  document.getElementById('evImagen').value        = m.imagen      || '';
+  document.getElementById('evDescripcion').value   = m.descripcion || '';
+  document.getElementById('evEnlace').value        = m.enlace      || '';
+  ['principio','prologo','anuncio','evento'].forEach(c => { document.getElementById(`fields-${c}`).style.display = m.categoria === c ? '' : 'none'; });
+  previewEvImg(m.imagen || '');
+  document.getElementById('tablonModal').classList.add('show');
+};
+
+window.closeTablonModal = () => document.getElementById('tablonModal').classList.remove('show');
+
+window.saveTablon = async () => {
+  const categoria = document.getElementById('tablonCategoria').value;
+  const modo      = document.getElementById('tablonModo').value;
+  const orden     = parseInt(document.getElementById('tablonOrden').value) || 0;
+  const editId    = document.getElementById('tablonEditId').value;
+  if (!categoria) { toast('Elige una categoría', 'err'); return; }
+  let data = { categoria, modo, orden, updatedAt: Date.now() };
+  switch (categoria) {
+    case 'principio':
+      data.titulo = document.getElementById('pTitulo').value.trim();
+      data.texto  = document.getElementById('pTexto').value.trim();
+      if (!data.titulo) { toast('El título es obligatorio', 'err'); return; }
+      break;
+    case 'prologo':
+      data.titulo    = document.getElementById('prTitulo').value.trim();
+      data.subtitulo = document.getElementById('prSubtitulo').value.trim();
+      data.texto     = document.getElementById('prTexto').value.trim();
+      if (!data.titulo) { toast('El título es obligatorio', 'err'); return; }
+      break;
+    case 'anuncio':
+      data.fecha       = document.getElementById('anFecha').value;
+      data.enlace      = document.getElementById('anEnlace').value.trim();
+      data.enlaceTexto = document.getElementById('anEnlaceTexto').value.trim();
+      data.descripcion = document.getElementById('anDescripcion').value.trim();
+      if (!data.enlace) { toast('El enlace del anuncio es obligatorio', 'err'); return; }
+      break;
+    case 'evento':
+      data.titulo      = document.getElementById('evTitulo').value.trim();
+      data.imagen      = document.getElementById('evImagen').value.trim();
+      data.descripcion = document.getElementById('evDescripcion').value.trim();
+      data.enlace      = document.getElementById('evEnlace').value.trim();
+      if (!data.titulo) { toast('El título del evento es obligatorio', 'err'); return; }
+      break;
+  }
+  try {
+    if (modo === 'sustituir') {
+      const toDelete = allTablon.filter(m => m.categoria === categoria && m.id !== editId);
+      for (const m of toDelete) { await deleteDoc(doc(db, 'tablon', m.id)); }
+      allTablon = allTablon.filter(m => !(m.categoria === categoria && m.id !== editId));
+    }
+    if (editId) {
+      await updateDoc(doc(db, 'tablon', editId), data);
+      const idx = allTablon.findIndex(x => x.id === editId);
+      if (idx >= 0) allTablon[idx] = { ...allTablon[idx], ...data };
+      toast('Módulo actualizado', 'ok');
+    } else {
+      data.createdAt = Date.now();
+      if (modo === 'añadir') data.orden = 0;
+      const ref = await addDoc(collection(db, 'tablon'), data);
+      allTablon.push({ id: ref.id, ...data });
+      toast('Módulo creado', 'ok');
+    }
+    allTablon.sort((a, b) => (a.orden || 0) - (b.orden || 0));
+    renderTablon(); closeTablonModal();
+  } catch (err) { toast('Error al guardar: ' + err.message, 'err'); }
+};
+
+window.deleteTablon = async (id, label) => {
+  if (!confirm(`¿Eliminar este módulo de "${label}"?`)) return;
+  try {
+    await deleteDoc(doc(db, 'tablon', id));
+    allTablon = allTablon.filter(m => m.id !== id);
+    renderTablon(); toast('Módulo eliminado');
+  } catch (err) { toast('Error al eliminar: ' + err.message, 'err'); }
 };
 
 // ══════════════════════════════
@@ -2336,46 +1752,17 @@ window.toast = (msg, type = '') => {
 };
 </script>
 
-
 <script>
 $(function () {
   const STORAGE_KEY = "theme";
-
-  function setTheme(theme) {
-    document.documentElement.style.colorScheme = theme;
-    localStorage.setItem(STORAGE_KEY, theme);
-    updateIcon(theme);
-  }
-
-  function updateIcon(theme) {
-    const icon = $("#themeToggle i");
-
-    if (theme === "dark") {
-      icon.removeClass("bi-moon").addClass("bi-sun");
-    } else {
-      icon.removeClass("bi-sun").addClass("bi-moon");
-    }
-  }
-
-  function detectSystemTheme() {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  }
-
-  // Inicializar
+  function setTheme(theme) { document.documentElement.style.colorScheme = theme; localStorage.setItem(STORAGE_KEY, theme); updateIcon(theme); }
+  function updateIcon(theme) { const icon = $("#themeToggle i"); if (theme === "dark") { icon.removeClass("bi-moon").addClass("bi-sun"); } else { icon.removeClass("bi-sun").addClass("bi-moon"); } }
+  function detectSystemTheme() { return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
   let theme = localStorage.getItem(STORAGE_KEY) || detectSystemTheme();
   setTheme(theme);
-
-  // Toggle
-  $("#themeToggle").on("click", function () {
-    let currentTheme = localStorage.getItem(STORAGE_KEY) || "light";
-    let newTheme = currentTheme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-  });
+  $("#themeToggle").on("click", function () { let currentTheme = localStorage.getItem(STORAGE_KEY) || "light"; setTheme(currentTheme === "light" ? "dark" : "light"); });
 });
 </script>
 
-  
 </body>
 </html>
