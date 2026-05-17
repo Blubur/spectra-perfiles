@@ -1,15 +1,3 @@
-/**
- * spectra-tablon-widget.js
- * ─────────────────────────────────────────────────────────────────────────────
- * Widget del Tablón de Spectra.
- * Uso en el foro (sin etiquetas script ni nada externo en el post):
- *
- *   <div id="spectra-tablon"></div>
- *
- * El script se carga una sola vez en el tema/plantilla del foro como archivo
- * externo (ej. desde GitHub Pages / jsDelivr).
- * ─────────────────────────────────────────────────────────────────────────────
- */
 (function () {
   "use strict";
 
@@ -37,9 +25,7 @@
   var allTablon = [];
   var root;
 
-  /* ──────────────────────────────────────────────
-     Carga de dependencias externas
-  ────────────────────────────────────────────── */
+
   function loadScript(src) {
     return new Promise(function (resolve, reject) {
       var existing = document.querySelector('script[src="' + src + '"]');
@@ -82,9 +68,7 @@
         color: var(--mono-text2, #21201c);
       }
 
-      /* ═══════════════════════════
-         ANUNCIOS
-      ═══════════════════════════ */
+      /* ═══════════════════════════ ANUNCIOS ═══════════════════════════ */
       #spectra-tablon .anuncios {}
       #spectra-tablon .anuncios h3 {
         font: 300 var(--f-s, .8rem) var(--f-mono, monospace);
@@ -122,9 +106,7 @@
         font-size: var(--f-s, .8rem);
       }
 
-      /* ═══════════════════════════
-         PRÓLOGO / CICLO
-      ═══════════════════════════ */
+      /* ═══════════════════════════ CICLO ═══════════════════════════ */
       #spectra-tablon .ciclo {}
       #spectra-tablon .ciclo ul { list-style: none; }
       #spectra-tablon .ciclo .capitulo {
@@ -151,9 +133,7 @@
         margin-top: var(--spacing-xs, .75rem);
       }
 
-      /* ═══════════════════════════
-         EVENTOS
-      ═══════════════════════════ */
+      /* ═══════════════════════════  EVENTOS  ═══════════════════════════ */
       #spectra-tablon .eventos {
         display: flex;
         flex-wrap: wrap;
@@ -178,8 +158,8 @@
         box-shadow: 0 2px 8px rgba(0,0,0,.08);
       }
       #spectra-tablon .eventos .evento-img {
-        width: 36px;
-        height: 36px;
+        width: 60px;
+        height: 60px;
         object-fit: cover;
         border-radius: calc(var(--br, 5px) - 1px);
         flex-shrink: 0;
@@ -197,9 +177,7 @@
         flex-direction: column;
       }
 
-      /* ═══════════════════════════
-         INTRO / EL PRINCIPIO
-      ═══════════════════════════ */
+      /* ═══════════════════════════  INTRO ═══════════════════════════ */
       #spectra-tablon .intro > span {
         font: italic var(--f-2xl, 1.95rem) var(--f-display, var(--f-deco, 'DM Serif Display', serif));
         display: block;
@@ -231,18 +209,14 @@
     document.head.appendChild(style);
   }
 
-  /* ──────────────────────────────────────────────
-     Helpers
-  ────────────────────────────────────────────── */
+  /* ────────────────────────────────────────────── Helpers ────────────────────────────────────────────── */
   function esc(v) {
     return String(v == null ? "" : v)
       .replace(/&/g,"&amp;").replace(/</g,"&lt;")
       .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
   }
 
-  /* ──────────────────────────────────────────────
-     Render: HTML del tablón a partir de allTablon
-  ────────────────────────────────────────────── */
+  /* ──────────────────────────────────────────────  Render ────────────────────────────────────────────── */
   function buildTablon() {
     var principios = allTablon.filter(function(m){ return m.categoria === 'principio'; });
     var prologos   = allTablon.filter(function(m){ return m.categoria === 'prologo'; });
@@ -269,7 +243,7 @@
       html += '</ul></div>';
     }
 
-    /* ── Prólogo / Ciclo ── */
+    /* ──  Ciclo ── */
     if (prologos.length) {
       var pr = prologos[0];
       // Separar número y título si el formato es "0. PRÓLOGO"
@@ -289,7 +263,7 @@
         </div>`;
     }
 
-    /* ── Próximos eventos ── */
+    /* ──  eventos ── */
     if (eventos.length) {
       html += '<div class="eventos">';
       eventos.forEach(function(ev) {
@@ -311,7 +285,7 @@
       html += '</div>';
     }
 
-    /* ── El principio / Intro ── */
+    /* ──  Intro ── */
     if (principios.length) {
       var pr2 = principios[0];
       html += `
@@ -333,9 +307,7 @@
     root.innerHTML = '<div class="st-error">' + esc(msg) + '</div>';
   }
 
-  /* ──────────────────────────────────────────────
-     Firebase
-  ────────────────────────────────────────────── */
+  /* ────────────────────────────────────────────── Firebase ────────────────────────────────────────────── */
   function initFirebaseApp() {
     if (!window.firebase) throw new Error("Firebase no cargado.");
     var existing = null;
@@ -362,9 +334,7 @@
     });
   }
 
-  /* ──────────────────────────────────────────────
-     Init
-  ────────────────────────────────────────────── */
+  /* ────────────────────────────────────────────── Init  ────────────────────────────────────────────── */
   function start() {
     root = document.getElementById(WIDGET_ID);
     if (!root) return;
