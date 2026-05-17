@@ -71,7 +71,7 @@
 
       /* ═══════════════════════════ ANUNCIOS ═══════════════════════════ */
       #spectra-tablon .anuncios {}
-      #spectra-tablon .anuncios h3 {
+      #spectra-tablon .anuncios h3, #spectra-tablon .eventos h3 {
         font: 300 var(--f-s) var(--f-mono);
         text-transform: uppercase;
         letter-spacing: .12em;
