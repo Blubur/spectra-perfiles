@@ -56,8 +56,6 @@
     var style = document.createElement("style");
     style.id = "spectra-tablon-style";
     style.textContent = `
-      /* ── Reset local ── */
-      #spectra-tablon * { box-sizing: border-box; margin: 0; padding: 0; }
 
       /* ── Sección raíz ── */
       #spectra-tablon.tablon {
